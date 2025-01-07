@@ -1,0 +1,1 @@
+<x-admin.sidebar></x-admin.sidebar>
