@@ -6,7 +6,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('/');
+
+Route::get('/lu', function () {
+    return view('loginuser');
+})->name('lu');
+
+Route::get('/regis', function () {
+    return view('registeruser');
+})->name('regis');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
