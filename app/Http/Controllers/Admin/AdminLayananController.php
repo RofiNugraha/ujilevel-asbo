@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Layanan;
+use App\Models\Booking;
+use App\Models\Notifikasi;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\Cast\String_;
 
@@ -31,20 +34,39 @@ class AdminLayananController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'tipe_customer' => 'required|in:anak,dewasa',
             'layanan_tambahan' => 'required|in:cukur_jenggot,cukur_kumis,cukur_jenggot_kumis,tidak_ada',
             'kursi' => 'required|in:satu,dua',
             'jam_booking' => 'required|date',
-            'harga' => 'required|string',
+            'harga' => 'required|numeric',
             'deskripsi' => 'nullable|string',
         ]);
 
-        Layanan::create($request->all());
+        $layanan = Layanan::create($validated);
+
+        if ($layanan) {
+            // Membuat pemesanan baru (booking)
+            $booking = Booking::create([
+                'user_id' => Auth::id(),
+                'layanan_id' => $layanan->id,
+                'status' => 'dibooking',
+                'status_pembayaran' => 'belum',
+            ]);
+
+            Notifikasi::create([
+                'user_id' => Auth::id(),
+                'booking_id' => $booking->id,
+                'pesan' => 'Pemesanan layanan berhasil untuk layanan ' . $layanan->tipe_customer . '.',
+                'tanggal_notifikasi' => now(),
+                'status_dibaca' => false,
+            ]);
+        }
 
         return redirect()->route('admin.layanan.index')
-            ->with('success', 'Layanan berhasil ditambahkan.');
+            ->with('success', 'Layanan berhasil ditambahkan dan pemesanan serta notifikasi telah dibuat.');
     }
+
 
     /**
      * Display the specified resource.

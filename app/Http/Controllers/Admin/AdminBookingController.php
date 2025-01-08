@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\Layanan;
+use App\Models\Notifikasi;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminBookingController extends Controller
 {
@@ -34,22 +36,38 @@ class AdminBookingController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
+        $validated = $request->validate([
             'layanan_id' => 'required|exists:layanans,id',
-            'status' => 'required|in:dibooking,selesai,dibatalkan',
             'status_pembayaran' => 'required|in:sudah,belum',
         ]);
 
-        $booking = Booking::create($request->all());
+        $layanan = Layanan::findOrFail($validated['layanan_id']);
 
-        return response()->json(['message' => 'Booking created successfully.', 'data' => $booking], 201);
+        $booking = Booking::create([
+            'user_id' => Auth::id(),
+            'layanan_id' => $layanan->id,
+            'status' => 'dibooking',
+            'status_pembayaran' => $validated['status_pembayaran'],
+        ]);
+
+        Notifikasi::create([
+            'user_id' => Auth::id(),
+            'booking_id' => $booking->id,
+            'pesan' => 'Pemesanan layanan ' . $layanan->tipe_customer . ' berhasil.',
+            'tanggal_notifikasi' => now(),
+            'status_dibaca' => false,
+        ]);
+
+        return response()->json([
+            'message' => 'Pemesanan berhasil dilakukan dan notifikasi telah dikirim.',
+            'booking' => $booking,
+        ]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(string $id)
     {
         $booking = Booking::with(['user', 'layanan'])->findOrFail($id);
         return response()->json($booking);
@@ -69,7 +87,7 @@ class AdminBookingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         $request->validate([
             'user_id' => 'required|exists:users,id',
@@ -87,7 +105,7 @@ class AdminBookingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $booking = Booking::findOrFail($id);
         $booking->delete();
