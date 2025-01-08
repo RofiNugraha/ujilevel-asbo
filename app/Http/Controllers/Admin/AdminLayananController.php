@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Layanan;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\Cast\String_;
 
 class AdminLayananController extends Controller
 {
@@ -56,15 +57,17 @@ class AdminLayananController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Layanan $layanan)
+    public function edit($id)
     {
+        $layanan = Layanan::findOrFail($id);
         return view('admin.layanan.edit', compact('layanan'));
     }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Layanan $layanan)
+    public function update(Request $request, string $id)
     {
         $request->validate([
             'tipe_customer' => 'required|in:anak,dewasa',
@@ -75,20 +78,21 @@ class AdminLayananController extends Controller
             'deskripsi' => 'nullable|string',
         ]);
 
-        $layanan->update($request->all());
+        $layanan = Layanan::findOrFail($id);
 
-        return redirect()->route('admin.layanan.index')
-            ->with('success', 'Layanan berhasil diperbarui.');
+        $layanan->update($request->all());
+        return redirect()->route('admin.layanan.index')->with('success', 'Data berhasil diupdate.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Layanan $layanan)
+    public function destroy(string $id)
     {
+        $layanan = Layanan::findOrFail($id);
+        
         $layanan->delete();
 
-        return redirect()->route('admin.layanan.index')
-            ->with('success', 'Layanan berhasil dihapus.');
+        return redirect()->route('admin.layanan.index')->with('success', 'layanan deleted successfully!');
     }
 }
