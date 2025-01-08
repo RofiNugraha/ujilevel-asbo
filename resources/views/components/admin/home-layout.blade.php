@@ -9,16 +9,16 @@
     <script src="https://cdn.tailwindcss.com/3.2.0"></script>
 </head>
 
-<body class="flex flex-col min-h-screen">
+<body class="flex flex-col min-h-screen" style="background-image: linear-gradient(to bottom right, #0C102B, #0E2094);">
     <main class="flex-grow">
         <header class="bg-white shadow-md">
             <div class="max-w-7xl mx-auto flex items-center justify-between py-4 px-6">
                 <img src="{{ asset('images/logo.png')}}" alt="ASBO Logo" class="w-[50px]">
                 <div class="hidden lg:flex space-x-6 text-lg font-medium text-gray-900">
                     <a href="{{ route('/') }}" class="text-gray-700 hover:text-gray-900">Home</a>
+                    <a href="{{ route('about') }}" class="hover:text-gray-900">About</a>
                     <a href="#overview" class="hover:text-gray-900">Overview</a>
                     <a href="#booking" class="hover:text-gray-900">Booking</a>
-                    <a href="#about" class="hover:text-gray-900">About</a>
                     <button class="relative text-gray-700 hover:text-gray-900">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
@@ -34,7 +34,7 @@
                     </svg>
                 </button>
                 <a class="bg-gray-200 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-300 hidden lg:inline-block"
-                    href="{{ route('lu') }}">Login</a>
+                    href="{{ route('login') }}">Login</a>
             </div>
             <div id="menu"
                 class="hidden flex-col space-y-4 text-lg font-medium text-gray-900 lg:hidden bg-white shadow-lg p-4">
@@ -42,7 +42,7 @@
                 <a href="#overview" class="block hover:text-gray-900">Overview</a>
                 <a href="#booking" class="block hover:text-gray-900">Booking</a>
                 <a href="#about" class="block hover:text-gray-900">About</a>
-                <a href="{{ route('lu') }}"
+                <a href="{{ route('login') }}"
                     class="block bg-gray-200 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-300">Login</a>
             </div>
         </header>

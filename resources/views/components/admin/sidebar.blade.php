@@ -4,3 +4,4 @@
 <a class="nav-link {{ request()->is('admin/layanan') ? 'active' : '' }}" href="/admin/layanan">
     <span>Layanan</span>
 </a>
+{{ $slot }}

@@ -11,6 +11,10 @@ Route::get('/', function () {
     return view('welcome');
 })->name('/');
 
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
+
 Route::get('/lu', function () {
     return view('loginuser');
 })->name('lu');
