@@ -12,7 +12,8 @@ Create
             <th>No.</th>
             <th>ID User</th>
             <th>ID Layanan</th>
-            <th>Jam Booking</th>
+            <th>Booking</th>
+            <th>Kursi</th>
             <th>Status</th>
             <th>Status Pembayaran</th>
         </tr>
@@ -24,7 +25,8 @@ Create
             <td>{{ $no++ }}</td>
             <td>{{ $item->user_id }}</td>
             <td>{{ $item->layanan_id }}</td>
-            <td>{{ $item->Booking }}</td>
+            <td>{{ $item->jam_booking }}</td>
+            <td>{{ $item->kursi }}</td>
             <td>{{ $item->status }}</td>
             <td>{{ $item->status_pembayaran }}</td>
             <td>

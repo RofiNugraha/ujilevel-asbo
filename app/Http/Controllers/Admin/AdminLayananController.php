@@ -43,20 +43,23 @@ class AdminLayananController extends Controller
             'deskripsi' => 'nullable|string',
         ]);
 
-        $jamBooking = Carbon::parse($request->jam_booking)->timezone('Asia/Jakarta');
+        $jamBooking = Carbon::parse($request->jam_booking);
 
         $start = $jamBooking->copy()->subMinutes(30);
         $end = $jamBooking->copy()->addMinutes(30);
 
-        $conflict = Booking::whereBetween('jam_booking', [$start, $end])->exists();
+        $conflict = Booking::where('jam_booking', '>=', $start)
+            ->where('jam_booking', '<=', $end)
+            ->where('kursi', $request->kursi)
+            ->exists();
 
         if ($conflict) {
             return redirect()->back()
-                ->withErrors(['jam_booking' => 'Jam booking berbenturan dengan pemesanan lain. Silakan pilih jam yang lain.'])
+                ->withErrors(['jam_booking' => 'Jam booking berbenturan dengan pemesanan lain pada kursi yang sama. Silakan pilih jam yang lain.'])
                 ->withInput();
         }
 
-        $hargaAwal = 15000;
+        $hargaAwal = $request->tipe_customer === 'anak' ? 13000 : 15000;
         $hargaTambahan = $request->layanan_tambahan !== 'tidak_ada' ? 5000 : 0;
         $validated['harga'] = $hargaAwal + $hargaTambahan;
 
@@ -69,8 +72,9 @@ class AdminLayananController extends Controller
                 'jam_booking' => $jamBooking,
                 'status' => 'dibooking',
                 'status_pembayaran' => 'belum',
+                'kursi' => $request->kursi,
             ]);
-
+            
             Notifikasi::create([
                 'user_id' => Auth::id(),
                 'booking_id' => $booking->id,

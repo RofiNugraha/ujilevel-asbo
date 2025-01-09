@@ -29,60 +29,62 @@ class AdminBookingController extends Controller
     {
         $user = User::all();
         $layanan = Layanan::all();
-        return view('adin.booking.create', compact('user', 'layanan'));
+        return view('admin.booking.create', compact('user', 'layanan'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
 
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'layanan_id' => 'required|exists:layanans,id',
-            'jam_booking' => 'required|date|after_or_equal:now',
-            'status_pembayaran' => 'required|in:sudah,belum',
-        ]);
+     public function store(Request $request)
+{
+    // Validasi data yang diterima
+    $validated = $request->validate([
+        'layanan_id' => 'required|exists:layanans,id',
+        'jam_booking' => 'required|date|after_or_equal:now',
+        'status_pembayaran' => 'required|in:sudah,belum',
+        'kursi' => 'required|in:satu,dua',
+    ]);
 
-        $jamBooking = Carbon::parse($validated['jam_booking']);
+    $jamBooking = Carbon::parse($validated['jam_booking']);
+    
+    $start = $jamBooking->copy()->subMinutes(30);
+    $end = $jamBooking->copy()->addMinutes(30);
 
-        $start = $jamBooking->copy()->subMinutes(30);
-        $end = $jamBooking->copy()->addMinutes(30);
-
-        $conflict = Booking::where('layanan_id', $validated['layanan_id'])
-            ->whereBetween('jam_booking', [$start, $end])
-            ->exists();
-
-        if ($conflict) {
-            return response()->json([
-                'message' => 'Jam booking berbenturan dengan pemesanan lain. Silakan pilih jam lain.',
-            ], 422);
-        }
-
-        $layanan = Layanan::findOrFail($validated['layanan_id']);
-
-        $booking = Booking::create([
-            'user_id' => Auth::id(),
-            'layanan_id' => $layanan->id,
-            'jam_booking' => $jamBooking,
-            'status' => 'dibooking',
-            'status_pembayaran' => $validated['status_pembayaran'],
-        ]);
-
-        Notifikasi::create([
-            'user_id' => Auth::id(),
-            'booking_id' => $booking->id,
-            'pesan' => 'Pemesanan layanan ' . $layanan->tipe_customer . ' berhasil.',
-            'tanggal_notifikasi' => now(),
-            'status_dibaca' => false,
-        ]);
-
+    $conflict = Booking::where('layanan_id', $validated['layanan_id'])
+        ->where('kursi', $validated['kursi'])
+        ->whereBetween('jam_booking', [$start, $end])
+        ->exists();
+    if ($conflict) {
         return response()->json([
-            'message' => 'Pemesanan berhasil dilakukan dan notifikasi telah dikirim.',
-            'booking' => $booking,
-        ]);
+            'message' => 'Jam booking berbenturan dengan pemesanan lain pada kursi yang sama. Silakan pilih jam lain.',
+        ], 422);
     }
 
+    $layanan = Layanan::findOrFail($validated['layanan_id']);
+
+    $booking = Booking::create([
+        'user_id' => Auth::id(),
+        'layanan_id' => $layanan->id,
+        'jam_booking' => $jamBooking,
+        'status' => 'pending',
+        'status_pembayaran' => $validated['status_pembayaran'],
+    ]);
+
+    Notifikasi::create([
+        'user_id' => Auth::id(),
+        'booking_id' => $booking->id,
+        'pesan' => 'Pemesanan layanan ' . $layanan->tipe_customer . ' berhasil.',
+        'tanggal_notifikasi' => now(),
+        'status_dibaca' => false,
+    ]);
+
+    // Mengembalikan response dengan data pemesanan
+    return response()->json([
+        'message' => 'Pemesanan berhasil dilakukan dan notifikasi telah dikirim.',
+        'booking' => $booking,
+    ]);
+}
 
     /**
      * Display the specified resource.

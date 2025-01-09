@@ -15,6 +15,7 @@ class Booking extends Model
         'jam_booking',
         'status',
         'status_pembayaran',
+        'kursi',
     ];
 
     public function user() {
