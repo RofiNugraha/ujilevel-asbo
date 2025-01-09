@@ -8,6 +8,7 @@ use App\Models\Layanan;
 use App\Models\Notifikasi;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class AdminBookingController extends Controller
@@ -18,7 +19,7 @@ class AdminBookingController extends Controller
     public function index()
     {
         $booking = Booking::with(['user', 'layanan'])->get();
-        return response()->json($booking);
+        return view('admin.booking.index', compact('booking'));
     }
 
     /**
@@ -34,18 +35,36 @@ class AdminBookingController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
         $validated = $request->validate([
             'layanan_id' => 'required|exists:layanans,id',
+            'jam_booking' => 'required|date|after_or_equal:now',
             'status_pembayaran' => 'required|in:sudah,belum',
         ]);
+
+        $jamBooking = Carbon::parse($validated['jam_booking']);
+
+        $start = $jamBooking->copy()->subMinutes(30);
+        $end = $jamBooking->copy()->addMinutes(30);
+
+        $conflict = Booking::where('layanan_id', $validated['layanan_id'])
+            ->whereBetween('jam_booking', [$start, $end])
+            ->exists();
+
+        if ($conflict) {
+            return response()->json([
+                'message' => 'Jam booking berbenturan dengan pemesanan lain. Silakan pilih jam lain.',
+            ], 422);
+        }
 
         $layanan = Layanan::findOrFail($validated['layanan_id']);
 
         $booking = Booking::create([
             'user_id' => Auth::id(),
             'layanan_id' => $layanan->id,
+            'jam_booking' => $jamBooking,
             'status' => 'dibooking',
             'status_pembayaran' => $validated['status_pembayaran'],
         ]);
@@ -63,6 +82,7 @@ class AdminBookingController extends Controller
             'booking' => $booking,
         ]);
     }
+
 
     /**
      * Display the specified resource.
