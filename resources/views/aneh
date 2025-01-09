@@ -1,0 +1,47 @@
+<x-admin.home-layout>
+    <div class="container mx-auto mt-12 mb-12 px-8"> <!-- Add margin-top to push content down a little -->
+        <div class="bg-[#0e2094] rounded-[39px] shadow-lg p-4 w-full h-[114px] flex items-center">
+            <h1 class="text-4xl px-4 font-semibold text-white">List Booking: Senin, 33-13-2029</h1>
+        </div>
+
+        <!-- Table Header -->
+        <div class="flex justify-center">
+            <table class="w-full bg-[#d9d9d9] rounded-xl mt-8">
+                <thead>
+                    <tr class="text-left bg-[#d9d9d9] text-2xl font-normal text-black">
+                        <th class="p-4 text-center">No</th>
+                        <th class="p-4 text-center">Nama</th>
+                        <th class="p-4 text-center" colspan="2">Keterangan Waktu</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="bg-white">
+                        <td class="p-4 text-2xl font-normal text-black text-center">1.</td>
+                        <td class="p-4 text-2xl font-normal text-black text-center">Asep</td>
+                        <td class="p-4 text-2xl font-normal text-black text-center" colspan="2">10.00</td>
+                    </tr>
+                    <tr class="bg-[#eeeeee]">
+                        <td class="p-4 text-2xl font-normal text-black text-center">2.</td>
+                        <td class="p-4 text-2xl font-normal text-black text-center">Udin</td>
+                        <td class="p-4 text-2xl font-normal text-black text-center" colspan="2">12.00</td>
+                    </tr>
+                    <tr class="bg-white">
+                        <td class="p-4 text-2xl font-normal text-black text-center">3.</td>
+                        <td class="p-4 text-2xl font-normal text-black text-center">Beni</td>
+                        <td class="p-4 text-2xl font-normal text-black text-center" colspan="2">14.00</td>
+                    </tr>
+                    <tr class="bg-white">
+                        <td class="p-4 text-2xl font-normal text-black text-center">3.</td>
+                        <td class="p-4 text-2xl font-normal text-black text-center">Beni</td>
+                        <td class="p-4 text-2xl font-normal text-black text-center" colspan="2">14.00</td>
+                    </tr>
+                    <tr class="bg-white">
+                        <td class="p-4 text-2xl font-normal text-black text-center">3.</td>
+                        <td class="p-4 text-2xl font-normal text-black text-center">Beni</td>
+                        <td class="p-4 text-2xl font-normal text-black text-center" colspan="2">14.00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</x-admin.home-layout>

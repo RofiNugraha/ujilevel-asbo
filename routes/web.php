@@ -15,6 +15,18 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
+Route::get('/overview', function () {
+    return view('overview');
+})->name('overview');
+
+Route::get('/booking', function () {
+    return view('booking');
+})->name('booking');
+
+Route::get('/form', function () {
+    return view('formbook');
+})->name('form');
+
 Route::get('/lu', function () {
     return view('loginuser');
 })->name('lu');
