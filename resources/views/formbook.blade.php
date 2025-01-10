@@ -93,13 +93,28 @@
     document.addEventListener("DOMContentLoaded", function() {
         const layananTambahan = document.getElementById("layanan_tambahan");
         const hargaField = document.getElementById("harga");
+        const tipeCustomer = document.getElementById("tipe_customer");
 
         layananTambahan.addEventListener("change", function() {
-            let basePrice = 15000;
+            let basePrice = tipeCustomer.value === "anak" ? 13000 : 15000;
             let additionalPrice = 0;
 
             if (this.value === "cukur_jenggot" || this.value === "cukur_kumis" || this.value ===
                 "cukur_jenggot_kumis") {
+                additionalPrice = 5000;
+            }
+
+            const totalPrice = basePrice + additionalPrice;
+
+            hargaField.value = totalPrice;
+        });
+
+        tipeCustomer.addEventListener("change", function() {
+            let basePrice = this.value === "anak" ? 13000 : 15000;
+            let additionalPrice = 0;
+
+            if (layananTambahan.value === "cukur_jenggot" || layananTambahan.value === "cukur_kumis" ||
+                layananTambahan.value === "cukur_jenggot_kumis") {
                 additionalPrice = 5000;
             }
 
