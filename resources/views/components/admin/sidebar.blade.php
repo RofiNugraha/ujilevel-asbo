@@ -7,4 +7,7 @@
 <a class="nav-link {{ request()->is('admin/booking') ? 'active' : '' }}" href="/admin/booking">
     <span>booking</span>
 </a>
+<a class="nav-link {{ request()->is('admin/notifikasi') ? 'active' : '' }}" href="/admin/notifikasi">
+    <span>Notifkasi</span>
+</a>
 {{ $slot }}

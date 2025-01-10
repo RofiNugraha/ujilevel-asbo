@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminBookingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\AdminLayananController;
+use App\Http\Controllers\Admin\AdminNotifikasiController;
 use App\Http\Controllers\CekLoginController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -73,7 +74,16 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(
     Route::get('/admin/booking/{id}', [AdminBookingController::class, 'show'])->name('admin.booking.show');
     Route::get('/admin/booking/{id}/edit', [AdminBookingController::class, 'edit'])->name('admin.booking.edit');
     Route::put('/admin/booking/{id}', [AdminBookingController::class, 'update'])->name('admin.booking.update');
-    Route::delete('/admin/booking/{id}', [AdminMiddleware::class, 'destroy'])->name('admin.booking.destroy');
+    Route::delete('/admin/booking/{id}', [AdminBookingController::class, 'destroy'])->name('admin.booking.destroy');
+    
+    // CRUD admin notifikasi
+    Route::get('/admin/notifikasi', [AdminNotifikasiController::class, 'index'])->name('admin.notifikasi.index');
+    Route::get('/admin/notifikasi/create', [AdminNotifikasiController::class, 'create'])->name('admin.notifikasi.create');
+    Route::post('/admin/notifikasi', [AdminNotifikasiController::class, 'store'])->name('admin.notifikasi.store');
+    Route::get('/admin/notifikasi/{id}', [AdminNotifikasiController::class, 'show'])->name('admin.notifikasi.show');
+    Route::get('/admin/notifikasi/{id}/edit', [AdminNotifikasiController::class, 'edit'])->name('admin.notifikasi.edit');
+    Route::put('/admin/notifikasi/{id}', [AdminNotifikasiController::class, 'update'])->name('admin.notifikasi.update');
+    Route::delete('/admin/notifikasi/{id}', [AdminNotifikasiController::class, 'destroy'])->name('admin.notifikasi.destroy');
 });
 
 require __DIR__.'/auth.php';
