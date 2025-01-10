@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\AdminLayananController;
 use App\Http\Controllers\Admin\AdminNotifikasiController;
 use App\Http\Controllers\CekLoginController;
+use App\Http\Controllers\Admin\AdminRiwayatTransaksiController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -92,6 +93,15 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(
     Route::get('/admin/notifikasi/{id}/edit', [AdminNotifikasiController::class, 'edit'])->name('admin.notifikasi.edit');
     Route::put('/admin/notifikasi/{id}', [AdminNotifikasiController::class, 'update'])->name('admin.notifikasi.update');
     Route::delete('/admin/notifikasi/{id}', [AdminNotifikasiController::class, 'destroy'])->name('admin.notifikasi.destroy');
+    
+    // CRUD admin riwayat transaksi
+    Route::get('/admin/riwayat', [AdminRiwayatTransaksiController::class, 'index'])->name('admin.riwayat.index');
+    Route::get('/admin/riwayat/create', [AdminRiwayatTransaksiController::class, 'create'])->name('admin.riwayat.create');
+    Route::post('/admin/riwayat', [AdminRiwayatTransaksiController::class, 'store'])->name('admin.riwayat.store');
+    Route::get('/admin/riwayat/{id}', [AdminRiwayatTransaksiController::class, 'show'])->name('admin.riwayat.show');
+    Route::get('/admin/riwayat/{id}/edit', [AdminRiwayatTransaksiController::class, 'edit'])->name('admin.riwayat.edit');
+    Route::put('/admin/riwayat/{id}', [AdminRiwayatTransaksiController::class, 'update'])->name('admin.riwayat.update');
+    Route::delete('/admin/riwayat/{id}', [AdminRiwayatTransaksiController::class, 'destroy'])->name('admin.riwayat.destroy');
 });
 
 require __DIR__.'/auth.php';
