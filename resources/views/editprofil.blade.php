@@ -19,8 +19,8 @@
                     value="Sri Ayu Apriliani" />
             </div>
             <div>
-                <label for="username" class="block text-lg font-semibold">Username</label>
-                <input type="text" id="username" name="username" class="w-full p-3 border border-gray-300 rounded-lg mt-2"
+                <label for="email" class="block text-lg font-semibold">Email</label>
+                <input type="text" id="email" name="email" class="w-full p-3 border border-gray-300 rounded-lg mt-2"
                     value="ayueo" />
             </div>
             <div>

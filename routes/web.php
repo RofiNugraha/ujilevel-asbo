@@ -46,6 +46,9 @@ Route::get('/editprofil', function () {
     return view('editprofil');
 })->name('editprofil');
 
+Route::get('/viewbooking', function () {
+    return view('viewbooking');
+})->name('viewbooking');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
