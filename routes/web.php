@@ -36,6 +36,14 @@ Route::get('/regis', function () {
     return view('registeruser');
 })->name('regis');
 
+Route::get('/profil', function () {
+    return view('profil');
+})->name('profil');
+
+Route::get('/editprofil', function () {
+    return view('editprofil');
+})->name('editprofil');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

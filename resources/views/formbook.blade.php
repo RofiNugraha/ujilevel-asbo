@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com/3.2.0"></script>
-    <title>Create Layanan</title>
+    <title>Booking</title>
 </head>
 
 <body class="bg-gradient-to-b flex items-center justify-center min-h-screen"
