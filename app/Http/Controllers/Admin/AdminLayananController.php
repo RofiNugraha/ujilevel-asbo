@@ -70,7 +70,7 @@ class AdminLayananController extends Controller
                 'user_id' => Auth::id(),
                 'layanan_id' => $layanan->id,
                 'jam_booking' => $jamBooking,
-                'status' => 'dibooking',
+                'status' => 'pending',
                 'status_pembayaran' => 'belum',
                 'kursi' => $request->kursi,
             ]);
@@ -78,7 +78,7 @@ class AdminLayananController extends Controller
             Notifikasi::create([
                 'user_id' => Auth::id(),
                 'booking_id' => $booking->id,
-                'pesan' => 'Pemesanan layanan Anda berhasil untuk tipe customer ' . $layanan->tipe_customer . '.',
+                'pesan' => 'Pemesanan layanan Anda berhasil untuk tipe customer ' . $layanan->tipe_customer . 'di kursi'. $layanan->kursi . '.',
                 'tanggal_notifikasi' => now(),
                 'status_dibaca' => false,
             ]);
@@ -131,26 +131,20 @@ class AdminLayananController extends Controller
      */
     public function destroy(string $id)
     {
-        // Temukan layanan berdasarkan ID
         $layanan = Layanan::findOrFail($id);
 
-        // Mengambil semua data booking yang terkait dengan layanan
         $bookings = Booking::where('layanan_id', $layanan->id)->get();
 
-        // Menghapus notifikasi yang terkait dengan setiap booking
         foreach ($bookings as $booking) {
             Notifikasi::where('booking_id', $booking->id)->delete();
         }
 
-        // Menghapus semua booking yang terkait dengan layanan
         foreach ($bookings as $booking) {
             $booking->delete();
         }
 
-        // Menghapus layanan
         $layanan->delete();
 
-        // Mengarahkan kembali dengan pesan sukses
         return redirect()->route('admin.layanan.index')->with('success', 'Layanan beserta data terkait (booking dan notifikasi) telah berhasil dihapus.');
     }
 
