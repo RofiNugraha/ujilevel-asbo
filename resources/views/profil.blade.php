@@ -29,7 +29,7 @@
                 </div>
                 <div>
                     <button class="bg-green-600 text-white py-2 px-4 rounded">
-                        <a href="{{ route('logout') }}">View Detail</a>
+                        <a href="{{ route('viewbooking') }}">View Detail</a>
                     </button>
                 </div>
             </div>
@@ -37,11 +37,12 @@
         <!-- Actions Section -->
         <div class="flex justify-between mx-4 mt-6">
             <button class="bg-blue-600 text-white py-2 px-4 rounded">
-                <a href="{{ route('editprofil') }}">Edit Prodil</a>
+                <a href="{{ route('editprofil') }}">Edit Profil</a>
             </button>
-            <button class="bg-red-600 text-white py-2 px-4 rounded">
-                <a href="{{ route('logout') }}">Logout</a>
-            </button>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="btn btn-link">Logout</button>
+            </form>
         </div>
     </main>
 </x-admin.home-layout>
