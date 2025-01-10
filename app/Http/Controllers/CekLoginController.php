@@ -65,7 +65,7 @@ class CekLoginController extends Controller
                 ]);
             }
 
-            return redirect()->route('formbook.store')
+            return redirect()->route('dashboard')
                 ->with('success', 'Layanan berhasil ditambahkan dan pemesanan serta notifikasi telah dibuat.');
         }
 }   
