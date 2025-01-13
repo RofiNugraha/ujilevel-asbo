@@ -38,22 +38,5 @@
             </div>
         </section>
     </main>
-
-    <script>
-    function toggleDropdown(id) {
-        const dropdown = document.getElementById(id);
-        dropdown.classList.toggle('hidden'); // Toggle visibility
-    }
-    </script>
-
-    <script>
-    const menuButton = document.getElementById('menu-button');
-    const menu = document.getElementById('menu');
-
-    menuButton.addEventListener('click', () => {
-        menu.classList.toggle('hidden');
-    });
-    </script>
-
     </body>
 </x-admin.home-layout>

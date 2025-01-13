@@ -1,0 +1,81 @@
+<x-admin.admin-layout>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <!-- Create Button -->
+                    <a href="{{ route('admin.layanan.create') }}" class="btn btn-success text-white mb-4">
+                        <i class="material-icons">add</i> Create
+                    </a>
+                    <hr>
+
+                    <!-- Responsive Table Wrapper -->
+                    <div class="table-responsive">
+                        <!-- Table with Improved Styling -->
+                        <table class="table table-striped table-hover align-middle" id="layanans-table" style="width: 100%;">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Tipe Customer</th>
+                                    <th>Layanan Tambahan</th>
+                                    <th>Kursi</th>
+                                    <th>Jam Booking</th>
+                                    <th>Harga</th>
+                                    <th>Deskripsi</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php $no = 1; @endphp
+                                @foreach($layanan as $item)
+                                <tr>
+                                    <td>{{ $no++ }}</td>
+                                    <td>{{ $item->tipe_customer }}</td>
+                                    <td>{{ $item->layanan_tambahan }}</td>
+                                    <td>{{ $item->kursi }}</td>
+                                    <td>{{ $item->jam_booking }}</td>
+                                    <td>{{ $item->harga }}</td>
+                                    <td>{{ $item->deskripsi }}</td>
+                                    <td>
+                                        <!-- Edit Button -->
+                                        <a href="{{ route('admin.layanan.edit', $item) }}" class="btn btn-primary btn-sm">
+                                            <i class="material-icons">edit</i> Edit
+                                        </a>
+                                        <!-- Delete Button with Modal -->
+                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $item->id }}">
+                                            <i class="material-icons">delete</i> Delete
+                                        </button>
+
+                                        <!-- Delete Confirmation Modal -->
+                                        <div class="modal fade" id="deleteModal{{ $item->id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ $item->id }}" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="deleteModalLabel{{ $item->id }}">Confirm Delete</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Apakah Anda yakin ingin menghapus layanan ini?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                        <form id="delete-form-{{ $item->id }}" action="{{ route('admin.layanan.destroy', $item->id) }}" method="POST" style="display: inline;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</x-admin.admin-layout>

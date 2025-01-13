@@ -66,13 +66,13 @@
                 </button>
                 <a class="bg-gray-200 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-300 hidden lg:inline-block"
                     href="{{ route('login') }}">Login</a>
-            </div> 
+            </div>
             <div id="menu"
                 class="hidden flex-col space-y-4 text-lg font-medium text-gray-900 lg:hidden bg-white shadow-lg p-4">
                 <a href="{{ route('/') }}" class="block text-gray-700 hover:text-gray-900">Home</a>
-                <a href="#overview" class="block hover:text-gray-900">Overview</a>
-                <a href="#booking" class="block hover:text-gray-900">Booking</a>
-                <a href="#about" class="block hover:text-gray-900">About</a>
+                <a href="{{ route('about') }}" class="block hover:text-gray-900">About</a>
+                <a href="#{{ route('overview') }}" class="block hover:text-gray-900">Overview</a>
+                <a href="{{ route('booking') }}" class="block hover:text-gray-900">Booking</a>
                 <a href="{{ route('login') }}"
                     class="block bg-gray-200 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-300">Login</a>
             </div>
@@ -89,6 +89,22 @@
         item.addEventListener('mouseout', () => {
             item.querySelector('::after').style.width = '0';
         });
+    });
+    </script>
+
+    <script>
+    function toggleDropdown(id) {
+        const dropdown = document.getElementById(id);
+        dropdown.classList.toggle('hidden'); // Toggle visibility
+    }
+    </script>
+
+    <script>
+    const menuButton = document.getElementById('menu-button');
+    const menu = document.getElementById('menu');
+
+    menuButton.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
     });
     </script>
 
