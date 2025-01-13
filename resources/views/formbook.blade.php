@@ -13,6 +13,15 @@
     style="background-image: linear-gradient(to bottom right, #0C102B, #0E2094);">
     <div class="max-w-3xl w-full bg-white p-8 rounded-lg shadow-lg m-4">
         <h1 class="text-3xl font-semibold text-center text-gray-800 mb-6">Asgar Book</h1>
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
         <form action="{{ route('formbook.store') }}" method="post">
             @csrf
             <div class="mb-4">

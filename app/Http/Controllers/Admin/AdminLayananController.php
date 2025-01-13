@@ -45,6 +45,12 @@ class AdminLayananController extends Controller
 
         $jamBooking = Carbon::parse($request->jam_booking);
 
+        if ($jamBooking->isPast()) {
+            return redirect()->back()
+                ->withErrors(['jam_booking' => 'Jam booking tidak boleh pada waktu yang telah berlalu.'])
+                ->withInput();
+        }
+
         $start = $jamBooking->copy()->subMinutes(30);
         $end = $jamBooking->copy()->addMinutes(30);
 
@@ -74,11 +80,11 @@ class AdminLayananController extends Controller
                 'status_pembayaran' => 'belum',
                 'kursi' => $request->kursi,
             ]);
-            
+
             Notifikasi::create([
                 'user_id' => Auth::id(),
                 'booking_id' => $booking->id,
-                'pesan' => 'Pemesanan layanan Anda berhasil untuk tipe customer ' . $layanan->tipe_customer . 'di kursi'. $layanan->kursi . '.',
+                'pesan' => 'Pemesanan layanan Anda berhasil untuk tipe customer ' . $layanan->tipe_customer . ' di kursi ' . $layanan->kursi . '.',
                 'tanggal_notifikasi' => now(),
                 'status_dibaca' => false,
             ]);
@@ -102,6 +108,14 @@ class AdminLayananController extends Controller
     public function edit($id)
     {
         $layanan = Layanan::findOrFail($id);
+
+        $booking = Booking::where('layanan_id', $layanan->id)->first();
+
+        if ($booking && $booking->status !== 'pending') {
+            return redirect()->route('admin.layanan.index')
+                ->withErrors(['error' => 'Layanan tidak dapat diedit karena status booking sudah ' . $booking->status . '.']);
+        }
+
         return view('admin.layanan.edit', compact('layanan'));
     }
 
@@ -111,19 +125,48 @@ class AdminLayananController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
+        $layanan = Layanan::findOrFail($id);
+
+        $validated = $request->validate([
             'tipe_customer' => 'required|in:anak,dewasa',
             'layanan_tambahan' => 'required|in:cukur_jenggot,cukur_kumis,cukur_jenggot_kumis,tidak_ada',
             'kursi' => 'required|in:satu,dua',
-            'jam_booking' => 'required|date',
-            'harga' => 'required|string',
+            'jam_booking' => 'required|date|after_or_equal:now',
             'deskripsi' => 'nullable|string',
         ]);
 
-        $layanan = Layanan::findOrFail($id);
+        $jamBooking = Carbon::parse($request->jam_booking);
 
-        $layanan->update($request->all());
-        return redirect()->route('admin.layanan.index')->with('success', 'Data berhasil diupdate.');
+        if ($jamBooking->isPast()) {
+            return redirect()->back()
+                ->withErrors(['jam_booking' => 'Jam booking tidak boleh pada waktu yang telah berlalu.'])
+                ->withInput();
+        }
+
+        $hargaAwal = $request->tipe_customer === 'anak' ? 13000 : 15000;
+        $hargaTambahan = $request->layanan_tambahan !== 'tidak_ada' ? 5000 : 0;
+        $validated['harga'] = $hargaAwal + $hargaTambahan;
+
+        $layanan->update($validated);
+
+        $bookings = Booking::where('layanan_id', $layanan->id)->get();
+        foreach ($bookings as $booking) {
+            $booking->update([
+                'kursi' => $validated['kursi'],
+                'jam_booking' => $validated['jam_booking'],
+            ]);
+
+            Notifikasi::create([
+                'user_id' => $booking->user_id,
+                'booking_id' => $booking->id,
+                'pesan' => 'Data booking Anda telah diperbarui. Harap cek detail terbaru.',
+                'tanggal_notifikasi' => now(),
+                'status_dibaca' => false,
+            ]);
+        }
+
+        return redirect()->route('admin.layanan.index')
+            ->with('success', 'Data layanan dan booking terkait berhasil diupdate.');
     }
 
     /**
