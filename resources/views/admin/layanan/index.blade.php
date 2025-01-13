@@ -5,6 +5,16 @@
     </a>
     <hr>
 
+
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <table class="table table-striped table-hover" id="layanans-table" style="width: 850px;">
         <thead>
             <tr>

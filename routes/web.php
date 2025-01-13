@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminBookingController;
+use App\Http\Controllers\Admin\AdminKasirController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\AdminLayananController;
@@ -105,6 +106,15 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(
     Route::get('/admin/riwayat/{id}/edit', [AdminRiwayatTransaksiController::class, 'edit'])->name('admin.riwayat.edit');
     Route::put('/admin/riwayat/{id}', [AdminRiwayatTransaksiController::class, 'update'])->name('admin.riwayat.update');
     Route::delete('/admin/riwayat/{id}', [AdminRiwayatTransaksiController::class, 'destroy'])->name('admin.riwayat.destroy');
+    
+    // CRUD admin kasir
+    Route::get('/admin/kasir', [AdminKasirController::class, 'index'])->name('admin.kasir.index');
+    Route::get('/admin/kasir/create', [AdminKasirController::class, 'create'])->name('admin.kasir.create');
+    Route::post('/admin/kasir', [AdminKasirController::class, 'store'])->name('admin.kasir.store');
+    Route::get('/admin/kasir/{id}', [AdminKasirController::class, 'show'])->name('admin.kasir.show');
+    Route::get('/admin/kasir/{id}/edit', [AdminKasirController::class, 'edit'])->name('admin.kasir.edit');
+    Route::put('/admin/kasir/{id}', [AdminKasirController::class, 'update'])->name('admin.kasir.update');
+    Route::delete('/admin/kasir/{id}', [AdminKasirController::class, 'destroy'])->name('admin.kasir.destroy');
 });
 
 require __DIR__.'/auth.php';

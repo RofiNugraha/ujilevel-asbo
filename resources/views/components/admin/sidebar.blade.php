@@ -13,4 +13,7 @@
 <a class="nav-link {{ request()->is('admin/riwayat') ? 'active' : '' }}" href="/admin/riwayat">
     <span>Riwayat Transaksi</span>
 </a>
+<a class="nav-link {{ request()->is('admin/kasir') ? 'active' : '' }}" href="/admin/kasir">
+    <span>Kasir</span>
+</a>
 {{ $slot }}
