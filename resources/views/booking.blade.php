@@ -1,4 +1,4 @@
-<x-admin.home-layout>
+<x-landing-layout>
     <main class="mt-16 flex justify-center items-center">
         <div class="bg-white rounded-3xl shadow-lg p-6 w-80 flex flex-col items-center">
             <img src="{{ asset('images/book.jpg') }}" alt="Cut and Style Hair" class="rounded-3xl mb-4">
@@ -16,4 +16,4 @@
             @endauth
         </div>
     </main>
-</x-admin.home-layout>
+</x-landing-layout>

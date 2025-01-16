@@ -1,4 +1,4 @@
-<x-admin.home-layout>
+<x-landing-layout>
     <div class="flex items-center justify-center mx-6">
         <div class="container mx-auto mt-12 mb-12 w-full max-w-4xl">
             <div class="bg-[#0e2094] rounded-[39px] shadow-lg p-4 h-[60px] flex items-center">
@@ -42,4 +42,4 @@
             </div>
         </div>
     </div>
-</x-admin.home-layout>
+</x-landing-layout>

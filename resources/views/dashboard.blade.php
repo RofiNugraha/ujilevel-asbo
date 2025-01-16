@@ -1,4 +1,4 @@
-<x-admin.home-layout>
+<x-landing-layout>
     <main class="flex-grow mt-16 mb-16 px-8">
         <!-- Home Section -->
         <section id="home" class="relative px-6">

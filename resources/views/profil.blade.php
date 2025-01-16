@@ -1,4 +1,4 @@
-<x-admin.home-layout>
+<x-landing-layout>
     <main class="bg-gray-100 w-full max-w-4xl min-h-schreen my-16 p-8 rounded-lg shadow-md m-auto">
         <!-- User Info Section -->
         <section class="bg-blue-900 text-white p-6 rounded-t-lg">
@@ -45,4 +45,4 @@
             </form>
         </div>
     </main>
-</x-admin.home-layout>
+</x-landing-layout>
