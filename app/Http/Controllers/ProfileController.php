@@ -21,6 +21,13 @@ class ProfileController extends Controller
         ]);
     }
 
+    public function show()
+    {
+        $user = Auth::user();
+
+        return view('profil', compact('user'));
+    }
+
     /**
      * Update the user's profile information.
      */

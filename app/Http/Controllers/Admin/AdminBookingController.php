@@ -23,6 +23,18 @@ class AdminBookingController extends Controller
         return view('admin.booking.index', compact('booking'));
     }
 
+    // menampilkan overview
+    public function showTodayBookings()
+    {
+        $today = Carbon::today();
+        $bookings = Booking::where('status', 'dibooking')
+            ->whereDate('jam_booking', $today)
+            ->with('user')
+            ->get();
+
+        return view('overview', compact('bookings'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */

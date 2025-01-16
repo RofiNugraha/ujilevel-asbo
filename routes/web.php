@@ -64,6 +64,12 @@ Route::middleware('auth')->group(function () {
     // formbook
     Route::get('/formbook', [CekLoginController::class, 'form'])->name('form');
     Route::post('/formbook', [CekLoginController::class, 'store'])->name('formbook.store');
+
+    // overview
+    Route::get('/overview', [AdminBookingController::class, 'showTodayBookings'])->name('overview');
+
+    // profil
+    Route::get('/profil', [ProfileController::class, 'show'])->name('profil');
     });
     
 });
