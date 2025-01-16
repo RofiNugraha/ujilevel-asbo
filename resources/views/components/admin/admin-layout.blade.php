@@ -53,21 +53,25 @@
                 <div class="sb-sidenav-menu">
                     <div class="nav text-white">
                         <div class="sb-sidenav-menu-heading">Core</div>
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="{{ route('dashboard') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="{{ route('admin.booking.index') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Booking
                         </a>
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="{{ route('admin.layanan.index') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            Dashboard
+                            Layanan
                         </a>
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="{{ route('admin.kasir.index') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            Dashboard
+                            Kasir
+                        </a>
+                        <a class="nav-link" href="{{ route('admin.riwayat.index') }}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Riwayat Booking
                         </a>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
                             data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
