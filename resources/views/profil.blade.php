@@ -13,8 +13,7 @@
         <!-- Personal Details Section -->
         <section class="mt-4 px-4">
             <h3 class="text-2xl font-bold">Personal Details</h3>
-            <p class="mt-2">Phone: 0812-3456-7890</p>
-            <p>Address: Jl. Merdeka No. 123, Jakarta</p>
+            <p class="mt-2">{{ $user->nomor_hp }}</p>
         </section>
         <hr class="border-t mt-6">
 
