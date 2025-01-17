@@ -37,7 +37,7 @@
                                             <td>{{ $item->status_pembayaran }}</td>
                                             <td>
                                                 <a href="{{ route('admin.booking.edit', $item) }}"
-                                                    class="btn btn-warning btn-sm">Edit</a>
+                                                    class="btn btn-success btn-sm">Process</a>
                                                 <button class="btn btn-danger btn-sm"
                                                     onclick="confirmDelete('{{ $item->id }}')">Delete</button>
                                             </td>

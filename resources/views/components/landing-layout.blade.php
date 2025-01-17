@@ -40,7 +40,7 @@
             <div class="max-w-7xl mx-auto flex items-center justify-between py-4 px-6">
                 <img src="{{ asset('images/logo.png')}}" alt="ASBO Logo" class="w-[50px]">
                 <div class="hidden lg:flex space-x-6 text-lg font-medium text-gray-900">
-                    <a href="{{ route('/') }}"
+                    <a href="{{ route('dashboard') }}"
                         class="nav-item text-gray-700 hover:text-gray-900 hover:underline">Home</a>
                     <a href="{{ route('about') }}"
                         class="nav-item text-gray-700 hover:text-gray-900 hover:underline">About</a>
@@ -64,8 +64,8 @@
                             d="M4 6h16M4 12h16m-7 6h7" />
                     </svg>
                 </button>
-                <a class="bg-gray-200 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-300 hidden lg:inline-block"
-                    href="{{ route('login') }}">Login</a>
+                <a href="{{ route('profil') }}"
+                    class="block bg-gray-200 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-300">Profil</a>
             </div>
             <div id="menu"
                 class="hidden flex-col space-y-4 text-lg font-medium text-gray-900 lg:hidden bg-white shadow-lg p-4">

@@ -56,4 +56,4 @@
     </script>
 
     </body>
-</x-admin.home-layout>
+</x-landing-layout>

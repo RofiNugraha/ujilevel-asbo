@@ -3,7 +3,7 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container mt-4">
-                    <h2>Edit Booking</h2>
+                    <h2>Konfirmasi Booking</h2>
                     <form action="{{ route('admin.booking.update', $booking->id) }}" method="POST">
                         @csrf
                         @method('PUT')
