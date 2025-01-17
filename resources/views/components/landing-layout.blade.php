@@ -73,8 +73,8 @@
                 <a href="{{ route('about') }}" class="block hover:text-gray-900">About</a>
                 <a href="#{{ route('overview') }}" class="block hover:text-gray-900">Overview</a>
                 <a href="{{ route('booking') }}" class="block hover:text-gray-900">Booking</a>
-                <a href="{{ route('login') }}"
-                    class="block bg-gray-200 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-300">Login</a>
+                <a href="{{ route('profil') }}"
+                    class="block bg-gray-200 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-300">Profil</a>
             </div>
         </header>
         {{ $slot }}
