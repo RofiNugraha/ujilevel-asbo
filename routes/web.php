@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\AdminLayananController;
 use App\Http\Controllers\Admin\AdminNotifikasiController;
 use App\Http\Controllers\CekLoginController;
 use App\Http\Controllers\Admin\AdminRiwayatTransaksiController;
+use App\Http\Controllers\UpdateProfileController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -70,6 +71,7 @@ Route::middleware('auth')->group(function () {
 
     // profil
     Route::get('/profil', [ProfileController::class, 'show'])->name('profil');
+    Route::put('/profil', [UpdateProfileController::class, 'updateProfile'])->name('profil.update');
     });
     
 });

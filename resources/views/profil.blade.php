@@ -2,7 +2,7 @@
     <main class="bg-gray-100 w-full max-w-4xl min-h-schreen my-16 p-8 rounded-lg shadow-md m-auto">
         <!-- User Info Section -->
         <section class="bg-blue-900 text-white p-6 rounded-t-lg">
-            <h2 class="text-2xl font-semibold text-center">User Profile</h2>
+            <h2 class="text-2xl font-semibold text-center">Profile</h2>
         </section>
         <section class="flex flex-col items-center mt-4">
             <h3 class="text-2xl font-bold mt-4">{{ $user->name }}</h3>
@@ -13,7 +13,7 @@
         <!-- Personal Details Section -->
         <section class="mt-4 px-4">
             <h3 class="text-2xl font-bold">Personal Details</h3>
-            <p class="mt-2">{{ $user->nomor_hp }}</p>
+            <p class="mt-2">No. Handphone: {{ $user->nomor_hp }}</p>
         </section>
         <hr class="border-t mt-6">
 
