@@ -8,98 +8,119 @@
     <title>ASBO - Asgar System Booking Online</title>
     <script src="https://cdn.tailwindcss.com/3.2.0"></script>
     <style>
-    <style>.nav-item {
-        position: relative;
-        display: inline-block;
-        padding-bottom: 0.5rem;
-        transition: all 0.3s ease-in-out;
+    /* Initial navbar style - transparent */
+    .navbar {
+        transition: background-color 0.3s ease-in-out;
     }
 
-    .nav-item::after {
+    .navbar.transparent {
+        background-color: transparent;
+    }
+
+    .navbar.solid {
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    /* Styling for the image with a dark overlay */
+    .image-container {
+        height: 550px;
+        background: url('{{ asset('images/asgar.jpg') }}') no-repeat center center;
+        background-size: cover;
+        position: relative;
+    }
+
+    .image-container::after {
         content: '';
         position: absolute;
-        width: 0;
-        height: 2px;
-        bottom: 0;
+        top: 0;
         left: 0;
-        background-color: #0E2094;
-        transition: width 0.3s ease-in-out;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+        /* Dark overlay with 40% opacity */
+        z-index: 1;
     }
 
-    .nav-item:hover::after {
-        width: 100%;
+    .image-container>* {
+        position: relative;
+        z-index: 2;
     }
-    </style>
-
     </style>
 </head>
 
-<body class="flex flex-col min-h-screen" style="background-image: linear-gradient(to bottom right, #0C102B, #0E2094);">
-    <main class="flex-grow">
-        <header class="bg-white shadow-md">
-            <div class="max-w-7xl mx-auto flex items-center justify-between py-4 px-6">
-                <img src="{{ asset('images/logo.png')}}" alt="ASBO Logo" class="w-[50px]">
-                <div class="hidden lg:flex space-x-6 text-lg font-medium text-gray-900">
-                    <a href="{{ route('dashboard') }}"
-                        class="nav-item text-gray-700 hover:text-gray-900 hover:underline">Home</a>
-                    <a href="{{ route('about') }}"
-                        class="nav-item text-gray-700 hover:text-gray-900 hover:underline">About</a>
-                    <a href="{{ route('overview') }}"
-                        class="nav-item text-gray-700 hover:text-gray-900 hover:underline">Overview</a>
-                    <a href="{{ route('booking') }}"
-                        class="nav-item text-gray-700 hover:text-gray-900 hover:underline">Booking</a>
-                    <button class="nav-item relative text-gray-700 hover:text-gray-900">
+<body class="flex flex-col min-h-screen" style="background-color: black;">
+    <header class="navbar transparent fixed w-full sticky top-0 z-10 shadow-md">
+        <div class="max-w-7xl mx-auto flex items-center justify-between py-4 px-6">
+            <img src="{{ asset('images/logogold.png')}}" alt="ASBO Logo" class="w-[80px]">
+            <div class="hidden lg:flex space-x-6 text-lg font-medium text-gray-900">
+                <a href="{{ route('dashboard') }}"
+                    class="nav-item text-gray-400 hover:text-[gold] hover:underline">Home</a>
+                <a href="{{ route('about') }}"
+                    class="nav-item text-gray-400 hover:text-[gold] hover:underline">About</a>
+                <a href="{{ route('overview') }}"
+                    class="nav-item text-gray-400 hover:text-[gold] hover:underline">Overview</a>
+                <a href="{{ route('booking') }}"
+                    class="nav-item text-gray-400 hover:text-[gold] hover:underline">Booking</a>
+                <a href="{{ route('notif') }}">
+                    <button class="nav-item relative text-gray-400 hover:text-[gold]">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-5-5.917V4a1 1 0 10-2 0v1.083A6.002 6.002 0 006 11v3.159c0 .417-.152.823-.405 1.136L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                         </svg>
                     </button>
-                </div>
-
-                <button id="menu-button" class="lg:hidden text-gray-700 hover:text-gray-900">
+                </a>
+            </div>
+            <a href="{{ route('profil') }}"
+                class="block bg-gray-200 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-300">Profil</a>
+            <button id="menu-button" class="lg:hidden text-gray-700 hover:text-gray-900">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </div>
+        <div id="menu"
+            class="hidden flex-col space-y-4 text-lg font-medium text-gray-900 lg:hidden bg-white shadow-lg p-4">
+            <a href="{{ route('dashboard') }}" class="block text-gray-700 hover:text-gray-900">Home</a>
+            <a href="{{ route('about') }}" class="block hover:text-gray-900">About</a>
+            <a href="#{{ route('overview') }}" class="block hover:text-gray-900">Overview</a>
+            <a href="{{ route('booking') }}" class="block hover:text-gray-900">Booking</a>
+            <a href="{{ route('notif') }}">
+                <button class="nav-item relative text-gray-400 hover:text-[gold]">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16m-7 6h7" />
+                            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-5-5.917V4a1 1 0 10-2 0v1.083A6.002 6.002 0 006 11v3.159c0 .417-.152.823-.405 1.136L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                     </svg>
                 </button>
-                <a href="{{ route('profil') }}"
-                    class="block bg-gray-200 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-300">Profil</a>
-            </div>
-            <div id="menu"
-                class="hidden flex-col space-y-4 text-lg font-medium text-gray-900 lg:hidden bg-white shadow-lg p-4">
-                <a href="{{ route('/') }}" class="block text-gray-700 hover:text-gray-900">Home</a>
-                <a href="{{ route('about') }}" class="block hover:text-gray-900">About</a>
-                <a href="#{{ route('overview') }}" class="block hover:text-gray-900">Overview</a>
-                <a href="{{ route('booking') }}" class="block hover:text-gray-900">Booking</a>
-                <a href="{{ route('profil') }}"
-                    class="block bg-gray-200 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-300">Profil</a>
-            </div>
-        </header>
+            </a>
+            <a href="{{ route('profil') }}"
+                class="block bg-gray-200 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-300">Profil</a>
+        </div>
+    </header>
+
+    <!-- Image Section -->
+    <div class="image-container"></div>
+
+    <main class="flex-grow">
         {{ $slot }}
     </main>
 
     <script>
-    document.querySelectorAll('.nav-item').forEach(item => {
-        item.addEventListener('mouseover', () => {
-            item.querySelector('::after').style.width = '100%';
-        });
-
-        item.addEventListener('mouseout', () => {
-            item.querySelector('::after').style.width = '0';
-        });
+    // JavaScript to handle scroll event and toggle navbar background
+    window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 0) {
+            navbar.classList.remove('transparent');
+            navbar.classList.add('solid');
+        } else {
+            navbar.classList.remove('solid');
+            navbar.classList.add('transparent');
+        }
     });
-    </script>
 
-    <script>
-    function toggleDropdown(id) {
-        const dropdown = document.getElementById(id);
-        dropdown.classList.toggle('hidden'); // Toggle visibility
-    }
-    </script>
-
-    <script>
+    // JavaScript to toggle the navbar menu on mobile screens
     const menuButton = document.getElementById('menu-button');
     const menu = document.getElementById('menu');
 
@@ -108,11 +129,40 @@
     });
     </script>
 
-
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-6 mt-auto">
-        <div class="max-w-7xl mx-auto text-center">
-            <p>© 2025 ASBO. All Rights Reserved.</p>
+    <footer class="bg-black text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Logo and Description -->
+                <div class="flex flex-col items-center md:items-start">
+                    <img src="{{ asset('images/logogold.png')}}" alt="ASBO Logo" class="w-[150px]">
+                    <p class="mt-2 text-gray-400 text-center md:text-left">
+                        Your trusted partner for financial management solutions.
+                    </p>
+                </div>
+                <!-- Links Section -->
+                <div class="flex flex-col items-center md:items-start">
+                    <h2 class="text-lg text-[gold] font-semibold">Quick Links</h2>
+                    <ul class="mt-4 space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Services</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <!-- Social Media Section -->
+                <div class="flex flex-col items-center md:items-start">
+                    <h2 class="text-lg text-[gold] font-semibold">Follow Us</h2>
+                    <div class="flex mt-4 space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <!-- Social Media SVG Icons -->
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 border-t border-gray-700 pt-4 text-center">
+                <p class="text-sm text-gray-500">© 2025 ASBO. All Rights Reserved.</p>
+            </div>
         </div>
     </footer>
 </body>

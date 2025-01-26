@@ -1,4 +1,8 @@
 <x-landing-layout>
+    <h1
+        class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 mt-20 flex justify-center items-center animate-pulse">
+        WELCOME!
+    </h1>
     <main class="flex-grow mt-16 mb-16 px-8">
         <!-- Home Section -->
         <section id="home" class="relative px-6">

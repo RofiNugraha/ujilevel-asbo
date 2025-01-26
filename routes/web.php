@@ -51,6 +51,10 @@ Route::get('/viewbooking', function () {
     return view('viewbooking');
 })->name('viewbooking');
 
+Route::get('/notif', function () {
+    return view('notifikasi');
+})->name('notif');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
