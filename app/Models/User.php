@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -20,7 +21,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'nomor_hp',
+        'phone',
         'password',
         'usertype',
     ];
@@ -51,5 +52,17 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function bookings(): HasMany {
+        return $this->hasMany(Booking::class);
+    }
+
+    public function carts(): HasMany {
+        return $this->hasMany(Cart::class);
+    }
+
+    public function checkouts(): HasMany {
+        return $this->hasMany(Checkout::class);
     }
 }

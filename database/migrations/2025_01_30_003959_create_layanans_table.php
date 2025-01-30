@@ -13,12 +13,9 @@ return new class extends Migration
     {
         Schema::create('layanans', function (Blueprint $table) {
             $table->id();
-            $table->enum('tipe_customer', ['anak', 'dewasa']);
-            $table->enum('layanan_tambahan', ['cukur_jenggot', 'cukur_kumis', 'cukur_jenggot_kumis', 'tidak_ada']);
-            $table->enum('kursi', ['satu', 'dua']);
-            $table->dateTime('jam_booking');
-            $table->decimal('harga');
+            $table->string('nama_layanan');
             $table->text('deskripsi')->nullable();
+            $table->decimal('harga', 10, 2);
             $table->timestamps();
         });
     }

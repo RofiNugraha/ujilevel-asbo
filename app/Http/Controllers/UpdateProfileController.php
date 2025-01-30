@@ -17,14 +17,14 @@ class UpdateProfileController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . Auth::id(),
-            'nomor_hp' => 'nullable|string|max:15',
+            'phone' => 'nullable|string|max:15',
         ]);
 
         $user = Auth::user();
 
         $user->name = $request->input('name');
         $user->email = $request->input('email');
-        $user->nomor_hp = $request->input('nomor_hp');
+        $user->phone = $request->input('phone');
 
 
         if ($user instanceof User) {

@@ -4,25 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Layanan extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'tipe_customer',
-        'layanan_tambahan',
-        'kursi',
-        'jam_booking',
-        'harga',
-        'deskripsi',
+        'nama_layanan', 
+        'deskripsi', 
+        'harga'
     ];
 
-    public function bookings() {
+    public function bookings(): HasMany {
         return $this->hasMany(Booking::class);
     }
 
-    public function riwayatTransaksi() {
-        return $this->hasMany(RiwayatTransaksi::class);
+    public function cartItems(): HasMany {
+        return $this->hasMany(CartItem::class);
     }
 }
