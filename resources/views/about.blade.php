@@ -9,7 +9,7 @@
             <img src="{{ asset('images/tempat.jpg') }}" alt="Barbershop Image"
                 class="md:w-1/2 max-w-[485px] max-h-[361px] rounded-lg shadow-lg">
             <div class="md:w-1/2 text-center md:text-left">
-                <h1 class="text-4xl font-bold mb-4">Asgar System Booking Online</h1>
+                <h1 class="text-4xl font-bold mb-4 text-[gold]">Asgar System Booking Online</h1>
                 <p class="text-lg leading-relaxed">Asgar System Booking Online merupakan solusi modern untuk memesan
                     layanan barbershop dengan mudah dan praktis. Kami hadir untuk memberikan pengalaman baru dalam
                     merawat penampilan Anda dengan teknologi yang menghubungkan Anda langsung dengan layanan potong
@@ -27,7 +27,7 @@
             <img src="{{ asset('images/tempat.jpg') }}" alt="Barbershop Image"
                 class="md:w-1/2 max-w-[485px] max-h-[361px] rounded-lg shadow-lg">
             <div class="md:w-1/2 text-center md:text-left">
-                <h1 class="text-4xl font-bold mb-4">Asgar System Booking Online</h1>
+                <h1 class="text-4xl font-bold mb-4 text-[gold]">Asgar System Booking Online</h1>
                 <p class="text-lg leading-relaxed">Asgar System Booking Online merupakan solusi modern untuk memesan
                     layanan barbershop dengan mudah dan praktis. Kami hadir untuk memberikan pengalaman baru dalam
                     merawat penampilan Anda dengan teknologi yang menghubungkan Anda langsung dengan layanan potong
