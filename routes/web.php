@@ -13,6 +13,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\LayananController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UpdateProfileController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Models\Layanan;
@@ -82,9 +83,6 @@ Route::middleware('auth')->group(function () {
 
     //layanan
     Route::get('/booking', [LayananController::class, 'index'])->name('booking');
-    
-    //produk
-    Route::get('/booking', [LayananController::class, 'index'])->name('booking');
 
     // profil
     Route::get('/profil', [ProfileController::class, 'show'])->name('profil');
@@ -92,8 +90,9 @@ Route::middleware('auth')->group(function () {
 
     // Cart Routes
     Route::get('cart', [CartController::class, 'index'])->name('cart.index');
-    Route::post('cart/{layananId}', [CartController::class, 'addItem'])->name('cart.addItem');
+    Route::post('cart/addItem', [CartController::class, 'addItem'])->name('cart.addItem');
     Route::get('cart/total/{cartId}', [CartController::class, 'totalPrice'])->name('cart.totalPrice');
+    Route::delete('/cart/remove/{cartItem}', [CartController::class, 'removeItem'])->name('cart.removeItem');
 
     // Checkout Routes
     Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout.index');

@@ -8,51 +8,32 @@
         <div class="bg-white rounded-3xl shadow-lg w-full max-w-4xl p-8">
             <div class="flex justify-between items-center border-b pb-4 mb-4">
                 <h2 class="text-2xl font-semibold">Your Cart</h2>
-                <p class="text-gray-500">3 items</p>
+                <p class="text-gray-500">{{ $cartItems->count() }} items</p>
             </div>
             <div class="space-y-6">
-                <!-- Item 1 -->
+                @forelse ($cartItems as $item)
                 <div class="flex items-center justify-between border-b pb-4">
-                    <img src="{{ asset('images/book.jpg') }}" alt="Item Image"
+                    <img src="{{ asset('storage/' . $item->layanan->gambar) }}" alt="Item Image"
                         class="w-20 h-20 object-cover rounded-xl">
                     <div class="flex-1 ml-4">
-                        <h3 class="font-semibold text-lg">Item Name</h3>
-                        <p class="text-gray-500">Description of the item</p>
+                        <h3 class="font-semibold text-lg">{{ $item->layanan->nama_layanan }}</h3>
+                        <p class="text-gray-500">{{ $item->layanan->deskripsi }}</p>
+                        <p class="text-gray-700">Qty: {{ $item->quantity }}</p>
                     </div>
-                    <p class="font-semibold text-xl text-gray-800 mr-2">Rp. 15.000,00</p>
-                    <button
-                        class="bg-red-500 text-white px-4 py-2 rounded-full shadow-md hover:bg-red-600 transition">
-                        Remove
-                    </button>
+                    <p class="font-semibold text-xl text-gray-800 mr-2">Rp.
+                        {{ number_format($item->subtotal, 0, ',', '.') }}</p>
+                    <form action="{{ route('cart.removeItem', $item->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                            class="bg-red-500 text-white px-4 py-2 rounded-full shadow-md hover:bg-red-600 transition">
+                            Remove
+                        </button>
+                    </form>
                 </div>
-                <!-- Item 2 -->
-                <div class="flex items-center justify-between border-b pb-4">
-                    <img src="{{ asset('images/book.jpg') }}" alt="Item Image"
-                        class="w-20 h-20 object-cover rounded-xl">
-                    <div class="flex-1 ml-4">
-                        <h3 class="font-semibold text-lg">Item Name</h3>
-                        <p class="text-gray-500">Description of the item</p>
-                    </div>
-                    <p class="font-semibold text-xl text-gray-800 mr-2">Rp. 20.000,00</p>
-                    <button
-                        class="bg-red-500 text-white px-4 py-2 rounded-full shadow-md hover:bg-red-600 transition">
-                        Remove
-                    </button>
-                </div>
-                <!-- Item 3 -->
-                <div class="flex items-center justify-between border-b pb-4">
-                    <img src="{{ asset('images/book.jpg') }}" alt="Item Image"
-                        class="w-20 h-20 object-cover rounded-xl">
-                    <div class="flex-1 ml-4">
-                        <h3 class="font-semibold text-lg">Item Name</h3>
-                        <p class="text-gray-500">Description of the item</p>
-                    </div>
-                    <p class="font-semibold text-xl text-gray-800 mr-2">Rp. 25.000,00</p>
-                    <button
-                        class="bg-red-500 text-white px-4 py-2 rounded-full shadow-md hover:bg-red-600 transition">
-                        Remove
-                    </button>
-                </div>
+                @empty
+                <p class="text-center text-gray-500">Your cart is empty.</p>
+                @endforelse
             </div>
         </div>
 
@@ -60,18 +41,20 @@
         <div class="bg-white rounded-3xl shadow-lg w-full max-w-4xl mt-8 p-6">
             <div class="flex justify-between items-center">
                 <h3 class="font-semibold text-lg">Total Price:</h3>
-                <p class="font-bold text-2xl text-gray-800">Rp. 60.000,00</p>
+                <p class="font-bold text-2xl text-gray-800">Rp.
+                    {{ number_format($cartItems->sum('subtotal'), 0, ',', '.') }}</p>
             </div>
             <div class="flex mt-6 gap-4">
                 <button
                     class="bg-green-500 text-white font-semibold px-6 py-3 rounded-full shadow-md hover:bg-green-600 transition w-full">
                     Proceed to Checkout
                 </button>
-                <button
-                    class="bg-gray-200 text-gray-700 font-semibold px-6 py-3 rounded-full shadow-md hover:bg-gray-300 transition w-full">
+                <a href=""
+                    class="bg-gray-200 text-gray-700 font-semibold px-6 py-3 rounded-full shadow-md hover:bg-gray-300 transition w-full text-center">
                     Continue Shopping
-                </button>
+                </a>
             </div>
+        </div>v>
         </div>
     </main>
 </x-landing-layout>
