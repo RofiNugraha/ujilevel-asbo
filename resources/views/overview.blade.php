@@ -108,7 +108,7 @@
                                         <th class="py-4 border-b-2 border-gray-300">Jam Booking</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody> 
                                     @forelse($bookings as $booking)
                                     <tr class="border-b border-gray-300">
                                         <td class="p-4">{{ $loop->iteration }}</td>
