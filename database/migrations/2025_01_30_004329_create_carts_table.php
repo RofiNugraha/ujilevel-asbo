@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('bookings', function (Blueprint $table) {
-            $table->enum('status', ['dibooking', 'selesai', 'dibatalkan', 'pending'])->change();
+        Schema::create('carts', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('bookings', function (Blueprint $table) {
-            $table->enum('status', ['dibooking', 'selesai', 'dibatalkan'])->change();
-        });
+        Schema::dropIfExists('carts');
     }
 };
