@@ -3,9 +3,9 @@
     <div id="layoutSidenav">
         <div id="layoutSidenav_content">
             <main>
-                <div class="bg-white mt-8 mx-8 p-8 rounded-lg shadow-md">
-                    <h1 class="text-2xl font-medium text-black">Halo DEAR</h1>
-                    <p class="text-2xl font-light text-black mt-4">
+                <div class="bg-white mt-8 mx-8 rounded-lg shadow-md">
+                    <h1 class="text-2xl font-medium m-2 text-black">Halo DEAR</h1>
+                    <p class="text-2xl font-light text-black m-2">
                         Terima kasih atas pesanan anda!, Kami ...
                     </p>
                 </div>
@@ -20,9 +20,9 @@
     <div id="layoutSidenav">
         <div id="layoutSidenav_content">
             <main>
-                <div class="bg-white mt-8 mx-8 p-8 rounded-lg shadow-md">
-                    <h1 class="text-2xl font-medium text-black">Halo DEAR</h1>
-                    <p class="text-2xl font-light text-black mt-4">
+                <div class="bg-white mt-8 mx-8 rounded-lg shadow-md">
+                    <h1 class="text-2xl font-medium m-2 text-black">Halo DEAR</h1>
+                    <p class="text-2xl font-light text-black m-2">
                         Terima kasih atas pesanan anda!, Kami ...
                     </p>
                 </div>

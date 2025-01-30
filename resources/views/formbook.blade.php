@@ -11,6 +11,10 @@
 
 <body class="bg-gradient-to-b flex items-center justify-center min-h-screen"
     style="background-image: linear-gradient(to bottom right, #0C102B, #0E2094);">
+    <div class="w-full text-center mb-6">
+        <h2 class="text-4xl font-bold text-[gold]">Book an Appointment</h2>
+        <p class="mt-2 text-gray-300">Choose your service and preferred time.</p>
+    </div>
     <div class="max-w-3xl w-full bg-white p-8 rounded-lg shadow-lg m-4">
         <h1 class="text-3xl font-semibold text-center text-gray-800 mb-6">Asgar Book</h1>
         @if ($errors->any())

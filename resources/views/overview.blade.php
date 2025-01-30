@@ -4,9 +4,8 @@
     0% {
         transform: translateX(100%);
     }
-
     100% {
-        transform: translateX(-100%);
+        transform: translateX(-70vw);
     }
 }
 
@@ -14,16 +13,60 @@
     display: inline-block;
     white-space: nowrap;
     overflow: hidden;
-    animation: marquee 10s linear infinite;
+    animation: marquee 20s linear infinite;
+    background: linear-gradient(to left, #0e2094, #1a3cb3);
+    color: gold;
+    padding: 10px;
+    border-radius: 20px;
+    position: absolute;
+    right: 0;
 }
 
 .marquee-container {
     width: 100%;
     overflow: hidden;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.image-container {
+    height: 550px;
+    background: url('{{ asset('images/asgar.jpg') }}') no-repeat center center;
+    background-size: cover;
+    position: relative;
+}
+
+.image-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1;
+}
+
+.image-container>* {
+    position: relative;
+    z-index: 2;
 }
 </style>
 <x-landing-layout>
+    <div class="image-container flex items-center justify-center text-center px-6 md:px-12">
+        <div class="max-w-2xl">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-yellow-500 animate-pulse">
+                Welcome to Our Barbershop!
+            </h1>
+            <p class="mt-4 text-lg md:text-xl text-gray-200">Experience the best haircut and grooming services.</p>
+            <a href="#booking"
+                class="mt-6 inline-block px-6 py-3 text-lg font-semibold text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700">
+                Book an Appointment
+            </a>
+        </div>
+    </div>
     <h1
         class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 mt-20 flex justify-center items-center animate-pulse">
         OVERVIEW BOOKING!
@@ -31,7 +74,7 @@
     <div class="flex items-center justify-center mx-6">
         <div class="container mx-auto mt-12 mb-12 w-full max-w-4xl">
             <div class="bg-[#ffff] rounded-[39px] shadow-lg p-4 h-[60px] flex items-center marquee-container">
-                <h1 class="text-1xl px-4 font-semibold text-[gold] marquee">
+                <h1 class="text-1xl px-4 font-semibold marquee">
                     List Booking: {{ \Carbon\Carbon::today()->format('l, d-m-Y') }}
                 </h1>
             </div>
@@ -78,7 +121,6 @@
                                         <td colspan="4" class="text-center p-4">Tidak ada booking hari ini.</td>
                                     </tr>
                                     @endforelse
-                                    <!-- Add more rows as needed -->
                                 </tbody>
                             </table>
                         </div>
@@ -89,64 +131,3 @@
     </div>
 </x-landing-layout>
 @endauth
-
-@guest
-<x-admin.home-layout>
-    <div class="flex items-center justify-center mx-6">
-        <div class="container mx-auto mt-12 mb-12 w-full max-w-4xl">
-            <div class="bg-[#0e2094] rounded-[39px] shadow-lg p-4 h-[60px] flex items-center">
-                <h1 class="text-1xl px-4 font-semibold text-white">
-                    List Booking: {{ \Carbon\Carbon::today()->format('l, d-m-Y') }}
-                </h1>
-            </div>
-            <div class="flex justify-center mt-6">
-                <div
-                    class="card mb-4 shadow-2xl rounded-lg overflow-hidden w-full bg-white transform hover:-translate-y-1 hover:shadow-3xl transition">
-                    <div class="card-header bg-gray-100 text-[#0e2094] font-bold flex items-center justify-between p-4">
-                        <span><i class="fas fa-table me-1"></i> Skill List</span>
-                        <button class="bg-[#0e2094] text-white px-4 py-2 rounded hover:bg-[#0c1a7a] transition">
-                            <i class="fas fa-search"></i> Search
-                        </button>
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table class="table-auto w-full text-center mb-0 shadow-lg">
-                                <thead class="bg-[#fffff] text-[#0e2094]">
-                                    <tr class="">
-                                        <th class="py-4">No.</th>
-                                        <th class="py-4">Nama</th>
-                                        <th class="py-4">Kursi</th>
-                                        <th class="py-4">Jam Booking</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white">
-                                    @forelse($bookings as $booking)
-                                    <tr class="bg-white border-b-2 border-black">
-                                        <td
-                                            class="p-4 text-2xl font-normal text-black text-center border-r-2 border-black">
-                                            {{ $loop->iteration }}</td>
-                                        <td
-                                            class="p-4 text-2xl font-normal text-black text-center border-r-2 border-black">
-                                            {{ $booking->user->name }}</td>
-                                        <td
-                                            class="p-4 text-2xl font-normal text-black text-center border-r-2 border-black">
-                                            {{ $booking->kursi }}</td>
-                                        <td class="p-4 text-2xl font-normal text-black text-center">
-                                            {{ $booking->jam_booking }}</td>
-                                    </tr>
-                                    @empty
-                                    <tr>
-                                        <td colspan="4" class="text-center p-4">Tidak ada booking hari ini.</td>
-                                    </tr>
-                                    @endforelse
-                                    <!-- Add more rows as needed -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</x-admin.home-layout>
-@endguest

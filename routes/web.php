@@ -55,6 +55,10 @@ Route::get('/notif', function () {
     return view('notifikasi');
 })->name('notif');
 
+Route::get('/cart', function () {
+    return view('cart');
+})->name('cart');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
