@@ -13,7 +13,8 @@ class Layanan extends Model
     protected $fillable = [
         'nama_layanan', 
         'deskripsi', 
-        'harga'
+        'harga',
+        'gambar',
     ];
 
     public function bookings(): HasMany {

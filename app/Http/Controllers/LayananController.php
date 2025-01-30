@@ -7,16 +7,9 @@ use Illuminate\Http\Request;
 
 class LayananController extends Controller
 {
-    public function store(Request $request)
+    public function index()
     {
-        $request->validate([
-            'nama_layanan' => 'required|string',
-            'deskripsi' => 'required|string',
-            'harga' => 'required|numeric|min:0',
-        ]);
-
-        Layanan::create($request->all());
-
-        return redirect()->route('layanan.index')->with('success', 'Layanan berhasil ditambahkan!');
+        $layanans = Layanan::all();
+        return view('booking', compact('layanans'));
     }
 }

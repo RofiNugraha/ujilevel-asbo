@@ -1,9 +1,9 @@
-<h1>Create Layanan</h1>
-<a href="{{ route('admin.layanan.index') }}">back</a>
-<form action="{{ route('admin.layanan.store') }}" method="POST" enctype="multipart/form-data">
+<h1>Create produk</h1>
+<a href="{{ route('admin.produk.index') }}">back</a>
+<form action="{{ route('admin.produk.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
-    <label for="nama_layanan">Nama Layanan</label>
-    <input type="text" name="nama_layanan" id="nama_layanan" required>
+    <label for="nama_produk">Nama produk</label>
+    <input type="text" name="nama_produk" id="nama_produk" required>
 
     <label for="deskripsi">Deskripsi</label>
     <textarea name="deskripsi" id="deskripsi"></textarea>

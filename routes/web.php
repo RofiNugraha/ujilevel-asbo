@@ -6,11 +6,16 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\AdminLayananController;
 use App\Http\Controllers\Admin\AdminNotifikasiController;
+use App\Http\Controllers\Admin\AdminProdukController;
 use App\Http\Controllers\CekLoginController;
 use App\Http\Controllers\Admin\AdminRiwayatTransaksiController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\LayananController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\UpdateProfileController;
 use App\Http\Middleware\AdminMiddleware;
+use App\Models\Layanan;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -71,12 +76,28 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::middleware(['auth'])->group(function () {
 
-    //input layanan
-    Route::post('/', [LayananController::class, 'store'])->name('layanan.store');
+    //layanan
+    Route::get('/booking', [LayananController::class, 'index'])->name('booking');
+    
+    //produk
+    Route::get('/booking', [LayananController::class, 'index'])->name('booking');
 
     // profil
     Route::get('/profil', [ProfileController::class, 'show'])->name('profil');
     Route::put('/profil', [UpdateProfileController::class, 'updateProfile'])->name('profil.update');
+
+    // Cart Routes
+    Route::get('cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('cart/{layananId}', [CartController::class, 'addItem'])->name('cart.addItem');
+    Route::get('cart/total/{cartId}', [CartController::class, 'totalPrice'])->name('cart.totalPrice');
+
+    // Checkout Routes
+    Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+    Route::get('checkout/{id}', [CheckoutController::class, 'show'])->name('checkout.show');
+
+    // Payment Routes
+    Route::post('payment/{checkoutId}', [PaymentController::class, 'pay'])->name('payment.pay');
     });
     
 });
@@ -92,6 +113,15 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(
     Route::get('/admin/layanan/{id}/edit', [AdminLayananController::class, 'edit'])->name('admin.layanan.edit');
     Route::put('/admin/layanan/{id}', [AdminLayananController::class, 'update'])->name('admin.layanan.update');
     Route::delete('/admin/layanan/{layanan}', [AdminLayananController::class, 'destroy'])->name('admin.layanan.destroy');
+
+    // produk
+    Route::get('/admin/produk', [AdminProdukController::class, 'index'])->name('admin.produk.index');
+    Route::get('/admin/produk/create', [AdminProdukController::class, 'create'])->name('admin.produk.create');
+    Route::post('/admin/produk', [AdminProdukController::class, 'store'])->name('admin.produk.store');
+    Route::get('/admin/produk/{produk}', [AdminProdukController::class, 'show'])->name('admin.produk.show');
+    Route::get('/admin/produk/{id}/edit', [AdminProdukController::class, 'edit'])->name('admin.produk.edit');
+    Route::put('/admin/produk/{id}', [AdminProdukController::class, 'update'])->name('admin.produk.update');
+    Route::delete('/admin/produk/{produk}', [AdminProdukController::class, 'destroy'])->name('admin.produk.destroy');
     
     // CRUD admin kasir
     Route::get('/admin/kasir', [AdminKasirController::class, 'index'])->name('admin.kasir.index');
