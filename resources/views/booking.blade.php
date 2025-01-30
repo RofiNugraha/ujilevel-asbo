@@ -51,7 +51,7 @@
                 @auth
                 <button
                     class="bg-blue-600 mt-4 mb-2 text-white rounded-full px-6 py-2 shadow-md transform hover:translate-y-1 hover:shadow-lg transition-all duration-300">
-                    <a href="{{ route('form') }}">Book Now</a>
+                    <a href="{{ route('form') }}">Add to Cart</a>
                 </button>
                 @else
                 <button

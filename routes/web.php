@@ -60,6 +60,10 @@ Route::get('/cart', function () {
     return view('cart');
 })->name('cart');
 
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
