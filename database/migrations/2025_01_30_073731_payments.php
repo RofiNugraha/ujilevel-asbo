@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('layanans', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_layanan');
-            $table->text('deskripsi')->nullable();
-            $table->decimal('harga', 10, 2);
+            $table->foreignId('checkout_id')->constrained('checkouts')->onDelete('cascade');
+            $table->string('metode_pembayaran', 20);
+            $table->string('status', 20);
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('layanans');
+        Schema::dropIfExists('payments');
     }
 };

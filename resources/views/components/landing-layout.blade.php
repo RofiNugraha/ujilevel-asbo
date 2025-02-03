@@ -82,7 +82,7 @@
                 </a>
             </div>
             <div class="flex items-center space-x-4">
-                <a href="{{ route('cart') }}">
+                <a href="">
                     <button class="p-3 rounded-full bg-gray-100 hover:bg-[gold] shadow-lg transition">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6 text-gray-800">

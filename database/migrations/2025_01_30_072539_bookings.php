@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('layanan_id')->constrained('layanans')->onDelete('cascade');
+            $table->foreignId('produk_id')->constrained('produks')->onDelete('cascade');
             $table->dateTime('tanggal_booking');
             $table->time('jam_booking');
-            $table->enum('status', ['dipesan', 'selesai', 'dibatalkan'])->default('dipesan');
-            $table->enum('metode_pembayaran', ['tunai', 'dana', 'kartu']);
+            $table->enum('kursi', ['satu', 'dua']);
+            $table->string('status', 20);
+            $table->string('metode_pembayaran', 20);
             $table->timestamps();
         });
     }

@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('checkouts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('cart_id')->constrained('carts')->onDelete('cascade');
             $table->decimal('total_harga', 10, 2);
-            $table->enum('status_pembayaran', ['belum', 'sudah'])->default('belum');
-            $table->enum('metode_pembayaran', ['tunai', 'dana']);
+            $table->string('status_pembayaran', 20);
+            $table->string('metode_pembayaran', 20);
             $table->timestamps();
         });
     }

@@ -3,20 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Layanan;
+use App\Models\Produk;
 use Illuminate\Http\Request;
 
 class LayananController extends Controller
 {
-    public function store(Request $request)
+    public function index()
     {
-        $request->validate([
-            'nama_layanan' => 'required|string',
-            'deskripsi' => 'required|string',
-            'harga' => 'required|numeric|min:0',
-        ]);
-
-        Layanan::create($request->all());
-
-        return redirect()->route('layanan.index')->with('success', 'Layanan berhasil ditambahkan!');
+        $produks = Produk::all();
+        $layanans = Layanan::all();
+        return view('booking', compact('layanans', 'produks'));
     }
 }
