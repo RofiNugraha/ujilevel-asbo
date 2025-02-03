@@ -13,15 +13,25 @@
             <div class="space-y-6">
                 @forelse ($cartItems as $item)
                 <div class="flex items-center justify-between border-b pb-4">
-                    <img src="{{ asset('storage/' . $item->layanan->gambar) }}" alt="Item Image"
+                    <!-- Display Image -->
+                    <img src="{{ asset('storage/' . $item->gambar) }}" alt="Item Image"
                         class="w-20 h-20 object-cover rounded-xl">
                     <div class="flex-1 ml-4">
-                        <h3 class="font-semibold text-lg">{{ $item->layanan->nama_layanan }}</h3>
-                        <p class="text-gray-500">{{ $item->layanan->deskripsi }}</p>
+                        <!-- Display Product or Service Name -->
+                        <h3 class="font-semibold text-lg">
+                            {{ $item->produk_id ? $item->produk->nama_produk : $item->layanan->nama_layanan }}
+                        </h3>
+                        <!-- Display Product or Service Description -->
+                        <p class="text-gray-500">
+                            {{ $item->produk_id ? $item->produk->deskripsi : $item->layanan->deskripsi }}
+                        </p>
+                        <!-- Display Quantity -->
                         <p class="text-gray-700">Qty: {{ $item->quantity }}</p>
                     </div>
+                    <!-- Display Subtotal -->
                     <p class="font-semibold text-xl text-gray-800 mr-2">Rp.
                         {{ number_format($item->subtotal, 0, ',', '.') }}</p>
+                    <!-- Remove Item Form -->
                     <form action="{{ route('cart.removeItem', $item->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
@@ -54,7 +64,6 @@
                     Continue Shopping
                 </a>
             </div>
-        </div>v>
         </div>
     </main>
 </x-landing-layout>

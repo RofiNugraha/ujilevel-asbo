@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('cart_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('cart_id')->constrained('carts')->onDelete('cascade');
-            $table->foreignId('layanan_id')->constrained('layanans')->onDelete('cascade');
-            $table->foreignId('produk_id')->constrained('produks')->onDelete('cascade');
+            $table->foreignId('layanan_id')->nullable()->constrained('layanans')->onDelete('cascade');
+            $table->foreignId('produk_id')->nullable()->constrained('produks')->onDelete('cascade');
+            $table->enum('jenis_pesanan', ['produk', 'layanan', 'keduanya']);
             $table->integer('quantity');
             $table->decimal('subtotal', 10, 2);
             $table->timestamps();

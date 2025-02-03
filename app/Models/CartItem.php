@@ -13,16 +13,23 @@ class CartItem extends Model
     protected $fillable = [
         'cart_id', 
         'layanan_id', 
+        'produk_id', 
         'quantity', 
         'subtotal', 
-        'produk_id', 
     ];
 
     public function cart(): BelongsTo {
         return $this->belongsTo(Cart::class);
     }
 
-    public function layanan(): BelongsTo {
-        return $this->belongsTo(Layanan::class);
+    public function produk()
+    {
+        return $this->belongsTo(Produk::class, 'produk_id')->withDefault();
     }
+
+    public function layanan()
+    {
+        return $this->belongsTo(Layanan::class, 'layanan_id')->withDefault();
+    }
+
 }
