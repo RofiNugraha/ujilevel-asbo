@@ -59,7 +59,7 @@
 <body class="flex flex-col min-h-screen" style="background-color: black;">
     <header class="navbar transparent fixed w-full sticky top-0 z-10 shadow-md">
         <div class="max-w-7xl mx-auto flex items-center justify-between py-4 px-6">
-            <img src="{{ asset('images/logogold.png')}}" alt="ASBO Logo" class="w-[80px]">
+            <img src="{{ asset('images/logogold.png')}}" alt="ASBO Logo" class="w-[100px]">
             <div class="hidden lg:flex space-x-6 text-lg font-medium text-gray-900">
                 <a href="{{ route('dashboard') }}"
                     class="nav-item text-gray-400 hover:text-[gold] hover:underline">Home</a>
