@@ -4,6 +4,7 @@
     0% {
         transform: translateX(100%);
     }
+
     100% {
         transform: translateX(-70vw);
     }
@@ -75,14 +76,14 @@
         <div class="container mx-auto mt-12 mb-12 w-full max-w-4xl">
             <div class="bg-[#ffff] rounded-[39px] shadow-lg p-4 h-[60px] flex items-center marquee-container">
                 <h1 class="text-1xl px-4 font-semibold marquee">
-                    List Booking: {{ \Carbon\Carbon::today()->format('l, d-m-Y') }}
+                    Booking List:
                 </h1>
             </div>
             <div class="flex justify-center mt-6">
                 <div
                     class="card mb-4 shadow-2xl rounded-lg overflow-hidden w-full bg-white transform hover:-translate-y-1 hover:shadow-3xl transition">
                     <div class="card-header bg-gray-100 text-[#0e2094] font-bold flex items-center justify-between p-4">
-                        <span><i class="fas fa-table me-1"></i> Skill List</span>
+                        <span><i class="fas fa-table me-1"></i> View List</span>
                         <div class="flex items-center space-x-2">
                             <div class="relative">
                                 <input type="text"
@@ -108,19 +109,13 @@
                                         <th class="py-4 border-b-2 border-gray-300">Jam Booking</th>
                                     </tr>
                                 </thead>
-                                <tbody> 
-                                    @forelse($bookings as $booking)
+                                <tbody>
                                     <tr class="border-b border-gray-300">
-                                        <td class="p-4">{{ $loop->iteration }}</td>
-                                        <td class="p-4">{{ $booking->user->name }}</td>
-                                        <td class="p-4">{{ $booking->kursi }}</td>
-                                        <td class="p-4">{{ $booking->jam_booking }}</td>
+                                        <td class="p-4"></td>
+                                        <td class="p-4"></td>
+                                        <td class="p-4"></td>
+                                        <td class="p-4"></td>
                                     </tr>
-                                    @empty
-                                    <tr>
-                                        <td colspan="4" class="text-center p-4">Tidak ada booking hari ini.</td>
-                                    </tr>
-                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
