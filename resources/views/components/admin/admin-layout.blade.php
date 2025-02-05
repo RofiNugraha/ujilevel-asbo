@@ -63,7 +63,7 @@
                         </a>
                         <a class="nav-link" href="">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            Layanan
+                            Pantek
                         </a>
                         <a class="nav-link" href="{{ route('admin.produk.index') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>

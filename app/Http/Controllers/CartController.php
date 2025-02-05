@@ -66,12 +66,10 @@ class CartController extends Controller
             return redirect()->back()->with('error', 'Invalid item selection. Please choose a service or product.');
         }
 
-        // Jika item sudah ada di keranjang, tambahkan quantity
         if ($cartItem) {
             $cartItem->increment('quantity', 1);
             $cartItem->update(['subtotal' => $cartItem->quantity * $item->harga]);
         } else {
-            // Tambahkan item baru ke keranjang
             $cart->cartItems()->create([
                 'layanan_id' => $request->layanan_id ?? null,
                 'produk_id' => $request->produk_id ?? null,

@@ -9,9 +9,12 @@
     <title>Responsive Login Page</title>
 </head>
 
-<body class="bg-cover bg-center bg-no-repeat h-screen flex items-center justify-center" style="background-image: url('{{ asset('images/bgd.jpg') }}'); background-size: cover; background-position: center;">
-    <form method="POST" action="{{ route('login') }}" class="bg-[#cccccc] rounded-[50px] w-[90%] max-w-[1006px] p-5 md:p-10 flex flex-col md:flex-row items-center justify-between shadow-lg">
-        @csrf <!-- Laravel directive for CSRF protection -->
+<body class="bg-cover bg-center bg-no-repeat h-screen flex items-center justify-center"
+    style="background-image: url('{{ asset('images/bgd.jpg') }}'); background-size: cover; background-position: center;">
+    <form method="POST" action="{{ route('login') }}"
+        class="bg-[#cccccc] rounded-[50px] w-[90%] max-w-[1006px] p-5 md:p-10 flex flex-col md:flex-row items-center justify-between shadow-lg">
+        @csrf
+        <!-- Laravel directive for CSRF protection -->
 
         <!-- Left side - Form -->
         <div class="flex flex-col items-center justify-center w-full md:w-1/2 p-4">

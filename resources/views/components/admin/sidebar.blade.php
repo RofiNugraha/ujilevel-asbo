@@ -8,7 +8,7 @@
     <span>booking</span>
 </a>
 <a class="nav-link {{ request()->is('admin/notifikasi') ? 'active' : '' }}" href="/admin/notifikasi">
-    <span>Notifkasi</span>
+    <span>Notifikasi</span>
 </a>
 <a class="nav-link {{ request()->is('admin/riwayat') ? 'active' : '' }}" href="/admin/riwayat">
     <span>Riwayat Transaksi</span>

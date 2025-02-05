@@ -71,9 +71,15 @@ Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
 
+<<<<<<< HEAD
 Route::get('/informasi', function () {
     return view('informasi');
 })->name('informasi');
+=======
+Route::get('/formbook', function () {
+    return view('formbook');
+})->name('formbook');
+>>>>>>> 40e2d717dc19b20a1a9db379344049ddeb6be898
 
 Route::get('/dashboard', function () {
     return view('dashboard');

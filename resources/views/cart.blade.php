@@ -57,9 +57,13 @@
             <div class="flex mt-6 gap-4">
                 <button
                     class="bg-green-500 text-white font-semibold px-6 py-3 rounded-full shadow-md hover:bg-green-600 transition w-full">
-                    Proceed to Checkout
+                    <a href="/formbook">Proceed to Checkout</a>
                 </button>
+<<<<<<< HEAD
                 <a href="{{ route('booking') }}"
+=======
+                <a href="/booking"
+>>>>>>> 40e2d717dc19b20a1a9db379344049ddeb6be898
                     class="bg-gray-200 text-gray-700 font-semibold px-6 py-3 rounded-full shadow-md hover:bg-gray-300 transition w-full text-center">
                     Continue Shopping
                 </a>
