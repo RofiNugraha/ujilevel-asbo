@@ -39,7 +39,7 @@
     </div>
     <h1
         class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 mt-20 flex justify-center items-center animate-pulse">
-        PRICELIST!
+        OUR SERVICE!
     </h1>
     <main class="m-16 flex flex-wrap justify-center items-center gap-16">
         @foreach ($layanans as $layanan)
@@ -56,11 +56,7 @@
                 <input type="hidden" name="quantity" value="1">
                 <button type="submit"
                     class="bg-blue-600 mt-4 mb-2 text-white rounded-full px-6 py-2 shadow-md transform hover:translate-y-1 hover:shadow-lg transition-all duration-300">
-<<<<<<< HEAD
-                    <a href="{{ route('form') }}">Add to Cart</a>
-=======
-                    Book Now
->>>>>>> 75f1c1f01840acf6a6fc7b643c4a420920754903
+                    Add to Cart
                 </button>
             </form>
             @else
@@ -82,7 +78,7 @@
             <img src="{{ asset('storage/' . $produk->gambar) }}" alt="Service Image"
                 class="rounded-3xl mb-4 w-40 h-40 object-cover">
             <h2 class="text-2xl font-semibold mb-2 text-center">{{ $produk->nama_produk }}</h2>
-            <p class="text-2xl font-semibold mb-2 text-center">{{ $produk->deskripsi }}</p>
+            <p class="mb-2 text-center">{{ $produk->deskripsi }}</p>
             <h5 class="font-semibold mb-2 text-center">Rp.{{ $produk->harga }}</h5>
             @auth
             <form action="{{ route('cart.addItem') }}" method="POST">
@@ -91,7 +87,7 @@
                 <input type="hidden" name="quantity" value="1">
                 <button type="submit"
                     class="bg-blue-600 mt-4 mb-2 text-white rounded-full px-6 py-2 shadow-md transform hover:translate-y-1 hover:shadow-lg transition-all duration-300">
-                    Book Now
+                    Add to cart
                 </button>
             </form>
             @else

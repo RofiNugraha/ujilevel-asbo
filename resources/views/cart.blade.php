@@ -59,7 +59,7 @@
                     class="bg-green-500 text-white font-semibold px-6 py-3 rounded-full shadow-md hover:bg-green-600 transition w-full">
                     Proceed to Checkout
                 </button>
-                <a href=""
+                <a href="{{ route('booking') }}"
                     class="bg-gray-200 text-gray-700 font-semibold px-6 py-3 rounded-full shadow-md hover:bg-gray-300 transition w-full text-center">
                     Continue Shopping
                 </a>

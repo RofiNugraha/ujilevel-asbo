@@ -109,18 +109,15 @@
                                     </tr>
                                 </thead>
                                 <tbody> 
-                                    @forelse($bookings as $booking)
                                     <tr class="border-b border-gray-300">
-                                        <td class="p-4">{{ $loop->iteration }}</td>
-                                        <td class="p-4">{{ $booking->user->name }}</td>
-                                        <td class="p-4">{{ $booking->kursi }}</td>
-                                        <td class="p-4">{{ $booking->jam_booking }}</td>
+                                        <td class="p-4"></td>
+                                        <td class="p-4"></td>
+                                        <td class="p-4"></td>
+                                        <td class="p-4"></td>
                                     </tr>
-                                    @empty
                                     <tr>
                                         <td colspan="4" class="text-center p-4">Tidak ada booking hari ini.</td>
                                     </tr>
-                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
