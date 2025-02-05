@@ -56,7 +56,11 @@
                 <input type="hidden" name="quantity" value="1">
                 <button type="submit"
                     class="bg-blue-600 mt-4 mb-2 text-white rounded-full px-6 py-2 shadow-md transform hover:translate-y-1 hover:shadow-lg transition-all duration-300">
+<<<<<<< HEAD
+                    <a href="{{ route('form') }}">Add to Cart</a>
+=======
                     Book Now
+>>>>>>> 75f1c1f01840acf6a6fc7b643c4a420920754903
                 </button>
             </form>
             @else
