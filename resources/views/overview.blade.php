@@ -116,6 +116,9 @@
                                         <td class="p-4"></td>
                                         <td class="p-4"></td>
                                     </tr>
+                                    <tr>
+                                        <td colspan="4" class="text-center p-4">Tidak ada booking hari ini.</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

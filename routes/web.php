@@ -73,6 +73,10 @@ Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
 
+Route::get('/informasi', function () {
+    return view('informasi');
+})->name('informasi');
+
 Route::get('/formbook', function () {
     return view('formbook');
 })->name('formbook');

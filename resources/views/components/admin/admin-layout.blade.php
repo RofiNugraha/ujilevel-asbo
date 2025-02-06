@@ -15,7 +15,7 @@
 
 <body class="sb-nav-fixed">
     {{ $slot }}
-    <nav class="sb-topnav navbar navbar-expand" style="background-color: #0E2094; height: 80px;">
+    <nav class="sb-topnav navbar navbar-expand" style="background-color: black; height: 80px;">
         <a class="navbar-brand ps-3" href="index.html">
             <img src="{{ asset('images/logoputih.png') }}" alt="Brand Image" style="height: 120px; width: 150px;" />
         </a>
@@ -49,7 +49,7 @@
     </nav>
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
-            <nav class="sb-sidenav accordion" id="sidenavAccordion" style="background-color: #0E2094;">
+            <nav class="sb-sidenav accordion" id="sidenavAccordion" style="background-color: black;">
                 <div class="sb-sidenav-menu">
                     <div class="nav text-white">
                         <div class="sb-sidenav-menu-heading">Core</div>

@@ -39,7 +39,7 @@
     </div>
     <h1
         class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 mt-20 flex justify-center items-center animate-pulse">
-        PRICELIST!
+        OUR SERVICE!
     </h1>
     <main class="m-16 flex flex-wrap justify-center items-center gap-16">
         @foreach ($layanans as $layanan)
@@ -55,9 +55,8 @@
                 <input type="hidden" name="layanan_id" value="{{ $layanan->id }}">
                 <input type="hidden" name="quantity" value="1">
                 <button type="submit"
-                    class="bg-blue-600 mt-4 mb-2 text-white rounded-full px-6 py-2 shadow-md transform hover:translate-y-1 hover:shadow-lg transition-all duration-300">
-                    Add to cart
-                </button>
+                    class="bg-blue-600 mt-4 mb-2 text-white rounded-full px-6 py-2 shadow-md transform hover:translate-y-1 hover:shadow-lg transition-all duration-300">Add
+                    to cart</button>
             </form>
             @else
             <button
