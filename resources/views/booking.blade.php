@@ -56,22 +56,33 @@
                 <input type="hidden" name="quantity" value="1">
                 <button type="submit"
                     class="bg-blue-600 mt-4 mb-2 text-white rounded-full px-6 py-2 shadow-md transform hover:translate-y-1 hover:shadow-lg transition-all duration-300">
-<<<<<<< HEAD
-                    <a href="{{ route('form') }}">Add to Cart</a>
-=======
-                    Book Now
->>>>>>> 75f1c1f01840acf6a6fc7b643c4a420920754903
+                    Add to cart
                 </button>
             </form>
             @else
             <button
                 class="bg-blue-600 mt-4 mb-2 text-white rounded-full px-6 py-2 shadow-md transform hover:translate-y-1 hover:shadow-lg transition-all duration-300">
-                <a href="{{ route('login') }}">Login to Book</a>
+                Book Now
             </button>
             @endauth
         </div>
         @endforeach
     </main>
+
+    <!-- Modal Pop-up -->
+    @if (session('error'))
+    <div x-data="{ show: true }" x-show="show"
+        class="fixed inset-0 z-[999] flex items-center justify-center bg-black bg-opacity-50">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h2 class="text-lg font-semibold text-red-600">Error</h2>
+            <p class="mt-2">{{ session('error') }}</p>
+            <button @click="show = false"
+                class="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition">
+                Close
+            </button>
+        </div>
+    </div>
+    @endif
     <h1
         class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 mt-20 flex justify-center items-center animate-pulse">
         PRODUCTS!
@@ -82,7 +93,7 @@
             <img src="{{ asset('storage/' . $produk->gambar) }}" alt="Service Image"
                 class="rounded-3xl mb-4 w-40 h-40 object-cover">
             <h2 class="text-2xl font-semibold mb-2 text-center">{{ $produk->nama_produk }}</h2>
-            <p class="text-2xl font-semibold mb-2 text-center">{{ $produk->deskripsi }}</p>
+            <p class="mb-2 text-center">{{ $produk->deskripsi }}</p>
             <h5 class="font-semibold mb-2 text-center">Rp.{{ $produk->harga }}</h5>
             @auth
             <form action="{{ route('cart.addItem') }}" method="POST">
@@ -91,7 +102,7 @@
                 <input type="hidden" name="quantity" value="1">
                 <button type="submit"
                     class="bg-blue-600 mt-4 mb-2 text-white rounded-full px-6 py-2 shadow-md transform hover:translate-y-1 hover:shadow-lg transition-all duration-300">
-                    Book Now
+                    Add to cart
                 </button>
             </form>
             @else
@@ -122,7 +133,7 @@
             @auth
             <button
                 class="bg-blue-600 mt-4 mb-2 text-white rounded-full px-6 py-2 shadow-md transform hover:translate-y-1 hover:shadow-lg transition-all duration-300">
-                <a href="">Book Now</a>
+                Add to cart
             </button>
             @else
             <button

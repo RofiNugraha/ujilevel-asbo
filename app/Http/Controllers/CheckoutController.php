@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
 use App\Models\Cart;
 use App\Models\Checkout;
 use App\Models\Payment;
@@ -23,8 +24,14 @@ class CheckoutController extends Controller
         return view('checkout.index', compact('cart', 'totalHarga'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request, $booking_id)
     {
+        $booking = Booking::findOrFail($booking_id);
+
+        if ($booking->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized access');
+        }
+
         $cart = Cart::where('user_id', Auth::id())->first();
 
         if (!$cart || $cart->cartItems->isEmpty()) {
@@ -37,6 +44,7 @@ class CheckoutController extends Controller
             'total_harga' => $cart->cartItems->sum('subtotal'),
             'status_pembayaran' => 'belum',
             'metode_pembayaran' => $request->metode_pembayaran,
+            'booking_id' => $booking->id,
         ]);
 
         return redirect()->route('checkout.show', $checkout->id);

@@ -18,6 +18,7 @@ class UpdateProfileController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . Auth::id(),
             'phone' => 'nullable|string|max:15',
+            'address' => 'nullable|string',
         ]);
 
         $user = Auth::user();
@@ -25,6 +26,7 @@ class UpdateProfileController extends Controller
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->phone = $request->input('phone');
+        $user->address = $request->input('address');
 
 
         if ($user instanceof User) {

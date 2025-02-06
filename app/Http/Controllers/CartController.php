@@ -47,17 +47,24 @@ class CartController extends Controller
             'produk_id' => 'nullable|exists:produks,id',
         ]);
 
-        // Pastikan hanya satu item yang dipilih (layanan atau produk, tidak keduanya)
         if ($request->has('layanan_id') && $request->has('produk_id')) {
             return redirect()->back()->with('error', 'Please select only one item: service or product.');
         }
 
-        // Tentukan apakah item adalah layanan atau produk
         $item = null;
         $cartItem = null;
 
         if ($request->filled('layanan_id')) {
             $item = Layanan::findOrFail($request->layanan_id);
+
+            $existingHaircut = $cart->cartItems()->whereHas('layanan', function ($query) {
+                $query->where('nama_layanan', 'Haircut');
+            })->exists();
+
+            if ($item->nama_layanan === 'Haircut' && $existingHaircut) {
+                return redirect()->back()->with('error', 'You have already added Haircut to your cart. Please checkout before ordering again.');
+            }
+
             $cartItem = $cart->cartItems()->where('layanan_id', $request->layanan_id)->first();
         } elseif ($request->filled('produk_id')) {
             $item = Produk::findOrFail($request->produk_id);
