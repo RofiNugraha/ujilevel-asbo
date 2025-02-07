@@ -77,10 +77,6 @@ Route::get('/informasi', function () {
     return view('informasi');
 })->name('informasi');
 
-Route::get('/formbook', function () {
-    return view('formbook');
-})->name('formbook');
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -103,6 +99,7 @@ Route::middleware('auth')->group(function () {
     Route::post('cart/addItem', [CartController::class, 'addItem'])->name('cart.addItem');
     Route::get('cart/total/{cartId}', [CartController::class, 'totalPrice'])->name('cart.totalPrice');
     Route::delete('/cart/remove/{cartItem}', [CartController::class, 'removeItem'])->name('cart.removeItem');
+    Route::get('/cart/count', [CartController::class, 'cartCount'])->name('cart.count');
 
     // Checkout
     Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout.index');
@@ -110,7 +107,8 @@ Route::middleware('auth')->group(function () {
     Route::get('checkout/{id}', [CheckoutController::class, 'show'])->name('checkout.show');
 
     // Booking
-    Route::post('/booking/store', [BookingController::class, 'store'])->name('BookingControllerng.store');
+    Route::get('/formbook', [BookingController::class, 'formbook'])->name('formbook');
+    Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store');
     Route::get('/pembayaran/{booking_id}', [BookingController::class, 'pembayaran'])->name('pembayaran');
     Route::post('/pembayaran/proses/{booking_id}', [BookingController::class, 'prosesPembayaran'])->name('pembayaran.proses');
     Route::get('/checkout/{Bookingng_id}', [BookingController::class, 'checkout'])->name('checkout');

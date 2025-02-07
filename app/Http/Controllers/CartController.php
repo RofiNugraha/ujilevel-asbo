@@ -108,4 +108,12 @@ class CartController extends Controller
 
         return response()->json(['total_harga' => $total]);
     }
+
+    public function cartCount()
+    {
+        $cart = Cart::where('user_id', Auth::id())->first();
+        $count = $cart ? $cart->cartItems->sum('quantity') : 0;
+
+        return response()->json(['cart_count' => $count]);
+    }
 }
