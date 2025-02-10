@@ -109,23 +109,17 @@
                                         <th class="py-4 border-b-2 border-gray-300">Jam Booking</th>
                                     </tr>
                                 </thead>
-<<<<<<< HEAD
                                 <tbody> 
-=======
                                 <tbody>
->>>>>>> 40e2d717dc19b20a1a9db379344049ddeb6be898
                                     <tr class="border-b border-gray-300">
                                         <td class="p-4"></td>
                                         <td class="p-4"></td>
                                         <td class="p-4"></td>
                                         <td class="p-4"></td>
                                     </tr>
-<<<<<<< HEAD
                                     <tr>
                                         <td colspan="4" class="text-center p-4">Tidak ada booking hari ini.</td>
                                     </tr>
-=======
->>>>>>> 40e2d717dc19b20a1a9db379344049ddeb6be898
                                 </tbody>
                             </table>
                         </div>

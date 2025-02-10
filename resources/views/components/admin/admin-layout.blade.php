@@ -15,9 +15,9 @@
 
 <body class="sb-nav-fixed">
     {{ $slot }}
-    <nav class="sb-topnav navbar navbar-expand" style="background-color: black; height: 80px;">
-        <a class="navbar-brand ps-3" href="index.html">
-            <img src="{{ asset('images/logoputih.png') }}" alt="Brand Image" style="height: 120px; width: 150px;" />
+    <nav class="sb-topnav navbar navbar-expand" style="background-color: black; height: 100px;">
+        <a class="navbar-brand ms-4 ps-3" href="index.html">
+            <img src="{{ asset('images/logogold.png') }}" alt="Brand Image" style="height: 100px; width: 150px;" />
         </a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
@@ -52,7 +52,7 @@
             <nav class="sb-sidenav accordion" id="sidenavAccordion" style="background-color: black;">
                 <div class="sb-sidenav-menu">
                     <div class="nav text-white">
-                        <div class="sb-sidenav-menu-heading">Core</div>
+                        <div class="sb-sidenav-menu-heading"></div>
                         <a class="nav-link" href="{{ route('admin.dashboard') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
@@ -75,10 +75,6 @@
                         </a>
                     </div>
                 </div>
-        </div>
-        <div class="sb-sidenav-footer">
-            <div class="small">Logged in as:</div>
-            Start Bootstrap
         </div>
         </nav>
     </div>
