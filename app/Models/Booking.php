@@ -13,7 +13,7 @@ class Booking extends Model
     protected $fillable = [
         'user_id', 
         'layanan_id', 
-        'tanggal_booking', 
+        'produk_id',
         'jam_booking', 
         'kursi',
         'status', 
@@ -26,5 +26,9 @@ class Booking extends Model
 
     public function layanan(): BelongsTo {
         return $this->belongsTo(Layanan::class);
+    }
+
+    public function produk(): BelongsTo {
+        return $this->belongsTo(Produk::class);
     }
 }

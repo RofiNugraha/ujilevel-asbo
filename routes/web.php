@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\AdminNotifikasiController;
 use App\Http\Controllers\Admin\AdminProdukController;
 use App\Http\Controllers\CekLoginController;
 use App\Http\Controllers\Admin\AdminRiwayatTransaksiController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\LayananController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UpdateProfileController;
 use App\Http\Middleware\AdminMiddleware;
+use App\Models\Booking;
 use App\Models\Layanan;
 use Illuminate\Support\Facades\Route;
 
@@ -74,10 +76,13 @@ Route::get('/contact', function () {
 Route::get('/informasi', function () {
     return view('informasi');
 })->name('informasi');
+<<<<<<< HEAD
 
 Route::get('/formbook', function () {
     return view('formbook');
 })->name('formbook');
+=======
+>>>>>>> 7106edab443dc92df1b6933a1857d8fecaa66043
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -92,22 +97,30 @@ Route::middleware('auth')->group(function () {
     //layanan
     Route::get('/booking', [LayananController::class, 'index'])->name('booking');
 
-    // profil
+    // Profil
     Route::get('/profil', [ProfileController::class, 'show'])->name('profil');
     Route::put('/profil', [UpdateProfileController::class, 'updateProfile'])->name('profil.update');
 
-    // Cart Routes
+    // Cart 
     Route::get('cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('cart/addItem', [CartController::class, 'addItem'])->name('cart.addItem');
     Route::get('cart/total/{cartId}', [CartController::class, 'totalPrice'])->name('cart.totalPrice');
     Route::delete('/cart/remove/{cartItem}', [CartController::class, 'removeItem'])->name('cart.removeItem');
+    Route::get('/cart/count', [CartController::class, 'cartCount'])->name('cart.count');
 
-    // Checkout Routes
+    // Checkout
     Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('checkout', [CheckoutController::class, 'store'])->name('checkout.store');
     Route::get('checkout/{id}', [CheckoutController::class, 'show'])->name('checkout.show');
 
-    // Payment Routes
+    // Booking
+    Route::get('/formbook', [BookingController::class, 'formbook'])->name('formbook');
+    Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store');
+    Route::get('/pembayaran/{booking_id}', [BookingController::class, 'pembayaran'])->name('pembayaran');
+    Route::post('/pembayaran/proses/{booking_id}', [BookingController::class, 'prosesPembayaran'])->name('pembayaran.proses');
+    Route::get('/checkout/{Bookingng_id}', [BookingController::class, 'checkout'])->name('checkout');
+
+    // Payment 
     Route::post('payment/{checkoutId}', [PaymentController::class, 'pay'])->name('payment.pay');
     });
     

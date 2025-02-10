@@ -82,18 +82,43 @@
                 </a>
             </div>
             <div class="flex items-center space-x-4">
-                <a href="">
-                    <button class="p-3 rounded-full bg-gray-100 hover:bg-[gold] shadow-lg transition">
+                <a href="/cart" class="relative">
+                    <button class="p-3 rounded-full bg-gray-100 hover:bg-[gold] shadow-lg transition relative">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6 text-gray-800">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-2 6h12M7 13L5.4 7M17 13l2 6M9 20a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z" />
                         </svg>
+                        <!-- Badge Notifikasi -->
+                        <span id="cart-badge"
+                            class="hidden absolute -bottom-1 -right-1 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                        </span>
                     </button>
                 </a>
                 <a href="{{ route('profil') }}"
                     class="block bg-gray-200 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-300">Profil</a>
             </div>
+
+            <script>
+            function updateCartBadge() {
+                fetch("{{ route('cart.count') }}")
+                    .then(response => response.json())
+                    .then(data => {
+                        let cartCount = data.cart_count;
+                        let badge = document.getElementById('cart-badge');
+
+                        if (cartCount > 0) {
+                            badge.textContent = cartCount;
+                            badge.classList.remove('hidden');
+                        } else {
+                            badge.classList.add('hidden');
+                        }
+                    })
+                    .catch(error => console.error('Error fetching cart count:', error));
+            }
+
+            document.addEventListener("DOMContentLoaded", updateCartBadge);
+            </script>
 
             <button id="menu-button" class="lg:hidden text-gray-700 hover:text-gray-900">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
@@ -190,6 +215,8 @@
             </div>
         </div>
     </footer>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </body>
 
 </html>
