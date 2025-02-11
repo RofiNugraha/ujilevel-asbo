@@ -31,6 +31,7 @@ class Produk extends Model
         'gambar',
     ];
 
+
     public function cartItems()
     {
         return $this->hasMany(CartItem::class);

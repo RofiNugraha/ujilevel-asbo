@@ -101,20 +101,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/cart/remove/{cartItem}', [CartController::class, 'removeItem'])->name('cart.removeItem');
     Route::get('/cart/count', [CartController::class, 'cartCount'])->name('cart.count');
 
-    // Checkout
-    Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-    Route::post('checkout', [CheckoutController::class, 'store'])->name('checkout.store');
-    Route::get('checkout/{id}', [CheckoutController::class, 'show'])->name('checkout.show');
-
     // Booking
-    Route::get('/formbook', [BookingController::class, 'formbook'])->name('formbook');
+    Route::get('/formbook/{layanan_id?}/{produk_id?}', [BookingController::class, 'formBook'])->name('formbook');
     Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store');
-    Route::get('/pembayaran/{booking_id}', [BookingController::class, 'pembayaran'])->name('pembayaran');
-    Route::post('/pembayaran/proses/{booking_id}', [BookingController::class, 'prosesPembayaran'])->name('pembayaran.proses');
-    Route::get('/checkout/{Bookingng_id}', [BookingController::class, 'checkout'])->name('checkout');
 
-    // Payment 
-    Route::post('payment/{checkoutId}', [PaymentController::class, 'pay'])->name('payment.pay');
     });
     
 });

@@ -13,46 +13,46 @@ class CheckoutController extends Controller
 {
     public function index()
     {
-        $cart = Cart::where('user_id', Auth::id())->first();
+        $user = Auth::user();
+        $cart = Cart::where('user_id', $user->id)->firstOrFail();
+        $totalHarga = $cart->items->sum('harga');
 
-        if (!$cart) {
-            return redirect()->route('cart.index')->with('error', 'Keranjang kosong');
-        }
-
-        $totalHarga = $cart->cartItems->sum('subtotal');
-
-        return view('checkout.index', compact('cart', 'totalHarga'));
+        return view('checkout', compact('cart', 'totalHarga'));
     }
 
-    public function store(Request $request, $booking_id)
+    /**
+     * Memproses checkout dan pembayaran
+     */
+    public function process(Request $request)
     {
-        $booking = Booking::findOrFail($booking_id);
-
-        if ($booking->user_id !== Auth::id()) {
-            abort(403, 'Unauthorized access');
-        }
-
-        $cart = Cart::where('user_id', Auth::id())->first();
-
-        if (!$cart || $cart->cartItems->isEmpty()) {
-            return redirect()->route('cart.index')->with('error', 'Keranjang kosong');
-        }
-
-        $checkout = Checkout::create([
-            'user_id' => Auth::id(),
-            'cart_id' => $cart->id,
-            'total_harga' => $cart->cartItems->sum('subtotal'),
-            'status_pembayaran' => 'belum',
-            'metode_pembayaran' => $request->metode_pembayaran,
-            'booking_id' => $booking->id,
+        $request->validate([
+            'metode_pembayaran' => 'required|in:cash,transfer,ewallet',
         ]);
 
-        return redirect()->route('checkout.show', $checkout->id);
+        $user = Auth::user();
+        $cart = Cart::where('user_id', $user->id)->firstOrFail();
+        $totalHarga = $cart->items->sum('harga');
+
+        // Simpan data checkout ke database
+        $checkout = Checkout::create([
+            'user_id' => $user->id,
+            'cart_id' => $cart->id,
+            'total_harga' => $totalHarga,
+            'status_pembayaran' => 'pending',
+            'metode_pembayaran' => $request->metode_pembayaran,
+        ]);
+
+        // Kosongkan keranjang setelah checkout
+        $cart->items()->delete();
+
+        return redirect()->route('checkout.success')->with('success', 'Checkout berhasil! Silakan lakukan pembayaran.');
     }
 
-    public function show($id)
+    /**
+     * Menampilkan halaman sukses setelah checkout
+     */
+    public function success()
     {
-        $checkout = Checkout::findOrFail($id);
-        return view('checkout.show', compact('checkout'));
+        return view('checkout_success');
     }
 }

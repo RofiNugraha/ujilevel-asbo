@@ -49,10 +49,13 @@
                     {{ number_format($cartItems->sum('subtotal'), 0, ',', '.') }}</p>
             </div>
             <div class="flex mt-6 gap-4">
-                <button
+                <a href="{{ route('formbook', [
+                'layanan_id' => $cartItems->whereNotNull('layanan_id')->pluck('layanan_id')->implode(','),
+                'produk_id' => $cartItems->whereNotNull('produk_id')->pluck('produk_id')->implode(',')
+                ]) }}"
                     class="bg-green-500 text-white font-semibold px-6 py-3 rounded-full shadow-md hover:bg-green-600 transition w-full">
-                    <a href="{{ route('formbook') }}">Proceed to Checkout</a>
-                </button>
+                    Proceed to Checkout
+                </a>
                 <a href="{{ route('booking') }}"
                     class="bg-gray-200 text-gray-700 font-semibold px-6 py-3 rounded-full shadow-md hover:bg-gray-300 transition w-full text-center">
                     Continue Shopping

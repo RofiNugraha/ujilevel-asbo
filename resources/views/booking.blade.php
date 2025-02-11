@@ -53,10 +53,13 @@
             <form action="{{ route('cart.addItem') }}" method="POST">
                 @csrf
                 <input type="hidden" name="layanan_id" value="{{ $layanan->id }}">
-                <input type="hidden" name="quantity" value="1">
+                <input type="hidden" name="quantity" id="quantity_{{ $layanan->id }}" min="1"
+                    max="{{ $layanan->nama_layanan == 'Haircut' ? 1 : 10 }}" value="1"
+                    class="w-16 border rounded text-center">
                 <button type="submit"
-                    class="bg-blue-600 mt-4 mb-2 text-white rounded-full px-6 py-2 shadow-md transform hover:translate-y-1 hover:shadow-lg transition-all duration-300">Add
-                    to cart</button>
+                    class="bg-blue-600 mt-4 mb-2 text-white rounded-full px-6 py-2 shadow-md hover:translate-y-1 hover:shadow-lg transition-all duration-300">
+                    Add to cart
+                </button>
             </form>
             @else
             <button
@@ -98,9 +101,8 @@
             <form action="{{ route('cart.addItem') }}" method="POST">
                 @csrf
                 <input type="hidden" name="produk_id" value="{{ $produk->id }}">
-                <input type="hidden" name="quantity" value="1">
                 <button type="submit"
-                    class="bg-blue-600 mt-4 mb-2 text-white rounded-full px-6 py-2 shadow-md transform hover:translate-y-1 hover:shadow-lg transition-all duration-300">
+                    class="bg-blue-600 mt-4 mb-2 text-white rounded-full px-6 py-2 shadow-md hover:translate-y-1 hover:shadow-lg transition-all duration-300">
                     Add to cart
                 </button>
             </form>

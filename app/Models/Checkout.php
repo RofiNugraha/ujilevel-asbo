@@ -15,7 +15,7 @@ class Checkout extends Model
         'cart_id', 
         'total_harga', 
         'status_pembayaran', 
-        'metode_pembayaran'
+        'metode_pembayaran',
     ];
 
     public function user(): BelongsTo {

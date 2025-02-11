@@ -43,46 +43,93 @@ class CartController extends Controller
         $cart = Cart::firstOrCreate(['user_id' => Auth::id()]);
 
         $request->validate([
-            'layanan_id' => 'nullable|exists:layanans,id',
-            'produk_id' => 'nullable|exists:produks,id',
+            'layanan_id' => 'nullable',
+            'produk_id' => 'nullable',
         ]);
 
         if ($request->has('layanan_id') && $request->has('produk_id')) {
             return redirect()->back()->with('error', 'Please select only one item: service or product.');
         }
 
-        $item = null;
-        $cartItem = null;
-
+        // Menambahkan layanan jika ada
         if ($request->filled('layanan_id')) {
-            $item = Layanan::findOrFail($request->layanan_id);
+            // Jika layanan dikirim dalam bentuk array
+            if (is_array($request->layanan_id)) {
+                foreach ($request->layanan_id as $layanan_id) {
+                    $item = Layanan::findOrFail($layanan_id);
 
-            $existingHaircut = $cart->cartItems()->whereHas('layanan', function ($query) {
-                $query->where('nama_layanan', 'Haircut');
-            })->exists();
+                    $existingHaircut = $cart->cartItems()->whereHas('layanan', function ($query) {
+                        $query->where('nama_layanan', 'Haircut');
+                    })->exists();
 
-            if ($item->nama_layanan === 'Haircut' && $existingHaircut) {
-                return redirect()->back()->with('error', 'You have already added Haircut to your cart. Please checkout before ordering again.');
+                    if ($item->nama_layanan === 'Haircut' && $existingHaircut) {
+                        return redirect()->back()->with('error', 'You have already added Haircut to your cart. Please checkout before ordering again.');
+                    }
+
+                    $cart->cartItems()->create([
+                        'layanan_id' => $layanan_id,
+                        'produk_id' => null,
+                        'quantity' => 1,
+                        'subtotal' => $item->harga,
+                    ]);
+                }
+            } else {
+                $item = Layanan::findOrFail($request->layanan_id);
+
+                $existingHaircut = $cart->cartItems()->whereHas('layanan', function ($query) {
+                    $query->where('nama_layanan', 'Haircut');
+                })->exists();
+
+                if ($item->nama_layanan === 'Haircut' && $existingHaircut) {
+                    return redirect()->back()->with('error', 'You have already added Haircut to your cart. Please checkout before ordering again.');
+                }
+
+                $cartItem = $cart->cartItems()->where('layanan_id', $request->layanan_id)->first();
+
+                if ($cartItem) {
+                    $cartItem->increment('quantity', 1);
+                    $cartItem->update(['subtotal' => $cartItem->quantity * $item->harga]);
+                } else {
+                    $cart->cartItems()->create([
+                        'layanan_id' => $request->layanan_id,
+                        'produk_id' => null,
+                        'quantity' => 1,
+                        'subtotal' => $item->harga,
+                    ]);
+                }
             }
-
-            $cartItem = $cart->cartItems()->where('layanan_id', $request->layanan_id)->first();
-        } elseif ($request->filled('produk_id')) {
-            $item = Produk::findOrFail($request->produk_id);
-            $cartItem = $cart->cartItems()->where('produk_id', $request->produk_id)->first();
-        } else {
-            return redirect()->back()->with('error', 'Invalid item selection. Please choose a service or product.');
         }
 
-        if ($cartItem) {
-            $cartItem->increment('quantity', 1);
-            $cartItem->update(['subtotal' => $cartItem->quantity * $item->harga]);
-        } else {
-            $cart->cartItems()->create([
-                'layanan_id' => $request->layanan_id ?? null,
-                'produk_id' => $request->produk_id ?? null,
-                'quantity' => 1,
-                'subtotal' => $item->harga,
-            ]);
+        // Menambahkan produk jika ada
+        if ($request->filled('produk_id')) {
+            if (is_array($request->produk_id)) {
+                foreach ($request->produk_id as $produk_id) {
+                    $item = Produk::findOrFail($produk_id);
+
+                    // Simpan setiap produk sebagai item baru
+                    $cart->cartItems()->create([
+                        'layanan_id' => null,
+                        'produk_id' => $produk_id,
+                        'quantity' => 1,
+                        'subtotal' => $item->harga,
+                    ]);
+                }
+            } else {
+                $item = Produk::findOrFail($request->produk_id);
+                $cartItem = $cart->cartItems()->where('produk_id', $request->produk_id)->first();
+
+                if ($cartItem) {
+                    $cartItem->increment('quantity', 1);
+                    $cartItem->update(['subtotal' => $cartItem->quantity * $item->harga]);
+                } else {
+                    $cart->cartItems()->create([
+                        'layanan_id' => null,
+                        'produk_id' => $request->produk_id,
+                        'quantity' => 1,
+                        'subtotal' => $item->harga,
+                    ]);
+                }
+            }
         }
 
         return redirect()->route('cart.index')->with('success', 'Item added to cart!');
