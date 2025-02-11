@@ -24,12 +24,7 @@
                         </p>
                         <p class="text-gray-700">Qty: {{ $item->quantity }}</p>
                     </div>
-<<<<<<< HEAD
-                    <!-- Display Subtotal -->
-                    <p class="font-semibold text-xl text-gray-800 mr-2">Rp
-=======
                     <p class="font-semibold text-xl text-gray-800 mr-2">Rp.
->>>>>>> 7106edab443dc92df1b6933a1857d8fecaa66043
                         {{ number_format($item->subtotal, 0, ',', '.') }}</p>
                     <form action="{{ route('cart.removeItem', $item->id) }}" method="POST">
                         @csrf
@@ -44,9 +39,7 @@
                 <p class="text-center text-gray-500">Your cart is empty.</p>
                 @endforelse
             </div>
-        </div>
-        <div class="max-w-3xl w-full bg-white p-8 rounded-lg shadow-lg m-4">
-            <h1 class="text-3xl font-semibold text-center text-gray-800 mb-6">Asgar Book</h1>
+            <h1 class="text-3xl font-semibold text-center text-gray-800 mb-4 mt-8">Pengisian Data Customer</h1>
             @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -86,17 +79,8 @@
                     <small class="text-red-500 text-xs">{{ $message }}</small>
                     @enderror
                 </div>
-                <div class="flex justify-between items-center mt-6">
-                    <button type="submit"
-                        class="w- py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">Submit</button>
-                    <a href="/cart">
-                        <button type="button"
-                            class="w- py-2 px-4 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-400">Back</button>
-                    </a>
-                </div>
             </form>
         </div>
-
         <!-- Summary Section -->
         <div class="bg-white rounded-3xl shadow-lg w-full max-w-4xl mt-8 p-6">
             <div class="flex justify-between items-center">
@@ -109,11 +93,7 @@
                     class="bg-green-500 text-white font-semibold px-6 py-3 rounded-full shadow-md hover:bg-green-600 transition w-full">
                     <a href="{{ route('formbook') }}">Proceed to Checkout</a>
                 </button>
-<<<<<<< HEAD
                 <a href="/booking"
-=======
-                <a href="{{ route('booking') }}"
->>>>>>> 7106edab443dc92df1b6933a1857d8fecaa66043
                     class="bg-gray-200 text-gray-700 font-semibold px-6 py-3 rounded-full shadow-md hover:bg-gray-300 transition w-full text-center">
                     Continue Shopping
                 </a>

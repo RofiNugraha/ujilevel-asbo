@@ -95,55 +95,6 @@
             </div>
         </section>
         <!-- Booking Section -->
-        <section id="form" class="mt-12 mb-12">
-            <div class="container mx-auto px-4">
-                <div class="flex flex-col md:flex-row items-center">
-                    <div class="md:w-1/3 mb-8 md:mb-0 md:mr-8">
-                        <img src="{{ asset('images/image.png') }}" alt="Contact Image"
-                            class="w-full h-auto rounded-lg shadow-lg">
-                    </div>
-                    <div class="md:w-2/3">
-                        <h4 class="text-3xl font-bold text-[gold] mb-3">Ada Pertanyaan?</h4>
-                        <h6 class="text-xl text-gray-300 mb-6">Silahkan kirimkan pesan jika ada yang ingin disampaikan.
-                        </h6>
-                        <form action="" method="post" class="space-y-6">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                <div class="col-span-1">
-                                    <input type="text"
-                                        class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                        placeholder="First name..." name="nama_depan">
-                                </div>
-                                <div class="col-span-1">
-                                    <input type="text"
-                                        class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                        placeholder="Second name..." name="nama_belakang">
-                                </div>
-                            </div>
-                            <div class="col-span-1">
-                                <input type="email"
-                                    class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    placeholder="E-mail..." name="email">
-                            </div>
-                            <div class="col-span-1">
-                                <input type="text"
-                                    class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    placeholder="No Telephone..." name="notelp">
-                            </div>
-                            <div class="col-span-1">
-                                <textarea name="pesan"
-                                    class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    rows="6" placeholder="Your Comment..."></textarea>
-                            </div>
-                            <div class="col-span-1">
-                                <button type="submit"
-                                    class="w-full bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold text-sm hover:bg-blue-600 transition mb-12">POST
-                                    COMMENT</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
     </div>
     <div class="min-h-screen bg-black">
         <!-- Contact Section -->

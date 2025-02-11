@@ -76,13 +76,10 @@ Route::get('/contact', function () {
 Route::get('/informasi', function () {
     return view('informasi');
 })->name('informasi');
-<<<<<<< HEAD
 
 Route::get('/formbook', function () {
     return view('formbook');
 })->name('formbook');
-=======
->>>>>>> 7106edab443dc92df1b6933a1857d8fecaa66043
 
 Route::get('/dashboard', function () {
     return view('dashboard');

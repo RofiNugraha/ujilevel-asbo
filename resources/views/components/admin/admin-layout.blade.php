@@ -61,9 +61,9 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Booking
                         </a>
-                        <a class="nav-link" href="">
+                        <a class="nav-link" href="{{ route('admin.kasir.index') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            Pantek
+                            Kasir
                         </a>
                         <a class="nav-link" href="{{ route('admin.produk.index') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
