@@ -109,6 +109,10 @@
                                         <th class="py-4 border-b-2 border-gray-300">Jam Booking</th>
                                     </tr>
                                 </thead>
+<<<<<<< HEAD
+                                <tbody> 
+=======
+>>>>>>> 7106edab443dc92df1b6933a1857d8fecaa66043
                                 <tbody>
                                     <tr class="border-b border-gray-300">
                                         <td class="p-4"></td>

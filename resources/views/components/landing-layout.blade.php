@@ -1,59 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASBO - Asgar System Booking Online</title>
+    <link rel="icon" href="{{ asset('images/logo.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com/3.2.0"></script>
-    <style>
-    /* Initial navbar style - transparent */
-    /* .navbar {
-        transition: background-color 0.3s ease-in-out;
-    }
-
-    .navbar.transparent {
-        background-color: transparent;
-    }
-
-    .navbar.solid {
-        background-color: rgba(0, 0, 0, 0.7);
-    } */
-
-    /* Styling for the image with a dark overlay */
-    /* .image-container {
-        height: 550px;
-        background: url('{{ asset('images/asgar.jpg') }}') no-repeat center center;
-        background-size: cover;
-        position: relative;
-    }
-
-    .image-container::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.8);
-        /* Dark overlay with 40% opacity */
-    /* z-index: 1;
-    }
-
-    .image-container>* {
-        position: relative;
-        z-index: 2;
-    } */
-    */
-    /* .text-gradient {
-        background: linear-gradient(to right, gold, white);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        text-fill-color: transparent;
-    } */
-    </style>
 </head>
 
 <body class="flex flex-col min-h-screen" style="background-color: black;">
