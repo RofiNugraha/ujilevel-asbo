@@ -33,16 +33,14 @@ class CheckoutController extends Controller
         $cart = Cart::where('user_id', $user->id)->firstOrFail();
         $totalHarga = $cart->items->sum('harga');
 
-        // Simpan data checkout ke database
         $checkout = Checkout::create([
             'user_id' => $user->id,
             'cart_id' => $cart->id,
             'total_harga' => $totalHarga,
-            'status_pembayaran' => 'pending',
+            'status_pembayaran' => 'belum bayar',
             'metode_pembayaran' => $request->metode_pembayaran,
         ]);
 
-        // Kosongkan keranjang setelah checkout
         $cart->items()->delete();
 
         return redirect()->route('checkout.success')->with('success', 'Checkout berhasil! Silakan lakukan pembayaran.');

@@ -14,6 +14,7 @@ class CartItem extends Model
         'cart_id', 
         'layanan_id', 
         'produk_id', 
+        'jenis_pesanan', 
         'quantity', 
         'subtotal', 
     ];

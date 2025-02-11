@@ -10,13 +10,20 @@ class Booking extends Model
 {
     use HasFactory;
 
+    protected $table = 'bookings';
+    protected $primaryKey = 'id';
+    public $incrementing = false;
+    protected $keyType = 'string';
+
     protected $fillable = [
+        'id', 
         'user_id', 
         'layanan_id', 
         'produk_id',
         'jam_booking', 
         'kursi',
         'status', 
+        'deskripsi', 
         'metode_pembayaran'
     ];
 

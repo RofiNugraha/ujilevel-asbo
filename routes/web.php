@@ -133,6 +133,15 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(
     Route::get('/admin/produk/{id}/edit', [AdminProdukController::class, 'edit'])->name('admin.produk.edit');
     Route::put('/admin/produk/{id}', [AdminProdukController::class, 'update'])->name('admin.produk.update');
     Route::delete('/admin/produk/{produk}', [AdminProdukController::class, 'destroy'])->name('admin.produk.destroy');
+
+    // booking
+    Route::get('/admin/booking', [AdminBookingController::class, 'index'])->name('admin.booking.index');
+    Route::get('/admin/booking/create', [AdminBookingController::class, 'create'])->name('admin.booking.create');
+    Route::post('/admin/booking', [AdminBookingController::class, 'store'])->name('admin.booking.store');
+    Route::get('/admin/booking/{booking}', [AdminBookingController::class, 'show'])->name('admin.booking.show');
+    Route::get('/admin/booking/{id}/edit', [AdminBookingController::class, 'edit'])->name('admin.booking.edit');
+    Route::put('/admin/booking/{id}', [AdminBookingController::class, 'update'])->name('admin.booking.update');
+    Route::delete('/admin/booking/{booking}', [AdminBookingController::class, 'destroy'])->name('admin.booking.destroy');
     
     // CRUD admin kasir
     Route::get('/admin/kasir', [AdminKasirController::class, 'index'])->name('admin.kasir.index');

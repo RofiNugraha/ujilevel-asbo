@@ -17,6 +17,7 @@
                                             <th>No.</th>
                                             <th>ID User</th>
                                             <th>ID Layanan</th>
+                                            <th>ID Produk</th>
                                             <th>Booking</th>
                                             <th>Kursi</th>
                                             <th>Status</th>
@@ -26,20 +27,19 @@
                                     </thead>
                                     <tbody>
                                         @php $no = 1; @endphp
-                                        @foreach($booking as $item)
+                                        @foreach($bookings as $item)
                                         <tr>
                                             <td>{{ $no++ }}</td>
                                             <td>{{ $item->user_id }}</td>
                                             <td>{{ $item->layanan_id }}</td>
+                                            <td>{{ $item->produk_id }}</td>
                                             <td>{{ $item->jam_booking }}</td>
                                             <td>{{ $item->kursi }}</td>
                                             <td>{{ $item->status }}</td>
                                             <td>{{ $item->status_pembayaran }}</td>
                                             <td>
-                                                <a href="{{ route('admin.booking.edit', $item) }}"
-                                                    class="btn btn-success btn-sm">Process</a>
-                                                <button class="btn btn-danger btn-sm"
-                                                    onclick="confirmDelete('{{ $item->id }}')">Delete</button>
+                                                <a href="" class="btn btn-warning btn-sm">Konfirmasi Booking</a>
+                                                <button class="btn btn-danger btn-sm">Delete</button>
                                             </td>
                                         </tr>
                                         @endforeach

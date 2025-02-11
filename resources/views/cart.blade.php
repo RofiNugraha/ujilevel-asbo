@@ -34,22 +34,28 @@
                             Remove
                         </button>
                     </form>
+
                 </div>
                 @empty
                 <p class="text-center text-gray-500">Your cart is empty.</p>
                 @endforelse
+                <div class="flex justify-between items-center">
+                    <h3 class="font-semibold text-lg">Total Price:</h3>
+                    <p class="font-bold text-2xl text-gray-800">Rp
+                        {{ number_format($cartItems->sum('subtotal'), 0, ',', '.') }}</p>
+                </div>
             </div>
             <h1 class="text-3xl font-semibold text-center text-gray-800 mb-4 mt-8">Pengisian Data Customer</h1>
             @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
                     @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
+                    <li style="color: red;">{{ $error }}</li>
                     @endforeach
                 </ul>
             </div>
             @endif
-            <form action="" method="post">
+            <form action="{{ route('booking.store') }}" method="post">
                 @csrf
                 <div class="mb-4">
                     <label for="kursi" class="block text-sm font-medium text-gray-700">Kursi</label>
@@ -74,27 +80,36 @@
                 <div class="mb-4">
                     <label for="deskripsi" class="block text-sm font-medium text-gray-700">Deskripsi</label>
                     <textarea name="deskripsi" id="deskripsi"
-                        class="mt-1 block w-full p-2.5 border-2 border-gray-300 rounded-md" rows="4"></textarea>
+                        class="mt-1 block w-full p-2.5 border-2 border-gray-300 rounded-md" rows="4"
+                        required></textarea>
                     @error('deskripsi')
                     <small class="text-red-500 text-xs">{{ $message }}</small>
                     @enderror
                 </div>
+                @if($cartItems->isNotEmpty())
+                @foreach ($cartItems as $index => $item)
+                <div class="flex items-center gap-4 border-b pb-4 mb-4">
+                    @if ($item->layanan)
+                    <input type="hidden" name="items[{{ $index }}][layanan_id]" value="{{ $item->layanan->id }}">
+                    @endif
+                    @if ($item->produk)
+                    <input type="hidden" name="items[{{ $index }}][produk_id]" value="{{ $item->produk->id }}">
+                    @endif
+                    <input type="hidden" name="items[{{ $index }}][quantity]" value="{{ $item->quantity }}">
+                </div>
+                @endforeach
+                @else
+                <p class="text-red-500">Keranjang Anda kosong!</p>
+                @endif
+
+                <button type="submit"
+                    class="bg-green-500 text-white font-semibold px-6 py-3 rounded-full shadow-md hover:bg-green-600 transition w-full">
+                    Proceed to Checkout</a></button>
             </form>
         </div>
         <!-- Summary Section -->
         <div class="bg-white rounded-3xl shadow-lg w-full max-w-4xl mt-8 p-6">
-            <div class="flex justify-between items-center">
-                <h3 class="font-semibold text-lg">Total Price:</h3>
-                <p class="font-bold text-2xl text-gray-800">Rp
-                    {{ number_format($cartItems->sum('subtotal'), 0, ',', '.') }}</p>
-            </div>
-            <div class="flex mt-6 gap-4">
-                <a href="{{ route('formbook', [
-                'layanan_id' => $cartItems->whereNotNull('layanan_id')->pluck('layanan_id')->implode(','),
-                'produk_id' => $cartItems->whereNotNull('produk_id')->pluck('produk_id')->implode(',')
-                ]) }}"
-                    class="bg-green-500 text-white font-semibold px-6 py-3 rounded-full shadow-md hover:bg-green-600 transition w-full">
-                    Proceed to Checkout </a>
+            <div class=" flex mt-6 gap-4">
                 <a href="{{ route('booking') }}" class="bg-gray-200 text-gray-700 font-semibold px-6 py-3 rounded-full shadow-md
                             hover:bg-gray-300 transition w-full text-center">
                     Continue Shopping

@@ -16,16 +16,24 @@ class BookingController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kursi' => 'required',
+            'kursi' => 'required|string',
             'jam_booking' => 'required|date|after:now',
+            'deskripsi' => 'required|string',
             'items' => 'required|array',
             'items.*.layanan_id' => 'nullable|exists:layanans,id',
             'items.*.produk_id' => 'nullable|exists:produks,id',
             'items.*.quantity' => 'required|integer|min:1',
-            'deskripsi' => 'nullable|string',
         ]);
 
+        $user = Auth::user();
+        $cart = Cart::where('user_id', $user->id)->first();
+
+        if (!$cart || $cart->cartItems->isEmpty()) {
+            return redirect()->back()->withErrors(['msg' => 'Keranjang Anda kosong. Silakan tambahkan layanan atau produk sebelum checkout.']);
+        }
+
         $jam_booking = Carbon::parse($request->jam_booking);
+
         $existingBooking = Booking::where('kursi', $request->kursi)
             ->whereBetween('jam_booking', [$jam_booking->copy()->subMinutes(40), $jam_booking->copy()->addMinutes(40)])
             ->exists();
@@ -34,57 +42,65 @@ class BookingController extends Controller
             return redirect()->back()->withErrors(['msg' => 'Jam booking berbenturan dengan customer lain.']);
         }
 
-        foreach ($request->items as $item) {
-            if (!isset($item['layanan_id']) && !isset($item['produk_id'])) {
-                return redirect()->back()->withErrors(['msg' => 'Harap pilih minimal satu layanan atau produk.']);
-            }
+        $layananIds = [];
+        $produkIds = [];
+        $total_harga = 0;
 
-            Booking::create([
-                'user_id' => Auth::id(),
-                'layanan_id' => $item['layanan_id'],
-                'produk_id' => $item['produk_id'],
-                'kursi' => $request->kursi,
-                'jam_booking' => $jam_booking,
-                'deskripsi' => $request->deskripsi,
-                'status' => 'pending',
-                'metode_pembayaran' => null,
-            ]);
+        foreach ($request->items as $item) {
+            if (!empty($item['layanan_id'])) {
+                $layanan = Layanan::find($item['layanan_id']);
+                if ($layanan) {
+                    $layananIds[] = $item['layanan_id'];
+                    $total_harga += $layanan->harga * $item['quantity'];
+                }
+            }
+            if (!empty($item['produk_id'])) {
+                $produk = Produk::find($item['produk_id']);
+                if ($produk) {
+                    $produkIds[] = $item['produk_id'];
+                    $total_harga += $produk->harga * $item['quantity'];
+                }
+            }
         }
+
+        $userId = Auth::id();
+
+        $layananId = !empty($layananIds) ? min($layananIds) : null;
+        $produkId = !empty($produkIds) ? min($produkIds) : null;
+
+        $idComponents = [$userId];
+        if ($layananId) {
+            $idComponents[] = $layananId;
+        }
+        if ($produkId) {
+            $idComponents[] = $produkId;
+        }
+        $uniqueSuffix = date('y');
+        $generatedId = substr(implode('', $idComponents) . $uniqueSuffix, 0, 10);
+
+        Booking::create([
+            'id' => $generatedId,
+            'user_id' => $userId,
+            'kursi' => $request->kursi,
+            'jam_booking' => $jam_booking,
+            'layanan_id' => json_encode($layananIds),
+            'produk_id' => json_encode($produkIds),
+            'status' => 'pending',
+            'deskripsi' => $request->deskripsi ?? '',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        Checkout::create([
+            'user_id' => $user->id,
+            'cart_id' => $cart->id,
+            'total_harga' => $total_harga,
+            'status_pembayaran' => 'belum bayar',
+            'metode_pembayaran' => '',
+        ]);
+
+        $cart->cartItems()->delete();
 
         return redirect()->route('dashboard')->with('success', 'Booking berhasil!');
-    }
-
-    public function formBook($layanan_id = null, $produk_id = null)
-    {
-        $cart = Cart::where('user_id', Auth::id())->first();
-        $cartItems = $cart ? $cart->cartItems()->with(['layanan', 'produk'])->get() : collect();
-
-        $layanan_ids = $layanan_id ? explode(',', $layanan_id) : [];
-        $produk_ids = $produk_id ? explode(',', $produk_id) : [];
-
-        $layanans = Layanan::whereIn('id', $layanan_ids)->get();
-        $produks = Produk::whereIn('id', $produk_ids)->get();
-
-        $cartCount = $cart->cartItems()->with(['layanan', 'produk'])->get();
-
-        foreach ($cartCount as $item) {
-            if ($item->produk_id) {
-                $item->gambar = $item->produk->gambar ?? 'default.jpg';
-            } elseif ($item->layanan_id) {
-                $item->gambar = $item->layanan->gambar ?? 'default.jpg';
-            } else {
-                $item->gambar = 'default.jpg';
-            }
-
-            if ($item->produk_id) {
-                $item->subtotal = $item->produk->harga * $item->quantity;
-            } elseif ($item->layanan_id) {
-                $item->subtotal = $item->layanan->harga * $item->quantity;
-            } else {
-                $item->subtotal = 0;
-            }
-        }
-
-        return view('formbook', compact('cartItems', 'cartCount', 'layanan_ids', 'produk_ids', 'layanans', 'produks'));
     }
 }
