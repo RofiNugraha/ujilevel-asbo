@@ -7,45 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASBO - Asgar System Booking Online</title>
     <script src="https://cdn.tailwindcss.com/3.2.0"></script>
-    <style>
-    /* Initial navbar style - transparent */
-    .navbar {
-        transition: background-color 0.3s ease-in-out;
-    }
-
-    .navbar.transparent {
-        background-color: transparent;
-    }
-
-    .navbar.solid {
-        background-color: rgba(0, 0, 0, 0.7);
-    }
-
-    /* Styling for the image with a dark overlay */
-    .image-container {
-        height: 550px;
-        background: url('{{ asset('images/asgar.jpg') }}') no-repeat center center;
-        background-size: cover;
-        position: relative;
-    }
-
-    .image-container::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.4);
-        /* Dark overlay with 40% opacity */
-        z-index: 1;
-    }
-
-    .image-container>* {
-        position: relative;
-        z-index: 2;
-    }
-    </style>
 </head>
 
 <body class="flex flex-col min-h-screen" style="background-color: black;">
@@ -53,23 +14,42 @@
         <div class="max-w-7xl mx-auto flex items-center justify-between py-4 px-6">
             <img src="{{ asset('images/logogold.png')}}" alt="ASBO Logo" class="w-[80px]">
             <div class="hidden lg:flex space-x-6 text-lg font-medium text-gray-900">
-                <a href="{{ route('dashboard') }}"
-                    class="nav-item text-gray-400 hover:text-[gold] hover:underline">Home</a>
+                <a href="{{ route('/') }}" class="nav-item text-gray-400 hover:text-[gold] hover:underline">Home</a>
                 <a href="{{ route('about') }}"
                     class="nav-item text-gray-400 hover:text-[gold] hover:underline">About</a>
                 <a href="{{ route('overview') }}"
                     class="nav-item text-gray-400 hover:text-[gold] hover:underline">Overview</a>
                 <a href="{{ route('booking') }}"
                     class="nav-item text-gray-400 hover:text-[gold] hover:underline">Booking</a>
-                <button class="nav-item relative text-gray-400 hover:text-[gold]">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-5-5.917V4a1 1 0 10-2 0v1.083A6.002 6.002 0 006 11v3.159c0 .417-.152.823-.405 1.136L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                    </svg>
-                </button>
+                <a href="{{ route('contact') }}"
+                    class="nav-item text-gray-400 hover:text-[gold] hover:underline">Contact</a>
+                <a href="{{ route('notif') }}">
+                    <button class="nav-item relative text-gray-400 hover:text-[gold]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-5-5.917V4a1 1 0 10-2 0v1.083A6.002 6.002 0 006 11v3.159c0 .417-.152.823-.405 1.136L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                        </svg>
+                    </button>
+                </a>
             </div>
-            <a class="bg-gray-200 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-300 hidden lg:inline-block" href="{{ route('login') }}">Login</a>
+            <div class="flex items-center space-x-4">
+                <a href="/cart" class="relative">
+                    <button class="p-3 rounded-full bg-gray-100 hover:bg-[gold] shadow-lg transition relative">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-6 h-6 text-gray-800">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-2 6h12M7 13L5.4 7M17 13l2 6M9 20a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z" />
+                        </svg>
+                        <!-- Badge Notifikasi -->
+                        <span id="cart-badge"
+                            class="hidden absolute -bottom-1 -right-1 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                        </span>
+                    </button>
+                </a>
+                <a href="{{ route('login') }}"
+                    class="block bg-gray-200 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-300">Login</a>
+            </div>
             <button id="menu-button" class="lg:hidden text-gray-700 hover:text-gray-900">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
@@ -90,12 +70,10 @@
                         d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-5-5.917V4a1 1 0 10-2 0v1.083A6.002 6.002 0 006 11v3.159c0 .417-.152.823-.405 1.136L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                 </svg>
             </button>
-            <a class="bg-gray-200 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-300 hidden lg:inline-block" href="{{ route('login') }}">Login</a>
+            <a class="bg-gray-200 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-300 hidden lg:inline-block"
+                href="{{ route('login') }}">Login</a>
         </div>
     </header>
-
-    <!-- Image Section -->
-    <div class="image-container"></div>
 
     <main class="flex-grow">
         {{ $slot }}

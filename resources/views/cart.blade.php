@@ -101,22 +101,22 @@
                 <input type="hidden" name="items[{{ $index }}][layanan_id]" value="{{ optional($item->layanan)->id }}">
                 <input type="hidden" name="items[{{ $index }}][quantity]" value="{{ $item->quantity }}">
                 @endforeach
-
-                <button type="submit"
-                    class="bg-green-500 text-white font-semibold px-6 py-3 rounded-full shadow-md hover:bg-green-600 transition w-full">
-                    Proceed to Checkout
-                </button>
+                @else
+                <p class="text-red-500">Keranjang Anda kosong!</p>
+                @endif
+                <div class="bg-white rounded-3xl shadow-lg w-full max-w-4xl mt-8 p-6">
+                    <div class=" flex mt-6 gap-4">
+                        <button type="submit"
+                            class="bg-green-500 text-white font-semibold px-6 py-3 rounded-full shadow-md hover:bg-green-600 transition w-full">
+                            Proceed to Checkout</button>
+                        <a href="{{ route('booking') }}" class="bg-gray-200 text-gray-700 font-semibold px-6 py-3 rounded-full shadow-md
+                            hover:bg-gray-300 transition w-full text-center">
+                            Continue Shopping
+                        </a>
+                    </div>
+                </div>
             </form>
-            @endif
-        </div>
-
-        <div class="bg-white rounded-3xl shadow-lg w-full max-w-4xl mt-8 p-6">
-            <div class="flex mt-6 gap-4">
-                <a href="" class="bg-gray-200 text-gray-700 font-semibold px-6 py-3 rounded-full shadow-md
-                    hover:bg-gray-300 transition w-full text-center">
-                    Continue Shopping
-                </a>
-            </div>
+            >>>>>>> 22fb2c7431b36e3c42bf4f59d346340c85c0dbe6
         </div>
     </main>
     @if(session('error') || session('success'))
