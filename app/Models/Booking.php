@@ -10,21 +10,16 @@ class Booking extends Model
 {
     use HasFactory;
 
-    protected $table = 'bookings';
-    protected $primaryKey = 'id';
-    public $incrementing = false;
-    protected $keyType = 'string';
-
     protected $fillable = [
-        'id', 
-        'user_id', 
-        'layanan_id', 
-        'produk_id',
-        'jam_booking', 
-        'kursi',
-        'status', 
-        'deskripsi', 
-        'metode_pembayaran'
+        'id', 'user_id', 'layanan_id', 'checkout_id', 
+        'jam_booking', 'kursi', 'status'
+    ];
+
+    protected $casts = [
+        'id' => 'string',
+        'jam_booking' => 'datetime',
+        'kursi' => 'string',
+        'status' => 'string'
     ];
 
     public function user(): BelongsTo {
@@ -35,7 +30,7 @@ class Booking extends Model
         return $this->belongsTo(Layanan::class);
     }
 
-    public function produk(): BelongsTo {
-        return $this->belongsTo(Produk::class);
+    public function checkout(): BelongsTo {
+        return $this->belongsTo(Checkout::class);
     }
 }

@@ -11,11 +11,14 @@ class Payment extends Model
     use HasFactory;
 
     protected $fillable = [
-        'checkout_id', 
-        'metode_pembayaran', 
-        'status'
+        'checkout_id', 'total_harga', 'metode_pembayaran', 'status'
     ];
-    
+
+    protected $casts = [
+        'metode_pembayaran' => 'string',
+        'status' => 'string'
+    ];
+
     public function checkout(): BelongsTo {
         return $this->belongsTo(Checkout::class);
     }

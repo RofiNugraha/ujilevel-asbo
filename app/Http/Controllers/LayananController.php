@@ -10,8 +10,7 @@ class LayananController extends Controller
 {
     public function index()
     {
-        $produks = Produk::all();
         $layanans = Layanan::all();
-        return view('booking', compact('layanans', 'produks'));
+        return view('booking', compact('layanans'));
     }
 }

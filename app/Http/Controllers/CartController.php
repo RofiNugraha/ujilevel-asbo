@@ -56,13 +56,11 @@ class CartController extends Controller
 
             $layanan = Layanan::findOrFail($request->layanan_id);
 
-            // Cek jika layanan masih ada di cart
             $cartItem = $cart->cartItems()->where('layanan_id', $request->layanan_id)->first();
             if ($cartItem) {
                 return redirect()->back()->with('error', 'Layanan ini masih ada di keranjang. Harap hapus sebelum menambah lagi.');
             }
 
-            // Cek jika layanan bernama "Haircut" dan sudah ada di cart
             $existingHaircut = $cart->cartItems()->whereHas('layanan', function ($query) {
                 $query->where('nama_layanan', 'Haircut');
             })->exists();
@@ -71,7 +69,6 @@ class CartController extends Controller
                 return redirect()->back()->with('error', 'Layanan Haircut masih ada di keranjang. Harap hapus sebelum menambah lagi.');
             }
 
-            // Tambahkan layanan ke cart jika belum ada
             $cart->cartItems()->create([
                 'layanan_id' => $request->layanan_id,
                 'produk_id' => null,
@@ -86,7 +83,6 @@ class CartController extends Controller
 
             $produk = Produk::findOrFail($request->produk_id);
 
-            // Cek jika produk sudah ada di cart
             $cartItem = $cart->cartItems()->where('produk_id', $request->produk_id)->first();
             if ($cartItem) {
                 $cartItem->increment('quantity', 1);

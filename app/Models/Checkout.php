@@ -11,11 +11,15 @@ class Checkout extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 
-        'cart_id', 
-        'total_harga', 
-        'status_pembayaran', 
-        'metode_pembayaran',
+    protected $fillable = [
+        'id', 'user_id', 'cart_id', 'total_harga', 
+        'status_pembayaran', 'metode_pembayaran'
+    ];
+
+    protected $casts = [
+        'id' => 'string',
+        'status_pembayaran' => 'string',
+        'metode_pembayaran' => 'string'
     ];
 
     public function user(): BelongsTo {

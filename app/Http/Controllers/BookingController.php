@@ -10,6 +10,7 @@ use App\Models\Produk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class BookingController extends Controller
 {
@@ -75,11 +76,11 @@ class BookingController extends Controller
         if ($produkId) {
             $idComponents[] = $produkId;
         }
-        $uniqueSuffix = date('y');
+        $uniqueSuffix = date('y') . uniqid();
         $generatedId = substr(implode('', $idComponents) . $uniqueSuffix, 0, 10);
 
         Booking::create([
-            'id' => $generatedId,
+            'id' => (string) Str::uuid(),
             'user_id' => $userId,
             'kursi' => $request->kursi,
             'jam_booking' => $jam_booking,

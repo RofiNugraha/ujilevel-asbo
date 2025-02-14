@@ -6,28 +6,20 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
-    {
+    public function up() {
         Schema::create('cart_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('cart_id')->constrained('carts')->onDelete('cascade');
-            $table->foreignId('layanan_id')->nullable()->constrained('layanans')->onDelete('cascade');
-            $table->foreignId('produk_id')->nullable()->constrained('produks')->onDelete('cascade');
-            $table->enum('jenis_pesanan', ['produk', 'layanan', 'keduanya']);
+            $table->string('layanan_id', 10);
             $table->integer('quantity');
             $table->decimal('subtotal', 10, 2);
             $table->timestamps();
+
+            $table->foreign('layanan_id')->references('id')->on('layanans')->onDelete('cascade');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
+    public function down() {
         Schema::dropIfExists('cart_items');
     }
 };
