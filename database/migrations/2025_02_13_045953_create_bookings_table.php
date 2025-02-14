@@ -6,30 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
-    {
+    public function up() {
         Schema::create('bookings', function (Blueprint $table) {
-            $table->string('id', 10)->primary();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->string('id', 20)->primary();
+            $table->bigInteger('user_id')->unsigned();
             $table->json('layanan_id');
-            $table->json('produk_id')->nullable();
             $table->dateTime('jam_booking');
             $table->enum('kursi', ['satu', 'dua']);
-            $table->text('deskripsi');
             $table->string('status', 20);
-            $table->string('metode_pembayaran', 20)->nullable();
+            $table->string('metode_pembayaran', 20);
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
+    public function down() {
         Schema::dropIfExists('bookings');
     }
 };

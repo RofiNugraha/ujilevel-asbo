@@ -18,12 +18,19 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+
+     protected $primaryKey = 'id';
+    public $incrementing = false;
+    protected $keyType = 'string';
     protected $fillable = [
+        'id',
         'name',
         'email',
         'phone',
         'address',
         'password',
+        'nama_lengkap',
+        'image',
         'usertype',
     ];
 
@@ -55,8 +62,12 @@ class User extends Authenticatable
         ];
     }
 
-    public function bookings(): HasMany {
-        return $this->hasMany(Booking::class);
+    protected static function boot() {
+        parent::boot();
+        
+        static::creating(function ($user) {
+            $user->id = str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT); 
+        });
     }
 
     public function carts(): HasMany {
@@ -65,5 +76,13 @@ class User extends Authenticatable
 
     public function checkouts(): HasMany {
         return $this->hasMany(Checkout::class);
+    }
+
+    public function bookings(): HasMany {
+        return $this->hasMany(Booking::class);
+    }
+
+    public function notifications(): HasMany {
+        return $this->hasMany(Notification::class);
     }
 }

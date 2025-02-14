@@ -157,7 +157,38 @@ body {
             </li>
         </ul>
     </nav>
+<<<<<<< HEAD
 
+=======
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion" id="sidenavAccordion" style="background-color: black;">
+                <div class="sb-sidenav-menu">
+                    <div class="nav text-white">
+                        <div class="sb-sidenav-menu-heading"></div>
+                        <a class="nav-link" href="{{ route('admin.dashboard') }}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Dashboard
+                        </a>
+                        <a class="nav-link" href="{{ route('admin.booking.index') }}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Booking
+                        </a>
+                        <a class="nav-link" href="{{ route('admin.kasir.index') }}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Kasir
+                        </a>
+                        <a class="nav-link" href="{{ route('admin.layanan.index') }}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Layanan
+                        </a>
+                    </div>
+                </div>
+        </div>
+        </nav>
+    </div>
+    </div>
+>>>>>>> 9cbb95e4a0e71c29cd310be3b2074c541a147879
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
     </script>
     <script src="{{ asset('js/scripts.js') }}"></script>
