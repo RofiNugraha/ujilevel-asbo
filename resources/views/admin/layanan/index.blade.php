@@ -4,15 +4,16 @@
             <main>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Layanan List</h1>
-                    <a href="{{ route('admin.layanan.create') }}" class="btn btn-primary mb-3">Tambah Layanan</a>
+                    <a href="{{ route('admin.layanan.create') }}" class="btn btn-primary mb-3">
+                        <i class="fas fa-plus"></i> Tambah Layanan
+                    </a>
                     <div class="card mb-4">
                         <div class="card-header">
-                            <i class="fas fa-table me-1"></i>
-                            Daftar Layanan
+                            <i class="fas fa-table me-1"></i> Daftar Layanan
                         </div>
                         <div class="card-body">
                             <table class="table" id="myTable">
-                                <thead class="table-dark">
+                                <thead class="bg-warning">
                                     <tr>
                                         <th>Nama Layanan</th>
                                         <th>Deskripsi</th>
@@ -33,9 +34,23 @@
                                         </td>
                                         <td>
                                             <a href="{{ route('admin.layanan.edit', $layanan->id) }}"
-                                                class="btn btn-warning btn-sm">Edit</a>
-                                            <button class="btn btn-danger btn-sm"
-                                                onclick="showDeleteModal({{ $layanan->id }})">Delete</button>
+                                                class="btn btn-warning btn-sm rounded-circle" data-bs-toggle="tooltip"
+                                                title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+
+                                            <!-- Form Delete -->
+                                            <form id="deleteForm-{{ $layanan->id }}"
+                                                action="{{ route('admin.layanan.destroy', $layanan->id) }}"
+                                                method="POST" style="display: inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button"
+                                                    class="btn btn-danger btn-sm rounded-circle delete-btn"
+                                                    data-id="{{ $layanan->id }}" data-bs-toggle="tooltip" title="Hapus">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -44,51 +59,37 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Delete Confirmation Modal -->
-                <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                Apakah Anda yakin ingin menghapus layanan ini?
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                <form id="deleteForm" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Hapus</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </main>
 
             <script>
-            function showDeleteModal(layananId) {
-                const deleteForm = document.getElementById('deleteForm');
-                deleteForm.action = `/admin/layanan/${layananId}`;
+            document.addEventListener("DOMContentLoaded", function() {
+                $('#myTable').DataTable();
 
-                Swal.fire({
-                    title: "Apakah Anda yakin?",
-                    text: "Data yang dihapus tidak bisa dikembalikan!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "Ya, hapus!",
-                    cancelButtonText: "Batal"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        deleteForm.submit();
-                    }
+                document.querySelectorAll('.delete-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const layananId = this.getAttribute('data-id');
+                        Swal.fire({
+                            title: "Apakah Anda yakin?",
+                            text: "Data yang dihapus tidak bisa dikembalikan!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonText: "Ya, hapus!",
+                            cancelButtonText: "Batal"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                document.getElementById(`deleteForm-${layananId}`)
+                                    .submit();
+                            }
+                        });
+                    });
                 });
-            }
+
+                // Inisialisasi tooltip
+                var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+                tooltipTriggerList.map(function(tooltipTriggerEl) {
+                    return new bootstrap.Tooltip(tooltipTriggerEl);
+                });
+            });
             </script>
         </div>
     </div>
