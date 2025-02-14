@@ -12,7 +12,7 @@ class Booking extends Model
 
     protected $fillable = [
         'id', 'user_id', 'layanan_id', 'checkout_id', 
-        'jam_booking', 'kursi', 'status'
+        'jam_booking', 'kursi', 'status', 'metode_pembayaran',
     ];
 
     protected $casts = [

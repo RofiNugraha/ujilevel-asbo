@@ -116,5 +116,6 @@
         </div>
         @endforeach
     </main>
+    @endguest
+
 </x-admin.home-layout>
-@endguest

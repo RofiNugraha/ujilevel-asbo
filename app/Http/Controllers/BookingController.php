@@ -6,7 +6,6 @@ use App\Models\Booking;
 use App\Models\Cart;
 use App\Models\Checkout;
 use App\Models\Layanan;
-use App\Models\Produk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -22,7 +21,6 @@ class BookingController extends Controller
             'deskripsi' => 'required|string',
             'items' => 'required|array',
             'items.*.layanan_id' => 'nullable|exists:layanans,id',
-            'items.*.produk_id' => 'nullable|exists:produks,id',
             'items.*.quantity' => 'required|integer|min:1',
         ]);
 
@@ -30,7 +28,7 @@ class BookingController extends Controller
         $cart = Cart::where('user_id', $user->id)->first();
 
         if (!$cart || $cart->cartItems->isEmpty()) {
-            return redirect()->back()->withErrors(['msg' => 'Keranjang Anda kosong. Silakan tambahkan layanan atau produk sebelum checkout.']);
+            return redirect()->back()->withErrors(['msg' => 'Keranjang Anda kosong. Silakan tambahkan layanan sebelum checkout.']);
         }
 
         $jam_booking = Carbon::parse($request->jam_booking);
@@ -44,7 +42,6 @@ class BookingController extends Controller
         }
 
         $layananIds = [];
-        $produkIds = [];
         $total_harga = 0;
 
         foreach ($request->items as $item) {
@@ -55,49 +52,47 @@ class BookingController extends Controller
                     $total_harga += $layanan->harga * $item['quantity'];
                 }
             }
-            if (!empty($item['produk_id'])) {
-                $produk = Produk::find($item['produk_id']);
-                if ($produk) {
-                    $produkIds[] = $item['produk_id'];
-                    $total_harga += $produk->harga * $item['quantity'];
-                }
-            }
+        }
+
+        if (empty($layananIds)) {
+            return redirect()->back()->withErrors(['msg' => 'Silakan pilih minimal satu layanan sebelum melanjutkan booking.']);
         }
 
         $userId = Auth::id();
+        $layananKey = implode('', $layananIds);
+        $timestamp = now()->format('ymdHis');
+        $randomString = Str::random(5);
 
-        $layananId = !empty($layananIds) ? min($layananIds) : null;
-        $produkId = !empty($produkIds) ? min($produkIds) : null;
+        $generatedId = substr(md5($userId . $layananKey . $timestamp . $randomString), 0, 10);
 
-        $idComponents = [$userId];
-        if ($layananId) {
-            $idComponents[] = $layananId;
+        while (Booking::where('id', $generatedId)->exists()) {
+            $randomString = Str::random(5);
+            $generatedId = substr(md5($userId . $layananKey . now()->format('ymdHis') . $randomString), 0, 10);
         }
-        if ($produkId) {
-            $idComponents[] = $produkId;
-        }
-        $uniqueSuffix = date('y') . uniqid();
-        $generatedId = substr(implode('', $idComponents) . $uniqueSuffix, 0, 10);
 
         Booking::create([
-            'id' => (string) Str::uuid(),
+            'id' => $generatedId,
             'user_id' => $userId,
             'kursi' => $request->kursi,
             'jam_booking' => $jam_booking,
             'layanan_id' => json_encode($layananIds),
-            'produk_id' => json_encode($produkIds),
             'status' => 'pending',
-            'deskripsi' => $request->deskripsi ?? '',
+            'metode_pembayaran' => 'belum dipilih',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
+        do {
+            $checkoutId = random_int(1000000000, 9999999999);
+        } while (Checkout::where('id', $checkoutId)->exists());
+
         Checkout::create([
+            'id' => $checkoutId,
             'user_id' => $user->id,
             'cart_id' => $cart->id,
             'total_harga' => $total_harga,
             'status_pembayaran' => 'belum bayar',
-            'metode_pembayaran' => '',
+            'metode_pembayaran' => 'belum dipilih',
         ]);
 
         $cart->cartItems()->delete();
