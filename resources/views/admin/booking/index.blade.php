@@ -12,8 +12,8 @@
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table" id="bookings-table">
-                                    <thead>
-                                        <tr>
+                                    <thead class="bg-warning">
+                                        <tr class="text-dark">
                                             <th>No.</th>
                                             <th>ID User</th>
                                             <th>ID Layanan</th>
@@ -66,12 +66,6 @@
                     });
                 }
                 </script>
-
-                <form id="delete-form-{{ $item->id }}" action="{{ route('admin.booking.destroy', $item->id) }}"
-                    method="POST" style="display: none;">
-                    @csrf
-                    @method('DELETE')
-                </form>
             </main>
         </div>
     </div>

@@ -3,8 +3,7 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="">.</h1>
-                    <h1 class="mt-2">Layanan List</h1>
+                    <h1 class="mt-4">Layanan List</h1>
                     <a href="{{ route('admin.layanan.create') }}" class="btn btn-primary mb-3">Tambah Layanan</a>
                     <div class="card mb-4">
                         <div class="card-header">

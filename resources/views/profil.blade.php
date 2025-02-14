@@ -1,46 +1,53 @@
 <x-landing-layout>
-    <main class="bg-gray-100 w-full max-w-4xl min-h-schreen my-16 p-8 rounded-lg shadow-md m-auto">
+    <main class="bg-gray-100 w-full max-w-3xl min-h-screen my-12 mx-auto rounded-lg shadow-lg overflow-hidden">
         <!-- User Info Section -->
-        <section class="bg-blue-900 text-white p-6 rounded-t-lg">
-            <h2 class="text-2xl font-semibold text-center">Profile</h2>
+        <section class="bg-gradient-to-r from-blue-700 to-blue-900 text-white p-8 text-center">
+            <h2 class="text-3xl font-semibold">Profile</h2>
         </section>
-        <section class="flex flex-col items-center mt-4">
+        
+        <section class="flex flex-col items-center py-6">
+            <div class="w-24 h-24 bg-gray-300 rounded-full flex items-center justify-center text-3xl font-bold text-gray-600">
+                {{ substr($user->name, 0, 1) }}
+            </div>
             <h3 class="text-2xl font-bold mt-4">{{ $user->name }}</h3>
-            <p class="text-xl mt-2">{{ $user->email }}</p>
+            <p class="text-lg text-gray-600 mt-1">{{ $user->email }}</p>
         </section>
-        <hr class="border-t mt-6">
+        
+        <hr class="border-t border-gray-300">
 
         <!-- Personal Details Section -->
-        <section class="mt-4 px-4">
-            <h3 class="text-2xl font-bold">Personal Details</h3>
-            <p class="mt-2">No. Handphone: {{ $user->nomor_hp }}</p>
+        <section class="p-6">
+            <h3 class="text-xl font-semibold text-gray-700">Personal Details</h3>
+            <p class="mt-2 text-gray-600">No. Handphone: <span class="font-medium">{{ $user->nomor_hp }}</span></p>
         </section>
-        <hr class="border-t mt-6">
+        
+        <hr class="border-t border-gray-300">
 
         <!-- Booking Details Section -->
-        <section class="mt-4 px-4">
-            <h3 class="text-2xl font-bold">Detail Bookings</h3>
-            <div class="bg-gray-300 p-4 rounded-lg mt-2 flex justify-between items-center">
+        <section class="p-6">
+            <h3 class="text-xl font-semibold text-gray-700">Detail Bookings</h3>
+            <div class="bg-white p-4 rounded-lg mt-3 shadow-md flex justify-between items-center">
                 <div>
-                    <p>Nama: Ayu</p>
-                    <p>Layanan: Style Hair</p>
-                    <p>Jam Booking: 12.00</p>
+                    <p class="text-gray-800 font-medium">Nama: <span class="font-semibold">Ayu</span></p>
+                    <p class="text-gray-700">Layanan: <span class="font-medium">Style Hair</span></p>
+                    <p class="text-gray-700">Jam Booking: <span class="font-medium">12.00</span></p>
                 </div>
-                <div>
-                    <button class="bg-green-600 text-white py-2 px-4 rounded">
-                        <a href="{{ route('viewbooking') }}">View Detail</a>
-                    </button>
-                </div>
+                <a href="{{ route('viewbooking') }}" class="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg shadow">
+                    View Detail
+                </a>
             </div>
         </section>
+        
+        <hr class="border-t border-gray-300">
+        
         <!-- Actions Section -->
-        <div class="flex justify-between mx-4 mt-6">
-            <button class="bg-blue-600 text-white py-2 px-4 rounded">
-                <a href="{{ route('editprofil') }}">Edit Profil</a>
-            </button>
+        <div class="flex justify-between p-6">
+            <a href="{{ route('editprofil') }}" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg shadow">
+                Edit Profil
+            </a>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button type="submit" class="btn btn-link">Logout</button>
+                <button type="submit" class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg shadow">Logout</button>
             </form>
         </div>
     </main>

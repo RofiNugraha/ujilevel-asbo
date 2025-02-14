@@ -101,20 +101,18 @@
                 @else
                 <p class="text-red-500">Keranjang Anda kosong!</p>
                 @endif
-
-                <button type="submit"
-                    class="bg-green-500 text-white font-semibold px-6 py-3 rounded-full shadow-md hover:bg-green-600 transition w-full">
-                    Proceed to Checkout</a></button>
-            </form>
-        </div>
-        <!-- Summary Section -->
-        <div class="bg-white rounded-3xl shadow-lg w-full max-w-4xl mt-8 p-6">
-            <div class=" flex mt-6 gap-4">
-                <a href="{{ route('booking') }}" class="bg-gray-200 text-gray-700 font-semibold px-6 py-3 rounded-full shadow-md
+                <div class="bg-white rounded-3xl shadow-lg w-full max-w-4xl mt-8 p-6">
+                    <div class=" flex mt-6 gap-4">
+                        <button type="submit"
+                            class="bg-green-500 text-white font-semibold px-6 py-3 rounded-full shadow-md hover:bg-green-600 transition w-full">
+                            Proceed to Checkout</button>
+                        <a href="{{ route('booking') }}" class="bg-gray-200 text-gray-700 font-semibold px-6 py-3 rounded-full shadow-md
                             hover:bg-gray-300 transition w-full text-center">
-                    Continue Shopping
-                </a>
-            </div>
+                            Continue Shopping
+                        </a>
+                    </div>
+                </div>
+            </form>
         </div>
     </main>
 </x-landing-layout>
