@@ -17,7 +17,6 @@
                                             <th>No.</th>
                                             <th>Nama</th>
                                             <th>Layanan</th>
-                                            <th>Produk</th>
                                             <th>Booking</th>
                                             <th>Kursi</th>
                                             <th>Status</th>
@@ -46,38 +45,23 @@
                                                 @endif
                                                 @endforeach
                                             </td>
-                                            <td>
-                                                @php
-                                                $produkItems = json_decode($item->produk_id, true) ?? [];
-                                                $produkCounts = [];
-
-                                                foreach ($produkItems as $produkItem) {
-                                                $produkCounts[$produkItem['id']] = ($produkCounts[$produkItem['id']] ??
-                                                0) + $produkItem['quantity'];
-                                                }
-                                                @endphp
-
-                                                @foreach($produkCounts as $produkId => $quantity)
-                                                @php
-                                                $produk = App\Models\Produk::find($produkId);
-                                                @endphp
-                                                @if($produk)
-                                                <span class="badge bg-success">
-                                                    {{ $produk->nama_produk }} (x{{ $quantity }})
-                                                </span>
-                                                @endif
-                                                @endforeach
-                                            </td>
                                             <td>{{ $item->jam_booking }}</td>
                                             <td>{{ $item->kursi }}</td>
                                             <td>{{ $item->status }}</td>
                                             <td>{{ $item->status_pembayaran }}</td>
                                             <td>
-                                                <a href="{{ route('admin.booking.update', $item->id) }}"
-                                                    class="btn btn-warning btn-sm">Konfirmasi
-                                                    Booking</a>
-                                                <button onclick="confirmDelete({{ $item->id }})"
-                                                    class="btn btn-danger btn-sm">Delete</button>
+                                                <a href="{{ route('admin.booking.edit', $item->id) }}"
+                                                    class="btn btn-warning btn-sm">
+                                                    Konfirmasi Booking
+                                                </a>
+                                                <form id="delete-form-{{ $item->id }}"
+                                                    action="{{ route('admin.booking.destroy', $item->id) }}"
+                                                    method="POST" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button" class="btn btn-danger btn-sm"
+                                                        onclick="confirmDelete({{ $item->id }})">Delete</button>
+                                                </form>
                                             </td>
                                         </tr>
                                         @endforeach

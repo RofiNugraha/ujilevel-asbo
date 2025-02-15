@@ -87,16 +87,6 @@
                     @enderror
                 </div>
 
-                <div class="mb-4">
-                    <label for="deskripsi" class="block text-sm font-medium text-gray-700">Deskripsi</label>
-                    <textarea name="deskripsi" id="deskripsi"
-                        class="mt-1 block w-full p-2.5 border-2 border-gray-300 rounded-md" rows="4"
-                        required></textarea>
-                    @error('deskripsi')
-                    <small class="text-red-500 text-xs">{{ $message }}</small>
-                    @enderror
-                </div>
-
                 @foreach ($cartItems as $index => $item)
                 <input type="hidden" name="items[{{ $index }}][layanan_id]" value="{{ optional($item->layanan)->id }}">
                 <input type="hidden" name="items[{{ $index }}][quantity]" value="{{ $item->quantity }}">
@@ -116,7 +106,6 @@
                     </div>
                 </div>
             </form>
-            >>>>>>> 22fb2c7431b36e3c42bf4f59d346340c85c0dbe6
         </div>
     </main>
     @if(session('error') || session('success'))

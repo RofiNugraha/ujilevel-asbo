@@ -3,66 +3,93 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="">.</h1>
-                    <h1 class=" mt-2">Booking Confirmation</h1>
+                    <h1 class="mt-4">Booking Confirmation</h1>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Nama Pelanggan</label>
+                        <input type="text" class="form-control" value="{{ $bookings->user->name }}" readonly>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Layanan yang Dipesan</label>
+                        <div class="row justify-content-left">
+                            @foreach($layanans as $layanan)
+                            <div class="col-md-2 mb-3">
+                                <div class="card shadow-sm border-0 text-center p-2">
+                                    <img src="{{ asset('storage/' . $layanan->gambar) }}" class="mx-auto"
+                                        alt="{{ $layanan->nama_layanan }}"
+                                        style="height: 120px; width: 120px; object-fit: cover; border-radius: 10px;">
+
+                                    <div class="card-body">
+                                        <p class="card-title fw-bold mb-1" style="font-size: 14px;">
+                                            {{ $layanan->nama_layanan }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+
                     <form action="{{ route('admin.booking.update', $bookings->id) }}" method="POST">
                         @csrf
                         @method('PUT')
 
-                        @foreach ($layanans as $layanan)
-                        <div>
-                            <img src="{{ asset('storage/' . $layanan->gambar) }}" alt="{{ $layanan->nama_layanan }}"
-                                width="100">
-                            <p><strong>Nama:</strong> {{ $layanan->nama_layanan }}</p>
-                            <p><strong>Deskripsi:</strong> {{ $layanan->deskripsi }}</p>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">ID Layanan</label>
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-2">
+                                @foreach($layanans as $layanan)
+                                <div class="p-3 border rounded-lg bg-white shadow-sm mb-4">
+                                    <p class="text-sm font-semibold">{{ $layanan->nama_layanan }}</p>
+                                    <p class="text-xs text-gray-500">ID: <span
+                                            class="font-mono text-blue-600">{{ $layanan->id }}</span></p>
+                                </div>
+                                @endforeach
+                            </div>
                         </div>
-                        @endforeach
-                        <label for="layanan_id">ID Layanan:</label>
-                        <input type="text" name="layanan_id" value="{{ old('layanan_id', $bookings->layanan_id) }}"
-                            readonly>
 
-                        @foreach ($produks as $produk)
-                        <div>
-                            <img src="{{ asset('storage/' . $produk->gambar) }}" alt="{{ $produk->nama_produk }}"
-                                width="100">
-                            <p><strong>Nama:</strong> {{ $produk->nama_produk }}</p>
-                            <p><strong>Deskripsi:</strong> {{ $produk->deskripsi }}</p>
-                        </div>
-                        @endforeach
-                        <label for="produk_id">ID Produk:</label>
-                        <input type="text" name="produk_id" value="{{ old('produk_id', $bookings->produk_id) }}"
-                            readonly>
-
-                        <label for="jam_booking">Jam Booking:</label>
-                        <input type="datetime-local" name="jam_booking" id="jam_booking"
-                            value="{{ old('jam_booking', \Carbon\Carbon::parse($bookings->jam_booking)->format('Y-m-d\TH:i')) }}"
-                            class="mt-1 block w-full p-2.5 border-2 border-gray-300 rounded-md" required>
-
-
-                        <label for="kursi">Kursi:</label>
-                        <input type="text" name="kursi" value="{{ old('kursi', $bookings->kursi) }}" readonly>
-
-                        <label for="deskripsi">Deskripsi:</label>
-                        <textarea name="deskripsi" readonly>{{ old('deskripsi', $bookings->deskripsi) }}</textarea>
-
-                        <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
-                        <select name="status" id="status"
-                            class="mt-1 block w-full p-2.5 border-2 border-gray-300 rounded-md">
-                            <option value="pending"
-                                {{ old('status', $bookings->status) == 'pending' ? 'selected' : '' }}>Pending</option>
-                            <option value="batal" {{ old('status', $bookings->status) == 'batal' ? 'selected' : '' }}>
-                                Batal</option>
-                            <option value="konfirmasi"
-                                {{ old('status', $bookings->status) == 'konfirmasi' ? 'selected' : '' }}>Konfirmasi
+                        <select name="layanan_id[]" class="form-select" multiple hidden>
+                            @foreach($layanans as $layanan)
+                            <option value="{{ $layanan->id }}"
+                                {{ in_array($layanan->id, json_decode($bookings->layanan_id, true)) ? 'selected' : '' }}>
+                                {{ $layanan->nama_layanan }}
                             </option>
-                            <option value="selesai"
-                                {{ old('status', $bookings->status) == 'selesai' ? 'selected' : '' }}>Selesai</option>
+                            @endforeach
                         </select>
-                        @error('status')
-                        <small class="text-red-500 text-xs">{{ $message }}</small>
-                        @enderror
 
-                        <button type="submit">Update Booking</button>
+
+                        <div class="mb-3">
+                            <label for="jam_booking" class="form-label fw-bold">Jam Booking</label>
+                            <input type="datetime-local" name="jam_booking" id="jam_booking"
+                                value="{{ old('jam_booking', \Carbon\Carbon::parse($bookings->jam_booking)->format('Y-m-d\TH:i')) }}"
+                                class="form-control" readonly>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Kursi</label>
+                            <input type="text" name="kursi" class="form-control" value="{{ $bookings->kursi }}"
+                                readonly>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="status" class="form-label fw-bold">Status</label>
+                            <select name="status" id="status" class="form-select">
+                                <option value="pending"
+                                    {{ old('status', $bookings->status) == 'pending' ? 'selected' : '' }}>Pending
+                                </option>
+                                <option value="batal"
+                                    {{ old('status', $bookings->status) == 'batal' ? 'selected' : '' }}>
+                                    Batal</option>
+                                <option value="konfirmasi"
+                                    {{ old('status', $bookings->status) == 'konfirmasi' ? 'selected' : '' }}>Konfirmasi
+                                </option>
+                                <option value="selesai"
+                                    {{ old('status', $bookings->status) == 'selesai' ? 'selected' : '' }}>Selesai
+                                </option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Update Booking</button>
                     </form>
                 </div>
             </main>

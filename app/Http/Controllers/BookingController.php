@@ -18,7 +18,6 @@ class BookingController extends Controller
         $request->validate([
             'kursi' => 'required|string',
             'jam_booking' => 'required|date|after:now',
-            'deskripsi' => 'required|string',
             'items' => 'required|array',
             'items.*.layanan_id' => 'nullable|exists:layanans,id',
             'items.*.quantity' => 'required|integer|min:1',

@@ -50,35 +50,47 @@ class AdminBookingController extends Controller
     public function edit(string $id)
     {
         $bookings = Booking::findOrFail($id);
-        $layananIds = json_decode($bookings->layanan_id, true);
-        $layanans = Layanan::whereIn('id', $layananIds)->get();
-        $produkIds = json_decode($bookings->produk_id, true);
-        $produks = Produk::whereIn('id', $produkIds)->get();
 
-        return view('admin.booking.edit', compact('bookings', 'layanans', 'produks'));
+        $layananIds = json_decode($bookings->layanan_id, true) ?? [];
+        $layananIdList = is_array($layananIds) ? $layananIds : [];
+        $layanans = Layanan::whereIn('id', $layananIdList)->get();
+
+        return view('admin.booking.edit', compact('bookings', 'layanans'));
     }
 
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            'layanan_id' => 'required|json',
-            'produk_id' => 'nullable|json',
-            'jam_booking' => 'required|date_format:Y-m-d H:i:s',
-            'kursi' => 'required|in:satu,dua',
-            'deskripsi' => 'required|string',
+        $request->merge([
+            'layanan_id' => is_string($request->layanan_id) ? json_decode($request->layanan_id, true) : $request->layanan_id,
         ]);
 
-        $bookings = Booking::findOrFail($id);
-        $bookings->update($request->all());
+        $request->validate([
+            'layanan_id' => 'required|array',
+            'jam_booking' => 'required|date_format:Y-m-d\TH:i',
+            'kursi' => 'required|in:satu,dua',
+            'status' => 'required|string|max:20',
+        ]);
 
-        return view('admin.booking.index')->with('success', 'Booking berhasil diperbarui.');
+        $booking = Booking::findOrFail($id);
+        $booking->update([
+            'layanan_id' => json_encode($request->layanan_id),
+            'jam_booking' => \Carbon\Carbon::parse($request->jam_booking)->format('Y-m-d H:i:s'),
+            'kursi' => $request->kursi,
+            'status' => $request->status,
+        ]);
+
+        return redirect()->route('admin.booking.index')->with('success', 'Booking berhasil diperbarui.');
     }
 
     public function destroy($id)
     {
-        $booking = Booking::findOrFail($id);
-        $booking->delete();
+        $booking = Booking::where('id', $id)->firstOrFail();
 
-        return redirect()->route('admin.booking.index');
+        if ($booking) {
+            $booking->delete();
+            return redirect()->route('admin.booking.index')->with('success', 'Booking berhasil dihapus.');
+        }
+
+        return redirect()->route('admin.booking.index')->with('error', 'Booking tidak ditemukan.');
     }
 }

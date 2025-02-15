@@ -129,8 +129,7 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(
     Route::get('/admin/booking', [AdminBookingController::class, 'index'])->name('admin.booking.index');
     Route::get('/admin/booking/create', [AdminBookingController::class, 'create'])->name('admin.booking.create');
     Route::post('/admin/booking', [AdminBookingController::class, 'store'])->name('admin.booking.store');
-    Route::get('/admin/booking/{booking}', [AdminBookingController::class, 'show'])->name('admin.booking.show');
-    Route::get('/bookings/{id}/edit', [AdminBookingController::class, 'edit'])->name('admin.booking.edit');
+    Route::get('/admin/booking/{id}/edit', [AdminBookingController::class, 'edit'])->name('admin.booking.edit');
     Route::put('/admin/booking/{id}', [AdminBookingController::class, 'update'])->name('admin.booking.update');
     Route::delete('/admin/booking/{booking}', [AdminBookingController::class, 'destroy'])->name('admin.booking.destroy');
     
