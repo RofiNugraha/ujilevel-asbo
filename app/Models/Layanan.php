@@ -20,10 +20,16 @@ class Layanan extends Model
 
     protected static function boot() {
         parent::boot();
+
         static::creating(function ($layanan) {
             $initials = strtoupper(implode('', array_map(fn($word) => $word[0], explode(' ', $layanan->nama_layanan))));
             
-            $layanan->id = $initials . '-' . mt_rand(100, 999);
+            do {
+                $randomNumber = mt_rand(100, 999);
+                $id = $initials . '-' . $randomNumber;
+            } while (Layanan::where('id', $id)->exists());
+
+            $layanan->id = $id;
         });
     }
 

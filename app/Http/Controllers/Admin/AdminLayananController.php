@@ -22,7 +22,7 @@ class AdminLayananController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_layanan' => 'required',
+            'nama_layanan' => 'required|string',
             'harga' => 'required|numeric',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif',
         ]);
@@ -38,7 +38,7 @@ class AdminLayananController extends Controller
 
         $layanan->save();
 
-        return redirect()->route('admin.layanan.index');
+        return redirect()->route('admin.layanan.index')->with('success', 'Layanan berhasil ditambahkan.');
     }
 
     public function edit($id)

@@ -41,6 +41,18 @@ class CartController extends Controller
         $cart = Cart::firstOrCreate(['user_id' => $user->id]);
         $layanan = Layanan::findOrFail($request->layanan_id);
 
+        if ($layanan->nama_layanan === 'Haircut') {
+            $existingHaircut = CartItem::where('cart_id', $cart->id)
+                                        ->whereHas('layanan', function ($query) {
+                                            $query->where('nama_layanan', 'Haircut');
+                                        })
+                                        ->first();
+
+            if ($existingHaircut) {
+                return redirect()->route('cart.index')->with('error', 'Layanan Haircut sudah ada di keranjang!');
+            }
+        }
+
         $cartItem = CartItem::where('cart_id', $cart->id)
                             ->where('layanan_id', $layanan->id)
                             ->first();
