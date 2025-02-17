@@ -17,7 +17,7 @@
                                     placeholder="Cari pelanggan...">
                             </div>
                             <table class="table table-hover" id="myTable">
-                                <thead class="table-dark">
+                                <thead class="bg-warning">
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Pelanggan</th>
