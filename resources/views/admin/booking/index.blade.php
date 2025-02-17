@@ -50,11 +50,18 @@
                                             <td>{{ $item->status }}</td>
                                             <td>{{ $item->status_pembayaran }}</td>
                                             <td>
-                                                <a href="{{ route('admin.booking.update', $item->id) }}"
-                                                    class="btn btn-warning btn-sm">Konfirmasi
-                                                    Booking</a>
-                                                <button onclick="confirmDelete({{ $item->id }})"
-                                                    class="btn btn-danger btn-sm">Delete</button>
+                                                <a href="{{ route('admin.booking.edit', $item->id) }}"
+                                                    class="btn btn-warning btn-sm">
+                                                    Konfirmasi Booking
+                                                </a>
+                                                <form id="delete-form-{{ $item->id }}"
+                                                    action="{{ route('admin.booking.destroy', $item->id) }}"
+                                                    method="POST" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button" class="btn btn-danger btn-sm"
+                                                        onclick="confirmDelete({{ $item->id }})">Delete</button>
+                                                </form>
                                             </td>
                                         </tr>
                                         @endforeach
