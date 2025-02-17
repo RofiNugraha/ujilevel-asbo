@@ -116,7 +116,6 @@
                     </div>
                 </div>
             </form>
-            >>>>>>> 22fb2c7431b36e3c42bf4f59d346340c85c0dbe6
         </div>
     </main>
     @if(session('error') || session('success'))

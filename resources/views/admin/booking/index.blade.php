@@ -17,7 +17,6 @@
                                             <th>No.</th>
                                             <th>Nama</th>
                                             <th>Layanan</th>
-                                            <th>Produk</th>
                                             <th>Booking</th>
                                             <th>Kursi</th>
                                             <th>Status</th>
@@ -42,28 +41,6 @@
                                                 @if($layanan)
                                                 <span class="badge bg-primary">
                                                     {{ $layanan->nama_layanan }} (x{{ $layananItem['quantity'] }})
-                                                </span>
-                                                @endif
-                                                @endforeach
-                                            </td>
-                                            <td>
-                                                @php
-                                                $produkItems = json_decode($item->produk_id, true) ?? [];
-                                                $produkCounts = [];
-
-                                                foreach ($produkItems as $produkItem) {
-                                                $produkCounts[$produkItem['id']] = ($produkCounts[$produkItem['id']] ??
-                                                0) + $produkItem['quantity'];
-                                                }
-                                                @endphp
-
-                                                @foreach($produkCounts as $produkId => $quantity)
-                                                @php
-                                                $produk = App\Models\Produk::find($produkId);
-                                                @endphp
-                                                @if($produk)
-                                                <span class="badge bg-success">
-                                                    {{ $produk->nama_produk }} (x{{ $quantity }})
                                                 </span>
                                                 @endif
                                                 @endforeach
