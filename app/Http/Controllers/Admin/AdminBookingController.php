@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\BookingUpdated;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\CartItem;
@@ -78,6 +79,8 @@ class AdminBookingController extends Controller
             'kursi' => $request->kursi,
             'status' => $request->status,
         ]);
+
+        event(new BookingUpdated($booking, $request->status));
 
         return redirect()->route('admin.booking.index')->with('success', 'Booking berhasil diperbarui.');
     }

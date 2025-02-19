@@ -1,0 +1,49 @@
+<?php
+
+namespace App\Listeners;
+
+use App\Events\BookingUpdated;
+use App\Mail\BookingStatusMail;
+use App\Models\Notification;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Mail;
+
+class SendBookingNotification
+{
+    /**
+     * Create the event listener.
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Handle the event.
+     */
+    public function handle(BookingUpdated $event)
+    {
+        $booking = $event->booking;
+        $user = $booking->user;
+        $status = $event->status;
+
+        $pesan = match ($status) {
+            'pending' => 'Booking Anda telah berhasil dibuat. Menunggu konfirmasi admin.',
+            'konfirmasi' => 'Booking Anda telah dikonfirmasi. Silakan datang sesuai jadwal.',
+            'batal' => 'Booking Anda telah dibatalkan oleh admin.',
+            'selesai' => 'Terima kasih! Booking Anda telah selesai.',
+            default => 'Status booking diperbarui.',
+        };
+
+        Notification::create([
+            'user_id' => $user->id,
+            'booking_id' => $booking->id,
+            'pesan' => $pesan,
+            'tanggal_notifikasi' => now(),
+            'status_dibaca' => false,
+        ]);
+
+        Mail::to($user->email)->send(new BookingStatusMail($booking, $pesan));
+    }
+}

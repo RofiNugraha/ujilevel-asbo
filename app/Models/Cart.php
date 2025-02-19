@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Cart extends Model
 {
@@ -21,7 +22,8 @@ class Cart extends Model
         return $this->hasMany(CartItem::class);
     }
 
-    public function checkout(): BelongsTo {
-        return $this->belongsTo(Checkout::class);
+    public function checkout(): HasOne {
+        return $this->hasOne(Checkout::class);
     }
+
 }

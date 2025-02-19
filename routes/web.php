@@ -108,6 +108,7 @@ Route::middleware('auth')->group(function () {
     // Booking
     Route::get('/formbook/{layanan_id?}/{produk_id?}', [BookingController::class, 'formBook'])->name('formbook');
     Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store');
+    Route::post('/checkout', [BookingController::class, 'checkout'])->name('checkout.store');
 
     });
     
