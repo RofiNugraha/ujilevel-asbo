@@ -73,14 +73,20 @@ class AdminBookingController extends Controller
         ]);
 
         $booking = Booking::findOrFail($id);
+
+        $status_lama = $booking->status;
+        $status_baru = $request->status;
+
         $booking->update([
             'layanan_id' => json_encode($request->layanan_id),
             'jam_booking' => \Carbon\Carbon::parse($request->jam_booking)->format('Y-m-d H:i:s'),
             'kursi' => $request->kursi,
-            'status' => $request->status,
+            'status' => $status_baru,
         ]);
 
-        event(new BookingUpdated($booking, $request->status));
+        if ($status_lama !== $status_baru) {
+            event(new BookingUpdated($booking, $status_baru));
+        }
 
         return redirect()->route('admin.booking.index')->with('success', 'Booking berhasil diperbarui.');
     }

@@ -16,9 +16,7 @@ class BookingStatusMail extends Mailable
 
     public $booking;
     public $pesan;
-    /**
-     * Create a new message instance.
-     */
+
     public function __construct(Booking $booking, $pesan)
     {
         $this->booking = $booking;

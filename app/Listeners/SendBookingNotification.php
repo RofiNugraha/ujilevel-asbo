@@ -5,20 +5,11 @@ namespace App\Listeners;
 use App\Events\BookingUpdated;
 use App\Mail\BookingStatusMail;
 use App\Models\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class SendBookingNotification
 {
-    /**
-     * Create the event listener.
-     */
-    public function __construct()
-    {
-        //
-    }
-
     /**
      * Handle the event.
      */

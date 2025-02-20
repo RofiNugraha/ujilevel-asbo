@@ -9,7 +9,6 @@ use App\Models\Layanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-use Illuminate\Container\Attributes\Log;
 use Illuminate\Support\Str;
 
 class BookingController extends Controller
@@ -32,7 +31,6 @@ class BookingController extends Controller
         }
 
         $jam_booking = Carbon::parse($request->jam_booking);
-
         $existingBooking = Booking::where('kursi', $request->kursi)
             ->whereBetween('jam_booking', [$jam_booking->copy()->subMinutes(40), $jam_booking->copy()->addMinutes(40)])
             ->exists();
@@ -70,7 +68,7 @@ class BookingController extends Controller
             $generatedId = substr(md5($userId . $layananKey . now()->format('ymdHis') . $randomString), 0, 10);
         }
 
-        Booking::create([
+        $booking = Booking::create([
             'id' => $generatedId,
             'user_id' => $userId,
             'kursi' => $request->kursi,
@@ -82,43 +80,25 @@ class BookingController extends Controller
             'updated_at' => now(),
         ]);
 
-        $cart->cartItems()->delete();
-
-        return redirect()->route('dashboard')->with('success', 'Booking berhasil!');
-    }
-
-    public function checkout(Request $request)
-    {
-        $request->validate([
-            'cart_id' => 'required|exists:carts,id',
-        ]);
-
-        $cart = Cart::find($request->cart_id);
-
-        if (!$cart || $cart->cartItems->isEmpty()) {
-            return redirect()->back()->withErrors(['msg' => 'Keranjang Anda kosong. Silakan tambahkan layanan sebelum checkout.']);
-        }
-
-        $total_harga = 0;
-        foreach ($cart->cartItems as $item) {
-            $layanan = $item->layanan;
-            $total_harga += $layanan->harga * $item->quantity;
-        }
-
         $userId = Auth::id();
         $timestamp = now()->format('ymdHis');
-        $randomString = Str::random(5);
-        $checkoutId = substr(md5($userId . $timestamp . $randomString), 0, 10);
+        $randomNumber = rand(1000, 9999);
 
+        $checkoutId = (string) ($timestamp . $randomNumber);
         while (Checkout::where('id', $checkoutId)->exists()) {
-            $randomString = Str::random(5);
-            $checkoutId = substr(md5($userId . now()->format('ymdHis') . $randomString), 0, 10);
+            $randomNumber = rand(1000, 9999);
+            $checkoutId = (string) ($timestamp . $randomNumber);
         }
 
-        Checkout::create([
+        if (!$booking) {
+            return redirect()->route('dashboard')->with('error', 'Booking tidak ditemukan.');
+        }
+
+        $checkout = Checkout::create([
             'id' => $checkoutId,
             'user_id' => $userId,
             'cart_id' => $cart->id,
+            'booking_id' => $generatedId,
             'total_harga' => $total_harga,
             'status_pembayaran' => 'belum bayar',
             'metode_pembayaran' => 'belum dipilih',
@@ -128,7 +108,6 @@ class BookingController extends Controller
 
         $cart->cartItems()->delete();
 
-        return redirect()->route('checkout.success')->with('success', 'Checkout berhasil!');
+        return redirect()->route('dashboard')->with('success', 'Booking dan checkout berhasil!');
     }
-
 }

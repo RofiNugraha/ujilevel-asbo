@@ -13,6 +13,7 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\LayananController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UpdateProfileController;
@@ -110,6 +111,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store');
     Route::post('/checkout', [BookingController::class, 'checkout'])->name('checkout.store');
 
+    // notification
+    Route::get('/notifikasi', [NotificationController::class, 'index'])->middleware('auth');
     });
     
 });

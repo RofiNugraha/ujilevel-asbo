@@ -20,6 +20,11 @@ class EventServiceProvider extends ServiceProvider
         ],
     ];
 
+    public function boot()
+    {
+        parent::boot();
+    }
+
     /**
      * Daftar event yang harus otomatis ditemukan oleh Laravel.
      *

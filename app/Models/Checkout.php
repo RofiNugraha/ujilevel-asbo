@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Checkout extends Model
@@ -12,7 +13,7 @@ class Checkout extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id', 'user_id', 'cart_id', 'total_harga', 
+        'id', 'user_id', 'cart_id', 'booking_id', 'total_harga', 
         'status_pembayaran', 'metode_pembayaran'
     ];
 
@@ -32,5 +33,10 @@ class Checkout extends Model
 
     public function payment(): HasOne {
         return $this->hasOne(Payment::class);
+    }
+
+    public function booking()
+    {
+        return $this->hasOne(Booking::class, 'checkout_id');
     }
 }
