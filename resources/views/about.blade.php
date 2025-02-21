@@ -25,18 +25,42 @@
     }
     </style>
 
-    <div class="image-container flex items-center justify-center text-center px-6 md:px-12">
-        <div class="max-w-2xl">
-            <h1 class="text-4xl md:text-6xl font-extrabold text-yellow-500 animate-pulse">
+    <div class="image-container relative w-full h-screen bg-cover bg-center flex items-center justify-center">
+        <div class="container text-center p-8 rounded-lg">
+            <h1
+                class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 animate-pulse">
                 Welcome to Our Barbershop!
             </h1>
-            <p class="mt-4 text-lg md:text-xl text-gray-200">Experience the best haircut and grooming services.</p>
-            <a href="#booking"
-                class="mt-6 inline-block px-6 py-3 text-lg font-semibold text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700">
-                Book an Appointment
-            </a>
+            <p class="mt-6 text-xl text-gray-200">Experience the best haircut and grooming services.</p>
+            <div class="mt-8">
+                <a href="#booking"
+                    class="px-6 py-3 text-lg font-semibold text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700">
+                    Book an Appointment
+                </a>
+            </div>
         </div>
     </div>
+    <section id="services" class="py-16 bg-black">
+        <div class="container mx-auto px-6 text-center m-4">
+            <h2 class="text-4xl font-bold text-[gold]">Our Services</h2>
+            <p class="mt-4 text-gray-300">We provide top-quality grooming services for men.</p>
+            <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="p-6 bg-gray-50 rounded-lg shadow-lg">
+                    <img src="{{ asset('images/haircut.jpg') }}" alt="Pomade"
+                        class="w-full h-40 object-cover rounded-lg">
+                    <h3 class="text-2xl font-bold text-gray-800 mt-4">Potong Rambut</h3>
+                </div>
+                <div class="p-6 bg-gray-50 rounded-lg shadow-lg">
+                    <img src="{{ asset('images/semir.jpg') }}" alt="Pomade" class="w-full h-40 object-cover rounded-lg">
+                    <h3 class="text-2xl font-bold text-gray-800 mt-4">Semir Rambut</h3>
+                </div>
+                <div class="p-6 bg-gray-50 rounded-lg shadow-lg">
+                    <img src="{{ asset('images/pijat.jpg') }}" alt="Pomade" class="w-full h-40 object-cover rounded-lg">
+                    <h3 class="text-2xl font-bold text-gray-800 mt-4">Pijat Kepala</h3>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <main
         class="container mx-auto px-6 py-16 text-white flex flex-col md:flex-row items-center space-y-12 md:space-y-0 md:space-x-12">
@@ -49,26 +73,41 @@
         </div>
     </main>
 
-    <main
-        class="container mx-auto px-6 py-16 text-white flex flex-col md:flex-row items-center space-y-12 md:space-y-0 md:space-x-12">
-        <img src="{{ asset('images/logogold.png') }}" alt="Logo" class="w-32 md:w-1/3 rounded-lg shadow-lg mr-64">
-        <div class="text-center md:text-left">
-            <h1 class="text-4xl font-bold text-yellow-500 text-center mb-8">Jam Operasi</h1>
-            <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
-                <ul class="text-lg space-y-2">
-                    <li class="flex justify-between border-b border-gray-700 pb-2"><span>Senin</span> <span>10.00 -
-                            21.00</span></li>
-                    <li class="flex justify-between border-b border-gray-700 pb-2"><span>Selasa</span> <span>10.00 -
-                            21.00</span></li>
-                    <li class="flex justify-between border-b border-gray-700 pb-2"><span>Rabu</span> <span>10.00 -
-                            21.00</span></li>
-                    <li class="flex justify-between border-b border-gray-700 pb-2"><span>Kamis</span> <span>10.00 -
-                            21.00</span></li>
-                    <li class="flex justify-between border-b border-gray-700 pb-2"><span>Jumat</span> <span>10.00 -
-                            21.00</span></li>
-                    <li class="flex justify-between border-b border-gray-700 pb-2"><span>Sabtu</span> <span>10.00 -
-                            22.00</span></li>
-                    <li class="flex justify-between"><span class="mr-4">Minggu</span> <span>10.00 - 22.00</span></li>
+    <main class="container mx-auto px-6 py-16 text-white flex flex-col items-center space-y-12">
+        <div class="text-center w-full md:w-2/3">
+            <h1 class="text-5xl font-extrabold text-yellow-500 text-center mb-8 drop-shadow-lg">Jam Operasi</h1>
+            <div
+                class="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-xl shadow-xl border border-gray-700 relative">
+                <img src="{{ asset('images/logogold.png') }}" alt="Logo"
+                    class="w-24 md:w-1/4 rounded-lg shadow-xl transform hover:scale-105 transition duration-300 ease-in-out mx-auto mb-6">
+                <ul class="text-lg space-y-4">
+                    <li
+                        class="flex justify-between items-center border-b border-gray-700 pb-2 hover:text-yellow-400 transition duration-300">
+                        <span>Senin</span> <span>10.00 - 21.00</span>
+                    </li>
+                    <li
+                        class="flex justify-between items-center border-b border-gray-700 pb-2 hover:text-yellow-400 transition duration-300">
+                        <span>Selasa</span> <span>10.00 - 21.00</span>
+                    </li>
+                    <li
+                        class="flex justify-between items-center border-b border-gray-700 pb-2 hover:text-yellow-400 transition duration-300">
+                        <span>Rabu</span> <span>10.00 - 21.00</span>
+                    </li>
+                    <li
+                        class="flex justify-between items-center border-b border-gray-700 pb-2 hover:text-yellow-400 transition duration-300">
+                        <span>Kamis</span> <span>10.00 - 21.00</span>
+                    </li>
+                    <li
+                        class="flex justify-between items-center border-b border-gray-700 pb-2 hover:text-yellow-400 transition duration-300">
+                        <span>Jumat</span> <span>10.00 - 21.00</span>
+                    </li>
+                    <li
+                        class="flex justify-between items-center border-b border-gray-700 pb-2 hover:text-yellow-400 transition duration-300">
+                        <span>Sabtu</span> <span>10.00 - 22.00</span>
+                    </li>
+                    <li class="flex justify-between items-center text-yellow-400 font-semibold">
+                        <span>Minggu</span> <span>10.00 - 22.00</span>
+                    </li>
                 </ul>
             </div>
         </div>

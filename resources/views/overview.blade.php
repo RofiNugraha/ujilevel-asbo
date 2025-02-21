@@ -56,16 +56,19 @@
 }
 </style>
 <x-landing-layout>
-    <div class="image-container flex items-center justify-center text-center px-6 md:px-12">
-        <div class="max-w-2xl">
-            <h1 class="text-4xl md:text-6xl font-extrabold text-yellow-500 animate-pulse">
+    <div class="image-container relative w-full h-screen bg-cover bg-center flex items-center justify-center">
+        <div class="container text-center p-8 rounded-lg">
+            <h1
+                class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 animate-pulse">
                 Welcome to Our Barbershop!
             </h1>
-            <p class="mt-4 text-lg md:text-xl text-gray-200">Experience the best haircut and grooming services.</p>
-            <a href="#booking"
-                class="mt-6 inline-block px-6 py-3 text-lg font-semibold text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700">
-                Book an Appointment
-            </a>
+            <p class="mt-6 text-xl text-gray-200">Experience the best haircut and grooming services.</p>
+            <div class="mt-8">
+                <a href="#booking"
+                    class="px-6 py-3 text-lg font-semibold text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700">
+                    Book an Appointment
+                </a>
+            </div>
         </div>
     </div>
     <h1

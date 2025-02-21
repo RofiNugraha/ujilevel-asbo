@@ -4,7 +4,7 @@
             <main>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Booking Confirmation</h1>
-
+                    <a href="{{ route('admin.booking.index') }}" class="btn btn-secondary mb-3">Kembali</a>
                     <div class="mb-3">
                         <label class="form-label fw-bold">Nama Pelanggan</label>
                         <input type="text" class="form-control" value="{{ $bookings->user->name }}" readonly>
@@ -89,7 +89,7 @@
                             </select>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Update Booking</button>
+                        <button type="submit" class="btn btn-primary mb-4">Update Booking</button>
                     </form>
                 </div>
             </main>

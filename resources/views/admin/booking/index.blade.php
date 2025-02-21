@@ -3,7 +3,12 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class=" mt-4">Booking List</h1>
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 mt-4">
+                        <div>
+                            <h1 class="fw-semibold">Bookingan</h1>
+                            <p class="text-gray mb-0">Hallo, selamat datang di halaman Booking</p>
+                        </div>
+                    </div>
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
