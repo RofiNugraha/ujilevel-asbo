@@ -4,15 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use App\Models\Cart;
+use App\Models\CartItem;
 use App\Models\Checkout;
 use App\Models\Layanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Container\Attributes\Auth as AttributesAuth;
 use Illuminate\Support\Str;
 
 class BookingController extends Controller
-{
+{  
     public function store(Request $request)
     {
         $request->validate([

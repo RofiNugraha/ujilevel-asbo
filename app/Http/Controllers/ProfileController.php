@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Booking;
+use App\Models\CartItem;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,8 +26,39 @@ class ProfileController extends Controller
     public function show()
     {
         $user = Auth::user();
+        
+        $bookings = Booking::with(['user', 'checkout'])
+            ->where('user_id', $user->id)
+            ->get();
 
-        return view('profil', compact('user'));
+        return view('profil', compact('user', 'bookings'));
+    }
+
+    
+    public function showBooking(string $id) {
+        $user = Auth::user();
+        
+        $booking = Booking::with(['user', 'checkout'])
+                ->where('id', $id)
+                ->firstOrFail();
+
+                // foreach ($booking as $booking) {
+                //     $layananIds = json_decode($booking->layanan_id, true) ?? [];
+                //     foreach ($layananIds as $key => $layananId) {
+                //         $cartItem = CartItem::where('layanan_id', $layananId)
+                //             ->whereHas('cart', function ($query) use ($booking) {
+                //                 $query->where('user_id', $booking->user_id);
+                //             })->first();
+                //         $layananIds[$key] = [
+                //             'id' => $layananId,
+                //             'quantity' => $cartItem->quantity ?? 1
+                //         ];
+                //     }
+                    
+                //     $booking->layanan_id = json_encode($layananIds);
+                // }
+        
+        return view('viewbooking', compact('booking'));
     }
 
     /**

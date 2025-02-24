@@ -15,37 +15,35 @@
         <div class="overflow-x-auto">
             <table class="min-w-full bg-white rounded-lg">
                 <tbody>
-                    <tr class="">
+                    <tr>
                         <td class="px-4 py-2 font-bold text-gray-700">Nama</td>
-                        <td class="px-4 py-2 text-gray-600">Ayu</td>
-                    </tr>
-                    <tr class="">
-                        <td class="px-4 py-2 font-bold text-gray-700">Tipe Customer</td>
-                        <td class="px-4 py-2 text-gray-600">Dewasa</td>
-                    </tr>
-                    <tr class="">
-                        <td class="px-4 py-2 font-bold text-gray-700">Layanan</td>
-                        <td class="px-4 py-2 text-gray-600">Style Hair</td>
-                    </tr>
-                    <tr class="">
-                        <td class="px-4 py-2 font-bold text-gray-700">Layanan Tambahan</td>
-                        <td class="px-4 py-2 text-gray-600">Tidak Ada</td>
-                    </tr>
-                    <tr class="">
-                        <td class="px-4 py-2 font-bold text-gray-700">Jam Booking</td>
-                        <td class="px-4 py-2 text-gray-600">12.00</td>
-                    </tr>
-                    <tr class="">
-                        <td class="px-4 py-2 font-bold text-gray-700">Kursi</td>
-                        <td class="px-4 py-2 text-gray-600">2</td>
-                    </tr>
-                    <tr class="">
-                        <td class="px-4 py-2 font-bold text-gray-700">Harga</td>
-                        <td class="px-4 py-2 text-gray-600">15.000</td>
+                        <td class="px-4 py-2 text-gray-600">{{ $booking->user->name }}</td>
                     </tr>
                     <tr>
-                        <td class="px-4 py-2 font-bold text-gray-700">Deskripsi</td>
-                        <td class="px-4 py-2 text-gray-600">Gaya model cepmek</td>
+                        <td class="px-4 py-2 font-bold text-gray-700">ID Booking</td>
+                        <td class="px-4 py-2 text-gray-600">{{ $booking->id }}</td>
+                    </tr>
+                    <tr>
+                        <td class="px-4 py-2 font-bold text-gray-700">Layanan</td>
+                        <td class="px-4 py-2 text-gray-600">belum beres
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-4 py-2 font-bold text-gray-700">Jam Booking</td>
+                        <td class="px-4 py-2 text-gray-600">{{ $booking->jam_booking }}</td>
+                    </tr>
+                    <tr>
+                        <td class="px-4 py-2 font-bold text-gray-700">Kursi</td>
+                        <td class="px-4 py-2 text-gray-600">{{ $booking->kursi }}</td>
+                    </tr>
+                    <tr>
+                        <td class="px-4 py-2 font-bold text-gray-700">Status</td>
+                        <td class="px-4 py-2 text-gray-600">{{ $booking->status }}</td>
+                    </tr>
+                    <tr>
+                        <td class="px-4 py-2 font-bold text-gray-700">Total Harga</td>
+                        <td class="px-4 py-2 text-gray-600">Rp
+                            {{ number_format(optional($booking->checkout)->total_harga, 2, ',', '.') }}</td>
                     </tr>
                 </tbody>
             </table>

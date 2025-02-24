@@ -23,7 +23,7 @@
                     class="nav-item text-gray-400 hover:text-[gold] hover:underline">Booking</a>
                 <a href="{{ route('contact') }}"
                     class="nav-item text-gray-400 hover:text-[gold] hover:underline">Contact</a>
-                <a href="{{ route('notif') }}">
+                <a href="{{ route('notifikasi') }}">
                     <button class="nav-item relative text-gray-400 hover:text-[gold]">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">

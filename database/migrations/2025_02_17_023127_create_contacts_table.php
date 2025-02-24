@@ -13,10 +13,9 @@ return new class extends Migration
     {
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->text('description');
-            $table->tinyInteger('rating')->unsigned()->checkBetween(1, 5);
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
+            $table->tinyInteger('rating')->unsigned();
+            $table->text('feedback')->nullable();
             $table->timestamps();
         });
     }
