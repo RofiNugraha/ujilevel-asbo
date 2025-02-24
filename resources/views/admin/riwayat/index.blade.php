@@ -3,45 +3,53 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Riwayat Transaksi</h1>
-                    <a href="{{ route('admin.riwayat.create') }}" class="btn btn-primary mb-3">Create Riwayat</a>
+                    <h1 class="mt-4">Riwayat Booking</h1>
                     <div class="card mb-4">
                         <div class="card-header">
-                            <i class="fas fa-table me-1"></i>
-                            Riwayat Transaksi
+                            <i class="fas fa-history me-1"></i>
+                            Riwayat Booking Anda
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table" id="riwayats-table">
-                                    <thead>
-                                        <tr>
+                                <table class="table table-hover" id="riwayat-table">
+                                    <thead class="bg-warning">
+                                        <tr class="text-dark">
                                             <th>No.</th>
-                                            <th>ID User</th>
-                                            <th>ID Layanan</th>
-                                            <th>Tanggal Transaksi</th>
-                                            <th>Jumlah Bayar</th>
-                                            <th>Pembayaran</th>
+                                            <th>Layanan</th>
+                                            <th>Booking</th>
+                                            <th>Kursi</th>
+                                            <th>Status</th>
+                                            <th>Status Pembayaran</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @php $no = 1; @endphp
-                                        @foreach($riwayat as $item)
                                         <tr>
-                                            <td>{{ $no++ }}</td>
-                                            <td>{{ $item->user_id }}</td>
-                                            <td>{{ $item->layanan_id }}</td>
-                                            <td>{{ $item->tanggal_transaksi }}</td>
-                                            <td>{{ $item->jumlah_bayar }}</td>
-                                            <td>{{ $item->metode_pembayaran }}</td>
+                                            <td>1</td>
+                                            <td><span class="badge bg-primary">Layanan A (x2)</span></td>
+                                            <td>10:00 AM</td>
+                                            <td>3</td>
+                                            <td><span class="badge bg-success">Confirmed</span></td>
+                                            <td><span class="badge bg-danger">Unpaid</span></td>
                                             <td>
-                                                <a href="{{ route('admin.riwayat.edit', $item) }}"
-                                                    class="btn btn-warning btn-sm">Edit</a>
-                                                <button class="btn btn-danger btn-sm"
-                                                    onclick="confirmDelete('{{ $item->id }}')">Delete</button>
+                                                <button class="btn btn-danger btn-sm">
+                                                    <i class="fas fa-times"></i> Batalkan
+                                                </button>
                                             </td>
                                         </tr>
-                                        @endforeach
+                                        <tr>
+                                            <td>2</td>
+                                            <td><span class="badge bg-primary">Layanan B (x1)</span></td>
+                                            <td>2:00 PM</td>
+                                            <td>2</td>
+                                            <td><span class="badge bg-warning">Pending</span></td>
+                                            <td><span class="badge bg-success">Paid</span></td>
+                                            <td>
+                                                <button class="btn btn-secondary btn-sm" disabled>
+                                                    <i class="fas fa-lock"></i> Tidak dapat dibatalkan
+                                                </button>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -50,28 +58,10 @@
                 </div>
 
                 <script>
-                function confirmDelete(riwayatId) {
-                    Swal.fire({
-                        title: "Are you sure?",
-                        text: "This action cannot be undone!",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonText: "Yes, delete it!",
-                        cancelButtonText: "Cancel"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            document.getElementById('delete-form-' + riwayatId).submit();
-                        }
-                    });
-                }
+                $(document).ready(function () {
+                    $('#riwayat-table').DataTable();
+                });
                 </script>
-
-                <form id="delete-form-{{ $item->id }}" action="{{ route('admin.riwayat.destroy', $item->id) }}"
-                    method="POST" style="display: none;">
-                    @csrf
-                    @method('DELETE')
-                </form>
-
             </main>
         </div>
     </div>

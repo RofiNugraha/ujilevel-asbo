@@ -116,6 +116,49 @@ body {
 
 <body class="sb-nav-fixed">
     {{ $slot }}
+    <nav class="sb-topnav navbar navbar-expand border-0"
+        style="height: 80px; background-color: white; margin-left: 235px;">
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0 text-warning bg-white" id="sidebarToggle">
+            <i class="fas fa-bars m-1"></i>
+        </button>
+        <div class="container-fluid d-flex justify-content-between">
+            <form class="d-none d-md-inline-block form-inline">
+                <div class="input-group search-container" style="width: 500px;">
+                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" />
+                    <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+            <ul class="navbar-nav ms-auto me-3 me-lg-4 m-2">
+                <li class="nav-item notification">
+                    <a class="nav-link text-warning" href="#">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a class="nav-link text-warning" href="#" id="darkModeToggle">
+                        <i class="fas fa-moon"></i>
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-warning profile-container" href="#" id="profileDropdown"
+                        role="button" data-bs-toggle="dropdown">
+                        <span class="me-2">Hallo, Admin</span>
+                        <img src="{{ asset('images/google.png') }}" alt="Profile" class="rounded-circle" width="30"
+                            height="30">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li><a class="dropdown-item" href="#">Activity Log</a></li>
+                        <li>
+                            <hr class="dropdown-divider" />
+                        </li>
+                        <li><a class="dropdown-item" href="#">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion" id="sidenavAccordion" style="background-color: white;">
@@ -169,49 +212,6 @@ body {
             </nav>
         </div>
     </div>
-    <nav class="sb-topnav navbar navbar-expand border-0"
-        style="height: 80px; background-color: white; margin-left: 235px;">
-        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0 text-warning bg-white" id="sidebarToggle">
-            <i class="fas fa-bars m-1"></i>
-        </button>
-        <div class="container-fluid d-flex justify-content-between">
-            <form class="d-none d-md-inline-block form-inline">
-                <div class="input-group search-container" style="width: 500px;">
-                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" />
-                    <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
-                </div>
-            </form>
-            <ul class="navbar-nav ms-auto me-3 me-lg-4 m-2">
-                <li class="nav-item notification">
-                    <a class="nav-link text-warning" href="#">
-                        <i class="fas fa-bell"></i>
-                        <span class="badge">3</span>
-                    </a>
-                </li>
-                <li class="nav-item mx-2">
-                    <a class="nav-link text-warning" href="#" id="darkModeToggle">
-                        <i class="fas fa-moon"></i>
-                    </a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-warning profile-container" href="#" id="profileDropdown"
-                        role="button" data-bs-toggle="dropdown">
-                        <span class="me-2">Hallo, Admin</span>
-                        <img src="{{ asset('images/google.png') }}" alt="Profile" class="rounded-circle" width="30"
-                            height="30">
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
-                        <li><a class="dropdown-item" href="#">Activity Log</a></li>
-                        <li>
-                            <hr class="dropdown-divider" />
-                        </li>
-                        <li><a class="dropdown-item" href="#">Logout</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </nav>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
     </script>
@@ -226,7 +226,7 @@ body {
     <script>
     document.getElementById("darkModeToggle").addEventListener("click", function() {
         document.body.classList.toggle("bg-dark");
-        document.body.classList.toggle("text-white");
+        document.body.classList.toggle("text-black");
     });
     </script>
 </body>
