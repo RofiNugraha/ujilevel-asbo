@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminBookingController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminKasirController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;

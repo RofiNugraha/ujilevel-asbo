@@ -123,36 +123,16 @@
                     <div class="carousel-container">
                         <button class="nav-btn nav-btn-left" onclick="scrollLeft()">❮</button>
                         <div id="reviewCarousel" class="review-carousel">
+                            @foreach ($contacts as $contact)
                             <div class="card review-card">
-                            <img src="{{ asset('images/google.png')}}" class="review-img">
-                                <h5 class="mt-3">Ahmad Santoso</h5>
-                                <p class="min-height">Pelayanan sangat baik dan responsif!</p>
-                                <div class="text-warning">⭐⭐⭐⭐⭐</div>
+                                <img src="{{ asset($contact->user->image) }}" class="review-img">
+                                <h5 class="mt-3">{{ $contact->user->name }}</h5>
+                                <p class="min-height">{{ $contact->feedback }}</p>
+                                <div class="text-warning">
+                                    {!! str_repeat('⭐', $contact->rating) !!}
+                                </div>
                             </div>
-                            <div class="card review-card">
-                                <img src="{{ asset('images/google.png')}}" class="review-img">
-                                <h5 class="mt-3">Siti Rahmawati</h5>
-                                <p class="min-height">Produk sesuai dengan yang diharapkan.</p>
-                                <div class="text-warning">⭐⭐⭐⭐⭐</div>
-                            </div>
-                            <div class="card review-card">
-                                <img src="{{ asset('images/google.png')}}" class="review-img">
-                                <h5 class="mt-3">Budi Prasetyo</h5>
-                                <p class="min-height">Cukup puas, namun ada beberapa kekurangan.</p>
-                                <div class="text-warning">⭐⭐⭐⭐</div>
-                            </div>
-                            <div class="card review-card">
-                                <img src="{{ asset('images/google.png')}}" class="review-img">
-                                <h5 class="mt-3">Dewi Anggraini</h5>
-                                <p class="min-height">Paket cepat sampai, sangat puas!</p>
-                                <div class="text-warning">⭐⭐⭐⭐⭐</div>
-                            </div>
-                            <div class="card review-card">
-                                <img src="{{ asset('images/google.png')}}" class="review-img">
-                                <h5 class="mt-3">Rahmat Hidayat</h5>
-                                <p class="min-height">Barang sesuai deskripsi, harga terjangkau.</p>
-                                <div class="text-warning">⭐⭐⭐⭐</div>
-                            </div>
+                            @endforeach
                         </div>
                         <button class="nav-btn nav-btn-right" onclick="scrollRight()">❯</button>
                     </div>
