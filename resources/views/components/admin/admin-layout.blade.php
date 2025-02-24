@@ -12,6 +12,8 @@
     <link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}">
+    </script>
 </head>
 
 <style>
@@ -26,13 +28,13 @@ body {
 
 
 .search-container {
-    background-color:;
+    background-color: ;
     border-radius: 5px;
     padding: 5px;
 }
 
 .profile-container {
-    background-color:;
+    background-color: ;
     border-radius: 5px;
     padding: 5px 10px;
     display: flex;

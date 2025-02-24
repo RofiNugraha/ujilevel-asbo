@@ -14,6 +14,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\LayananController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\OverviewController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UpdateProfileController;
@@ -62,9 +63,9 @@ Route::get('/viewbooking', function () {
     return view('viewbooking');
 })->name('viewbooking');
 
-Route::get('/notif', function () {
+Route::get('/notifikasi', function () {
     return view('notifikasi');
-})->name('notif');
+})->name('notifikasi');
 
 Route::get('/cart', function () {
     return view('cart');
@@ -78,22 +79,20 @@ Route::get('/informasi', function () {
     return view('informasi');
 })->name('informasi');
 
-Route::get('/formbook', function () {
-    return view('formbook');
-})->name('formbook');
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::middleware(['auth'])->group(function () {
-
-    //layanan
+        
+    // layanan
     Route::get('/booking', [LayananController::class, 'index'])->name('booking');
+    
+    // Overview
+    Route::get('/overview', [OverviewController::class, 'index'])->name('overview');
 
     // Profil
     Route::get('/profil', [ProfileController::class, 'show'])->name('profil');
@@ -112,8 +111,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/checkout', [BookingController::class, 'checkout'])->name('checkout.store');
 
     // notification
-    Route::get('/notifikasi', [NotificationController::class, 'index'])->middleware('auth');
-    });
+    Route::get('/notifikasi', [NotificationController::class, 'index'])->name('notifikasi');
+    Route::patch('/notifikasi/{id}/read', [NotificationController::class, 'markAsRead']);
     
 });
 
@@ -145,6 +144,10 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(
     Route::get('/admin/kasir/{id}/edit', [AdminKasirController::class, 'edit'])->name('admin.kasir.edit');
     Route::put('/admin/kasir/{id}', [AdminKasirController::class, 'update'])->name('admin.kasir.update');
     Route::delete('/admin/kasir/{id}', [AdminKasirController::class, 'destroy'])->name('admin.kasir.destroy');
+
+    Route::post('/admin/kasir/{id}', [PaymentController::class, 'createPayment']);
+    Route::post('/admin/kasir/callback', [PaymentController::class, 'callback']);
+    Route::get('/admin/kasir/{id}', [PaymentController::class, 'getPaymentToken']);
 });
 
 require __DIR__.'/auth.php';

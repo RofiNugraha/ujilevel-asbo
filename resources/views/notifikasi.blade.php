@@ -6,30 +6,52 @@
                 <div class="bg-white mt-8 mx-8 shadow-md p-4">
                     <h1 class="text-2xl font-medium text-black">Notifikasi</h1>
 
-                    @if(isset($notifications) && $notifications->isNotEmpty())
-                    @foreach ($notifications as $notification)
+                    @forelse ($notifications as $notification)
                     @php
-                    $bgColor = match($notification->booking->status ?? '') {
-                    'batal' => 'bg-red-500',
-                    'konfirmasi' => 'bg-green-500',
-                    'selesai' => 'bg-blue-500',
-                    default => 'bg-gray-200',
+                    $status = $notification->booking->status ?? 'default';
+
+                    $bgColor = match ($status) {
+                    'konfirmasi' => 'bg-green-500', // Hijau
+                    'batal' => 'bg-red-500', // Merah
+                    'selesai' => 'bg-blue-500', // Biru
+                    default => 'bg-gray-300', // Default abu-abu
                     };
                     @endphp
 
-                    <div class="{{ $bgColor }} text-white p-3 rounded-lg my-2">
-                        <p class="font-medium">{{ $notification->pesan }}</p>
-                        <p class="text-sm">{{ $notification->tanggal_notifikasi }}</p>
+                    <div class="{{ $bgColor }} text-black bg-gray-200 p-3 rounded-lg my-2">
+                        <strong>{{ $notification->user->name ?? 'Tidak diketahui' }}</strong>:
+                        {{ $notification->pesan }}
+                        <br>
+                        <small>{{ $notification->tanggal_notifikasi }}</small>
+                        @if (!$notification->status_dibaca)
+                        <button onclick="markAsRead({{ $notification->id }})"
+                            class="bg-blue-500 text-white px-2 py-1 rounded">Tandai Dibaca</button>
+                        @endif
                     </div>
-                    @endforeach
-                    @else
-                    <p class="text-gray-500">Tidak ada notifikasi.</p>
-                    @endif
+                    @empty
+                    <p class="text-gray-500">Tidak ada notifikasi</p>
+                    @endforelse
 
                 </div>
             </main>
         </div>
     </div>
+
+    <script>
+    function markAsRead(id) {
+        fetch(`/notifikasi/${id}/read`, {
+                method: 'PATCH',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                location.reload();
+            });
+    }
+    </script>
 </x-landing-layout>
 @endauth
 

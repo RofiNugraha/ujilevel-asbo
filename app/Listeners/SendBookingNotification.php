@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Events\BookingUpdated;
 use App\Mail\BookingStatusMail;
 use App\Models\Notification;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 
@@ -31,7 +32,7 @@ class SendBookingNotification
             'user_id' => $user->id,
             'booking_id' => $booking->id,
             'pesan' => $pesan,
-            'tanggal_notifikasi' => now(),
+            'tanggal_notifikasi' => Carbon::now('Asia/Jakarta'),
             'status_dibaca' => false,
         ]);
 

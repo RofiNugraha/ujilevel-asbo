@@ -76,7 +76,7 @@
         <div class="container mx-auto mt-12 mb-12 w-full max-w-4xl">
             <div class="bg-[#ffff] rounded-[39px] shadow-lg p-4 h-[60px] flex items-center marquee-container">
                 <h1 class="text-1xl px-4 font-semibold marquee">
-                    Booking List:
+                    Booking List: {{ now()->setTimezone('Asia/Jakarta')->format('l, d F Y') }}
                 </h1>
             </div>
             <div class="flex justify-center mt-6">
@@ -110,16 +110,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @forelse ($bookings as $booking)
                                     <tr class="border-b border-gray-300">
-                                        <td class="p-4"></td>
-                                        <td class="p-4"></td>
-                                        <td class="p-4"></td>
-                                        <td class="p-4"></td>
+                                        <td class="p-4">{{ $loop->iteration }}</td>
+                                        <td class="p-4">{{ $booking->user ? $booking->user->name : 'Tidak Diketahui' }}
+                                        </td>
+                                        <td class="p-4">{{ ucfirst($booking->kursi) }}</td>
+                                        <td class="p-4">{{ $booking->jam_booking }}</td>
                                     </tr>
+                                    @empty
                                     <tr>
-                                        <td colspan="4" class="text-center p-4">Tidak ada booking hari ini.</td>
+                                        <td colspan="4" class="text-center p-4">Tidak ada booking yang dikonfirmasi hari
+                                            ini.</td>
                                     </tr>
+                                    @endforelse
                                 </tbody>
+
                             </table>
                         </div>
                     </div>

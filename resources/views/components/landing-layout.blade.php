@@ -22,7 +22,7 @@
                     class="nav-item text-gray-400 hover:text-[gold] hover:underline">Booking</a>
                 <a href="{{ route('contact') }}"
                     class="nav-item text-gray-400 hover:text-[gold] hover:underline">Contact</a>
-                <a href="{{ route('notif') }}">
+                <a href="{{ route('notifikasi') }}">
                     <button class="nav-item relative text-gray-400 hover:text-[gold]">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
@@ -84,7 +84,7 @@
                 <a href="{{ route('about') }}" class="block hover:text-gray-900">About</a>
                 <a href="#{{ route('overview') }}" class="block hover:text-gray-900">Overview</a>
                 <a href="{{ route('booking') }}" class="block hover:text-gray-900">Booking</a>
-                <a href="{{ route('notif') }}">
+                <a href="{{ route('notifikasi') }}">
                     <button class="nav-item relative text-gray-400 hover:text-[gold]">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
