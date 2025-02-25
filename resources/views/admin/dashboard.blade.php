@@ -123,15 +123,13 @@
                     <div class="carousel-container">
                         <button class="nav-btn nav-btn-left" onclick="scrollLeft()">❮</button>
                         <div id="reviewCarousel" class="review-carousel">
-                            @foreach($ratings as $rating)
+                            @foreach ($contacts as $contact)
                             <div class="card review-card">
-                                <img src="{{ asset('images/google.png') }}" class="review-img">
-                                <h5 class="mt-3">{{ $rating->user->name }}</h5>
-                                <p class="min-height">{{ $rating->feedback }}</p>
+                                <img src="{{ asset($contact->user->image) }}" class="review-img">
+                                <h5 class="mt-3">{{ $contact->user->name }}</h5>
+                                <p class="min-height">{{ $contact->feedback }}</p>
                                 <div class="text-warning">
-                                    @for ($i = 0; $i < $rating->stars; $i++)
-                                        ⭐
-                                        @endfor
+                                    {!! str_repeat('⭐', $contact->rating) !!}
                                 </div>
                             </div>
                             @endforeach

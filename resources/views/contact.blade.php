@@ -66,11 +66,16 @@
                     <!-- Contact Form -->
                     <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-left">
                         <h3 class="text-2xl font-bold text-[gold] text-center">Rate Our Service</h3>
+<<<<<<< HEAD
                         <form action="" method="post" class="mt-4 space-y-4">
+=======
+                        <form action="{{ route('contact.store') }}" method="post" class="mt-4 space-y-4">
+                            @csrf
+>>>>>>> bb7a6f9f4a5c709083410697cbacaf8356db4667
                             <label class="text-white block">Rate Our Service:</label>
                             <input type="number" id="rating-input" name="rating" min="1" max="5" step="1"
                                 class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                                placeholder="Enter a number (1 - 5)" oninput="updateStars(this.value)">
+                                placeholder="Enter a number (1 - 5)" oninput="updateStars(this.value)" readonly>
 
                             <div class="flex space-x-1 mt-2" id="rating-container">
                                 <span class="cursor-pointer text-gray-500 text-2xl" data-value="1"

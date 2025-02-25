@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminBookingController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminKasirController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\Admin\AdminRiwayatTransaksiController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\LayananController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OverviewController;
@@ -59,10 +61,6 @@ Route::get('/editprofil', function () {
     return view('editprofil');
 })->name('editprofil');
 
-Route::get('/viewbooking', function () {
-    return view('viewbooking');
-})->name('viewbooking');
-
 Route::get('/notifikasi', function () {
     return view('notifikasi');
 })->name('notifikasi');
@@ -97,6 +95,7 @@ Route::middleware(['auth'])->group(function () {
     // Profil
     Route::get('/profil', [ProfileController::class, 'show'])->name('profil');
     Route::put('/profil', [UpdateProfileController::class, 'updateProfile'])->name('profil.update');
+    Route::get('/viewbooking/{id}', [ProfileController::class, 'showBooking'])->name('viewbooking.show');
 
     // Cart 
     Route::get('cart', [CartController::class, 'index'])->name('cart.index');
@@ -113,6 +112,9 @@ Route::middleware(['auth'])->group(function () {
     // notification
     Route::get('/notifikasi', [NotificationController::class, 'index'])->name('notifikasi');
     Route::patch('/notifikasi/{id}/read', [NotificationController::class, 'markAsRead']);
+
+    // contact
+    Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
     
 });
 
