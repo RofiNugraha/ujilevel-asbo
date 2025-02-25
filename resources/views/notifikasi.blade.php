@@ -16,17 +16,21 @@
                     'selesai' => 'bg-blue-500', // Biru
                     default => 'bg-gray-300', // Default abu-abu
                     };
+
+                    $icon = match ($status) {
+                    'konfirmasi' => 'success',
+                    'batal' => 'error',
+                    'selesai' => 'info',
+                    default => 'question',
+                    };
                     @endphp
 
-                    <div class="{{ $bgColor }} text-black bg-gray-200 p-3 rounded-lg my-2">
+                    <div class="{{ $bgColor }} text-black bg-gray-200 p-3 rounded-lg my-2 cursor-pointer"
+                        onclick="showNotification({{ $notification->id }}, '{{ $notification->user->name ?? 'Tidak diketahui' }}', '{{ $notification->pesan }}', '{{ $notification->tanggal_notifikasi }}', '{{ $icon }}')">
                         <strong>{{ $notification->user->name ?? 'Tidak diketahui' }}</strong>:
                         {{ $notification->pesan }}
                         <br>
                         <small>{{ $notification->tanggal_notifikasi }}</small>
-                        @if (!$notification->status_dibaca)
-                        <button onclick="markAsRead({{ $notification->id }})"
-                            class="bg-blue-500 text-white px-2 py-1 rounded">Tandai Dibaca</button>
-                        @endif
                     </div>
                     @empty
                     <p class="text-gray-500">Tidak ada notifikasi</p>
@@ -37,8 +41,9 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-    function markAsRead(id) {
+    function showNotification(id, user, message, date, icon) {
         fetch(`/notifikasi/${id}/read`, {
                 method: 'PATCH',
                 headers: {
@@ -47,12 +52,24 @@
                 }
             }).then(response => response.json())
             .then(data => {
-                alert(data.message);
-                location.reload();
+                Swal.fire({
+                    title: `📢 Dari: ${user}`,
+                    html: `<p style='font-size: 18px; font-weight: 500;'>${message}</p>`,
+                    footer: `<small style='color: gray;'>📅 ${date}</small>`,
+                    icon: icon,
+                    showConfirmButton: false,
+                    timer: 5000,
+                    background: '#f9f9f9',
+                    color: '#333',
+                    toast: true,
+                    position: 'top-end',
+                    showCloseButton: true
+                });
             });
     }
     </script>
 </x-landing-layout>
+
 @endauth
 
 @guest
