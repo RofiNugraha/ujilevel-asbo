@@ -31,9 +31,13 @@
             <div class="bg-white p-4 rounded-lg mt-3 shadow-md flex justify-between items-center">
                 <div>
                     <p class="text-gray-800 font-medium">Nama: <span class="font-semibold">{{ $user->name }}</span></p>
-                    <p class="text-gray-700">Layanan: belum beres<span
-                            class="font-medium">{{ json_decode($booking->layanan_id, true)[0]['id'] ?? '' }}</span></p>
-                    <p class="text-gray-700">Jam Booking: <span class="font-medium">{{ $booking->jam_booking }}</span>
+                    <p class="text-gray-800 font-medium">Pesanan:
+                        @foreach($booking->layanans as $layanan)
+                        <span class="font-medium">{{ $layanan->nama_layanan }} | </span>
+                        @endforeach
+                    </p>
+                    <p class="text-gray-800 font-medium">Jam Booking: <span
+                            class="font-medium">{{ $booking->jam_booking }}</span>
                     </p>
                 </div>
                 <a href="{{ route('viewbooking.show', $booking->id) }}"
