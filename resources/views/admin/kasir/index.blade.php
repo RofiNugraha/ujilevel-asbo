@@ -15,6 +15,7 @@
                                     <thead class="bg-warning">
                                         <tr class="text-dark">
                                             <th>No.</th>
+                                            <th>Nama</th>
                                             <th>Layanan</th>
                                             <th>Booking</th>
                                             <th>Kursi</th>
@@ -24,12 +25,43 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @php $no = 1; @endphp
+                                        @foreach($bookings as $item)
                                         <tr>
-                                            <td>1</td>
-                                            <td><span class="badge bg-primary">Layanan A (x2)</span></td>
-                                            <td>10:00 AM</td>
-                                            <td>3</td>
-                                            <td><span class="badge bg-success">Confirmed</span></td>
+                                            <td>{{ $no++ }}</td>
+                                            <td>{{ $item->user->name }}</td>
+                                            <td>
+                                                @php
+                                                $layananItems = json_decode($item->layanan_id, true) ?? [];
+                                                @endphp
+                                                @foreach($layananItems as $layananItem)
+                                                <span class="badge bg-primary">
+                                                    @php
+                                                    $layanan = App\Models\Layanan::find($layananItem['id']);
+                                                    @endphp
+                                                    @if($layanan)
+                                                    <span class="badge bg-primary">
+                                                        {{ $layanan->nama_layanan }} (x{{ $layananItem['quantity'] }})
+                                                    </span>
+                                                    @endif
+                                                </span><br>
+                                                @endforeach
+                                            </td>
+                                            <td>{{ $item->jam_booking }}</td>
+                                            <td>{{ $item->kursi }}</td>
+                                            <td>
+                                                @php
+                                                $badgeColor = match($item->status) {
+                                                'pending' => 'bg-warning',
+                                                'konfirmasi' => 'bg-success',
+                                                'batal' => 'bg-danger',
+                                                'selesai' => 'bg-primary',
+                                                default => 'bg-secondary'
+                                                };
+                                                @endphp
+
+                                                <span class="badge {{ $badgeColor }}">{{ $item->status }}</span>
+                                            </td>
                                             <td><span class="badge bg-danger">Unpaid</span></td>
                                             <td>
                                                 <button class="btn btn-danger btn-sm">
@@ -37,8 +69,10 @@
                                                 </button>
                                             </td>
                                         </tr>
+                                        @endforeach
                                         <tr>
                                             <td>2</td>
+                                            <td>popay</td>
                                             <td><span class="badge bg-primary">Layanan B (x1)</span></td>
                                             <td>2:00 PM</td>
                                             <td>2</td>
@@ -58,7 +92,7 @@
                 </div>
 
                 <script>
-                $(document).ready(function () {
+                $(document).ready(function() {
                     $('#riwayat-table').DataTable();
                 });
                 </script>

@@ -14,7 +14,7 @@ class AdminBookingController extends Controller
 {
     public function index()
     {
-        $bookings = Booking::with('user')->paginate(10);
+        $bookings = Booking::with('user')->whereIn('status', ['pending', 'batal'])->paginate(10);
 
         foreach ($bookings as $booking) {
             $layananIds = json_decode($booking->layanan_id, true) ?? [];
