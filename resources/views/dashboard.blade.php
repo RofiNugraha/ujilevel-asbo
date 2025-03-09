@@ -23,6 +23,10 @@
         position: relative;
         z-index: 2;
     }
+
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
     </style>
     <div class="min-h-screen bg-black from-gray-50 to-gray-200">
         <!-- Hero Section -->
@@ -141,4 +145,23 @@
             </div>
         </section>
     </div>
+    <div class="container mx-auto my-10 px-4">
+        <div class="relative flex items-center">
+            <button class="absolute left-0 z-10 p-2 bg-gray-200 rounded-full shadow-md hover:bg-gray-300"
+                onclick="scrollLeft()">❮</button>
+            <div id="reviewCarousel" class="flex overflow-x-auto gap-4 scrollbar-hide scroll-smooth">
+                <div class="min-w-[250px] bg-white shadow-lg rounded-lg p-4 flex flex-col items-center text-center">
+                    <img src="{{ asset('images/google.png') }}" class="w-20 h-20 rounded-full object-cover">
+                    <h5 class="mt-3 font-semibold text-lg">John Doe</h5>
+                    <p class="mt-2 text-gray-600 min-h-[60px]">This is an amazing service! Highly recommended.</p>
+                    <div class="text-yellow-500 mt-2">
+                        ⭐⭐⭐⭐⭐
+                    </div>
+                </div>
+            </div>
+            <button class="absolute right-0 z-10 p-2 bg-gray-200 rounded-full shadow-md hover:bg-gray-300"
+                onclick="scrollRight()">❯</button>
+        </div>
+    </div>
+
 </x-landing-layout>
