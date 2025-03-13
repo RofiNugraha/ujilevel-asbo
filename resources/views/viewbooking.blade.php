@@ -25,8 +25,10 @@
                     </tr>
                     <tr>
                         <td class="px-4 py-2 font-bold text-gray-700">Layanan</td>
-                        <td class="px-4 py-2 text-gray-600">belum beres
+                        @foreach($booking->layanans as $layanan)
+                        <td class="px-4 py-2 text-gray-600">{{ $layanan->nama_layanan }} |
                         </td>
+                        @endforeach
                     </tr>
                     <tr>
                         <td class="px-4 py-2 font-bold text-gray-700">Jam Booking</td>

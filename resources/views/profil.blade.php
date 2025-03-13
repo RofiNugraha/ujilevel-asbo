@@ -6,9 +6,9 @@
         </section>
 
         <section class="flex flex-col items-center py-6">
-            <div
-                class="w-24 h-24 bg-gray-300 rounded-full flex items-center justify-center text-3xl font-bold text-gray-600">
-                {{ substr($user->name, 0, 1) }}
+            <div>
+                <img src="{{ asset('images/google.png') }}" alt="Profile Image" class="w-24 h-24 rounded-full bg-gray-300">
+                <!-- {{ substr($user->name, 0, 1) }} -->
             </div>
             <h3 class="text-2xl font-bold mt-4">{{ $user->name }}</h3>
             <p class="text-lg text-gray-600 mt-1">{{ $user->email }}</p>
@@ -31,9 +31,13 @@
             <div class="bg-white p-4 rounded-lg mt-3 shadow-md flex justify-between items-center">
                 <div>
                     <p class="text-gray-800 font-medium">Nama: <span class="font-semibold">{{ $user->name }}</span></p>
-                    <p class="text-gray-700">Layanan: <span
-                            class="font-medium">{{ $booking->layanan->nama ?? 'Tidak tersedia' }}</span></p>
-                    <p class="text-gray-700">Jam Booking: <span class="font-medium">{{ $booking->jam_booking }}</span>
+                    <p class="text-gray-800 font-medium">Pesanan:
+                        @foreach($booking->layanans as $layanan)
+                        <span class="font-medium">{{ $layanan->nama_layanan }} | </span>
+                        @endforeach
+                    </p>
+                    <p class="text-gray-800 font-medium">Jam Booking: <span
+                            class="font-medium">{{ $booking->jam_booking }}</span>
                     </p>
                 </div>
                 <button @click="selectedBooking = {{ json_encode($booking) }}"

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Booking;
 use App\Models\CartItem;
+use App\Models\Layanan;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +30,13 @@ class ProfileController extends Controller
         
         $bookings = Booking::with(['user', 'checkout'])
             ->where('user_id', $user->id)
+            ->whereIn('status', ['pending', 'konfirmasi'])
             ->get();
+
+            foreach ($bookings as $booking) {
+                $layananIds = json_decode($booking->layanan_id, true);
+                $booking->layanans = Layanan::whereIn('id', $layananIds)->get();
+            }
 
         return view('profil', compact('user', 'bookings'));
     }
@@ -42,21 +49,8 @@ class ProfileController extends Controller
                 ->where('id', $id)
                 ->firstOrFail();
 
-                // foreach ($booking as $booking) {
-                //     $layananIds = json_decode($booking->layanan_id, true) ?? [];
-                //     foreach ($layananIds as $key => $layananId) {
-                //         $cartItem = CartItem::where('layanan_id', $layananId)
-                //             ->whereHas('cart', function ($query) use ($booking) {
-                //                 $query->where('user_id', $booking->user_id);
-                //             })->first();
-                //         $layananIds[$key] = [
-                //             'id' => $layananId,
-                //             'quantity' => $cartItem->quantity ?? 1
-                //         ];
-                //     }
-                    
-                //     $booking->layanan_id = json_encode($layananIds);
-                // }
+        $layananIds = json_decode($booking->layanan_id, true);
+        $booking->layanans = Layanan::whereIn('id', $layananIds)->get();
         
         return view('viewbooking', compact('booking'));
     }

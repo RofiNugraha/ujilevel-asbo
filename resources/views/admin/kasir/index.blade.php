@@ -5,154 +5,135 @@
                 <div class="container mt-4">
                     <h2 class="mb-4">Admin Kasir - Barbershop</h2>
 
-                    <!-- Form Input Customer Non-Booking -->
                     <div class="card mb-4">
                         <div class="card-header">Tambah Customer Non-Booking</div>
                         <div class="card-body">
-                            <form id="customerForm">
-                                <div class="mb-3">
-                                    <label class="form-label">Nama Customer</label>
-                                    <input type="text" class="form-control" id="namaCustomer" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Pilih Layanan</label>
-                                    <div class="row" id="layananContainer">
-                                        <div class="col-md-4">
-                                            <div class="card layanan-card"
-                                                onclick="tambahLayanan('Haircut', 50000, '{{ asset('images/google.png') }}')">
-                                                <img src="{{ asset('images/google.png') }}" class="card-img-top"
-                                                    alt="Haircut">
-                                                <div class="card-body text-center">
-                                                    <h5 class="card-title">Haircut</h5>
-                                                    <p class="card-text">Potong rambut stylish dan rapi.</p>
-                                                    <p class="fw-bold">Rp50.000</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="card layanan-card"
-                                                onclick="tambahLayanan('Shave', 30000, '{{ asset('images/google.png') }}')">
-                                                <img src="{{ asset('images/google.png') }}" class="card-img-top"
-                                                    alt="Shave">
-                                                <div class="card-body text-center">
-                                                    <h5 class="card-title">Shave</h5>
-                                                    <p class="card-text">Cukur jenggot atau kumis dengan rapi.</p>
-                                                    <p class="fw-bold">Rp30.000</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="card layanan-card"
-                                                onclick="tambahLayanan('Haircut & Shave', 70000, '{{ asset('images/google.png') }}')">
-                                                <img src="{{ asset('images/google.png') }}" class="card-img-top"
-                                                    alt="Haircut & Shave">
-                                                <div class="card-body text-center">
-                                                    <h5 class="card-title">Haircut & Shave</h5>
-                                                    <p class="card-text">Paket lengkap potong rambut dan cukur.</p>
-                                                    <p class="fw-bold">Rp70.000</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="riwayat-table">
+                                    <thead class="bg-warning">
+                                        <tr class="text-dark">
+                                            <th>No.</th>
+                                            <th>Nama</th>
+                                            <th>Layanan</th>
+                                            <th>Booking</th>
+                                            <th>Kursi</th>
+                                            <th>Status</th>
+                                            <th>Status Pembayaran</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php $no = 1; @endphp
+                                        @foreach($bookings as $item)
+                                        <tr>
+                                            <td>{{ $no++ }}</td>
+                                            <td>{{ $item->user->name }}</td>
+                                            <td>
+                                                @php
+                                                $layananItems = json_decode($item->layanan_id, true) ?? [];
+                                                @endphp
+                                                @foreach($layananItems as $layananItem)
+                                                <span class="badge bg-primary">
+                                                    @php
+                                                    $layanan = App\Models\Layanan::find($layananItem['id']);
+                                                    @endphp
+                                                    @if($layanan)
+                                                    <span class="badge bg-primary">
+                                                        {{ $layanan->nama_layanan }} (x{{ $layananItem['quantity'] }})
+                                                    </span>
+                                                    @endif
+                                                </span><br>
+                                                @endforeach
+                                            </td>
+                                            <td>{{ $item->jam_booking }}</td>
+                                            <td>{{ $item->kursi }}</td>
+                                            <td>
+                                                @php
+                                                $badgeColor = match($item->status) {
+                                                'pending' => 'bg-warning',
+                                                'konfirmasi' => 'bg-success',
+                                                'batal' => 'bg-danger',
+                                                'selesai' => 'bg-primary',
+                                                default => 'bg-secondary'
+                                                };
+                                                @endphp
 
-                                <!-- Keranjang Layanan -->
-                                <div class="card mt-3 shadow-lg">
-                                    <div class="card-header text-white d-flex align-items-center"
-                                        style="background-color: gold;">
-                                        <i class="bi bi-cart-fill me-2"></i> Keranjang Layanan
-                                    </div>
-                                    <div class="card-body">
-                                        <ul id="keranjang" class="list-group mb-3"></ul>
-                                        <h5 class="text-end">Total: <span id="totalHarga" class="fw-bold"
-                                                style="color: gold;">Rp0</span></h5>
-                                    </div>
-                                </div>
+                                                <span class="badge {{ $badgeColor }}">{{ $item->status }}</span>
+                                            </td>
+                                            <td>
+                                                @if($item->status_pembayaran == 'unpaid')
+                                                <span class="badge bg-danger">Unpaid</span>
+                                                @else
+                                                <span class="badge bg-success">Paid</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-danger btn-sm">
+                                                    <i class="fas fa-times"></i> Batalkan
+                                                </button>
+                                                <button class="btn btn-success btn-sm" onclick="openPaymentModal()">
+                                                    <i class="fas fa-wallet"></i> Bayar
+                                                </button>
+                                            </td>
 
-                                <button type="button" class="btn text-white mt-3 w-100 fw-bold"
-                                    style="background-color: gold;" onclick="tambahBooking()">
-                                    <i class="bi bi-plus-circle"></i> Tambah
-                                </button>
-
-
-                            </form>
-                        </div>
-                    </div>
-
-                    <!-- Tabel Riwayat Booking -->
-                    <div class="card">
-                        <div class="card-header">Riwayat Booking</div>
-                        <div class="card-body">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Nama Customer</th>
-                                        <th>Layanan</th>
-                                        <th>Total Harga</th>
-                                        <th>Tanggal</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="riwayatBooking"></tbody>
-                            </table>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <script>
-                let layananTerpilih = [];
-
-                function tambahLayanan(nama, harga, gambar) {
-                    layananTerpilih.push({
-                        nama,
-                        harga,
-                        gambar
-                    });
-                    updateKeranjang();
-                }
-
-                function updateKeranjang() {
-                    let keranjang = document.getElementById("keranjang");
-                    keranjang.innerHTML = "";
-                    let total = 0;
-
-                    layananTerpilih.forEach((item, index) => {
-                        total += item.harga;
-                        let li = document.createElement("li");
-                        li.className = "list-group-item d-flex justify-content-between align-items-center";
-                        li.innerHTML =
-                            `<img src="${item.gambar}" alt="${item.nama}" width="50" class="me-2"> ${item.nama} - Rp${item.harga.toLocaleString()} <button class='btn btn-danger btn-sm' onclick='hapusLayanan(${index})'>X</button>`;
-                        keranjang.appendChild(li);
-                    });
-
-                    document.getElementById("totalHarga").textContent = `Rp${total.toLocaleString()}`;
-                }
-
-                function hapusLayanan(index) {
-                    layananTerpilih.splice(index, 1);
-                    updateKeranjang();
-                }
-
-                function tambahBooking() {
-                    let nama = document.getElementById("namaCustomer").value;
-                    if (nama === "" || layananTerpilih.length === 0) {
-                        alert("Nama customer dan layanan harus dipilih!");
-                        return;
-                    }
-                    let tanggal = new Date().toLocaleDateString();
-                    let totalHarga = layananTerpilih.reduce((acc, item) => acc + item.harga, 0);
-                    let layananList = layananTerpilih.map(item => item.nama).join(", ");
-
-                    let table = document.getElementById("riwayatBooking");
-                    let newRow = table.insertRow();
-                    newRow.innerHTML =
-                        `<td>${nama}</td><td>${layananList}</td><td>Rp${totalHarga.toLocaleString()}</td><td>${tanggal}</td>`;
-
-                    document.getElementById("customerForm").reset();
-                    layananTerpilih = [];
-                    updateKeranjang();
-                }
-                </script>
             </main>
         </div>
     </div>
+
+    <!-- Modal Pembayaran -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="paymentModalLabel">💳 Pilih Metode Pembayaran</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <p class="fw-bold">Silakan pilih metode pembayaran yang tersedia:</p>
+                    <div class="d-grid gap-3">
+                        <button
+                            class="btn btn-outline-primary py-3 fs-5 d-flex align-items-center justify-content-center">
+                            <i class="fas fa-university me-2"></i> Transfer Bank
+                        </button>
+                        <button
+                            class="btn btn-outline-warning py-3 fs-5 d-flex align-items-center justify-content-center">
+                            <i class="fas fa-mobile-alt me-2"></i> E-Wallet (GoPay, OVO, Dana)
+                        </button>
+                        <button
+                            class="btn btn-outline-danger py-3 fs-5 d-flex align-items-center justify-content-center">
+                            <i class="fas fa-credit-card me-2"></i> Kartu Kredit/Debit
+                        </button>
+                        <button
+                            class="btn btn-outline-success py-3 fs-5 d-flex align-items-center justify-content-center">
+                            <i class="fas fa-money-bill-wave me-2"></i> Bayar di Tempat (Cash)
+                        </button>
+                    </div>
+                    <p class="mt-4 text-muted">Pastikan pembayaran sesuai dengan total biaya layanan.</p>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+    $(document).ready(function() {
+        $('#riwayat-table').DataTable();
+    });
+
+    function openPaymentModal() {
+        var paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
+        paymentModal.show();
+    }
+    </script>
 </x-admin.admin-layout>
