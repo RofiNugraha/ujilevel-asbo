@@ -50,7 +50,7 @@
                                                 method="POST" style="display: inline;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="button"
+                                                <button type="submit"
                                                     class="btn btn-danger btn-sm rounded-circle delete-btn"
                                                     data-id="{{ $layanan->id }}" data-bs-toggle="tooltip" title="Hapus">
                                                     <i class="fas fa-trash"></i>
