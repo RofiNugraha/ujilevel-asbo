@@ -12,9 +12,16 @@
 <body class="bg-gradient-to-b from-[#0C102B] to-[#0E2094] min-h-screen flex items-center justify-center">
     <div class="bg-white rounded-2xl w-full max-w-4xl p-8 shadow-lg relative">
         <h1 class="text-4xl font-bold text-center mb-8">Edit Profile</h1>
-        <form action="{{ route('profil.update') }}" method="POST" class="space-y-6">
+        <form action="{{ route('profil.update') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
             @csrf
             @method('PUT')
+            <div class="flex flex-col items-center">
+                <img src="{{ auth()->user()->profile_image ? asset('storage/' . auth()->user()->profile_image) : 'https://via.placeholder.com/150' }}"
+                    alt="Profile Picture" class="w-32 h-32 rounded-full object-cover border-4 border-gray-300 mb-4">
+                <label for="profile_image" class="block text-lg font-semibold">Profile Image</label>
+                <input type="file" id="profile_image" name="profile_image"
+                    class="w-full p-3 border border-gray-300 rounded-lg mt-2" />
+            </div>
             <div>
                 <label for="name" class="block text-lg font-semibold">Name</label>
                 <input type="text" id="name" name="name" class="w-full p-3 border border-gray-300 rounded-lg mt-2"

@@ -71,6 +71,17 @@
     .nav-btn-right {
         right: -40px;
     }
+
+    .icon-container {
+        width: 67px;
+        height: 67px;
+        background-color: gold;
+        /* Warna background icon */
+        border-radius: 50%;
+        margin-left: 50px;
+        align-items: center;
+        justify-content: center;
+    }
     </style>
 
     <div id="layoutSidenav">
@@ -91,32 +102,58 @@
                     </div>
                 </div>
 
-                <div class="row g-3 mt-42222A">
+                <div class="row g-3 mt-4">
                     <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="card shadow-sm p-3 d-flex align-items-center rounded-4 text-center">
-                            <i class="fas fa-shopping-cart fa-2x text-primary mb-2"></i>
-                            <h3 class="fs-6 fw-semibold">Total Pesanan</h3>
-                            <p class="fs-4 fw-bold" id="totalOrders">150</p>
+                        <div class="card shadow-sm p-4 d-flex flex-row justify-center align-items-center rounded-4">
+                            <div class="icon-container me-3">
+                                <i class="fas fa-shopping-cart mt-3 fa-2x text-primary"></i>
+                            </div>
+                            <div class="text-start">
+                                <h3 class="fs-2 fw-bold">75</h3>
+                                <p class="fs-6 text-muted mb-1">Total Orders</p>
+                                <span class="text-success">
+                                    <i class="fas fa-arrow-up"></i> 4% (30 days)
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="card shadow-sm p-3 d-flex align-items-center rounded-4 text-center">
-                            <i class="fas fa-wallet fa-2x text-success mb-2"></i>
-                            <h3 class="fs-6 fw-semibold">Pendapatan</h3>
-                            <p class="fs-4 fw-bold" id="totalRevenue">Rp 5.000.000</p>
+                        <div class="card shadow-sm p-4 d-flex flex-row justify-center align-items-center rounded-4">
+                            <div class="icon-container me-3">
+                                <i class="fas fa-box fa-2x mt-3 text-success"></i>
+                            </div>
+                            <div class="text-start">
+                                <h3 class="fs-2 fw-bold">357</h3>
+                                <p class="fs-6 text-muted mb-1">Total Delivered</p>
+                                <span class="text-success">
+                                    <i class="fas fa-arrow-up"></i> 4% (30 days)
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="col-12 col-lg-4">
-                        <div class="card shadow-sm p-3 d-flex align-items-center rounded-4 text-center">
-                            <i class="fas fa-users fa-2x text-warning mb-2"></i>
-                            <h3 class="fs-6 fw-semibold">Pelanggan</h3>
-                            <p class="fs-4 fw-bold" id="totalCustomers">120</p>
+                        <div class="card shadow-sm p-4 d-flex flex-row justify-center align-items-center rounded-4">
+                            <div class="icon-container me-3">
+                                <i class="fas fa-shopping-bag fa-2x mt-3 text-secondary"></i>
+                            </div>
+                            <div class="text-start">
+                                <h3 class="fs-2 fw-bold">$128</h3>
+                                <p class="fs-6 text-muted mb-1">Total Revenue</p>
+                                <span class="text-danger">
+                                    <i class="fas fa-arrow-down"></i> 12% (30 days)
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="mt-5 card shadow-sm p-4" style="height: 320px;">
-                    <h3 class="fs-5 fw-semibold mb-3"><i class="fas fa-chart-bar me-2"></i> Statistik Pesanan</h3>
+                <div class="mt-5 card  p-4 position-relative overflow-hidden"
+                    style="height: 320px; border-radius: 12px; background: linear-gradient(135deg, #f8f9fa, #e9ecef); transition: all 0.3s ease-in-out;">
+
+                    <h3 class="fs-5 fw-semibold mb-3 d-flex align-items-center">
+                        <i class="fas fa-chart-bar me-2 text-primary"></i> Statistik Pesanan
+                    </h3>
+
                     <canvas id="orderChart"></canvas>
                 </div>
                 <div class="container mt-5 mb-5">
@@ -175,8 +212,11 @@
                 ],
                 datasets: [{
                     label: "Jumlah Pesanan",
-                    data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120],
-                    backgroundColor: "rgba(54, 162, 235, 0.5)"
+                    data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120], // Data tetap
+                    backgroundColor: [
+                        "#A52A2A", "#DAA520", "#A52A2A", "#DAA520", "#A52A2A", "#DAA520",
+                        "#A52A2A", "#DAA520", "#A52A2A", "#DAA520", "#A52A2A", "#DAA520"
+                    ]
                 }]
             },
             options: {
@@ -197,6 +237,8 @@
                 }
             }
         });
+
+
 
         document.getElementById("dropdownToggle").addEventListener("click", function() {
             Swal.fire({

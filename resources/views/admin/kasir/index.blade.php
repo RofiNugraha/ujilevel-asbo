@@ -2,16 +2,15 @@
     <div id="layoutSidenav">
         <div id="layoutSidenav_content">
             <main>
-                <div class="container-fluid px-4">
-                    <h1 class="mt-4">Riwayat Booking</h1>
+                <div class="container mt-4">
+                    <h2 class="mb-4">Admin Kasir - Barbershop</h2>
+
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-history me-1"></i>
                             Riwayat Booking Anda
                         </div>
-
-                        <!-- @TODO: You can add the desired ID as a reference for the embedId parameter. -->
-                        <div id="snap-container"></div>
+                        <div class="card-header">Tambah Customer Non-Booking</div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-hover" id="riwayat-table">
@@ -65,9 +64,15 @@
 
                                                 <span class="badge {{ $badgeColor }}">{{ $item->status }}</span>
                                             </td>
-                                            <td><span class="badge bg-danger">Unpaid</span></td>
                                             <td>
-                                                <button id="pay-button">Pay!</button>
+                                                @if($item->status_pembayaran == 'unpaid')
+                                                <span class="badge bg-danger">Unpaid</span>
+                                                @else
+                                                <span class="badge bg-success">Paid</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <<<<<<< HEAD <button id="pay-button">Pay!</button>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -81,31 +86,85 @@
                                             <td><span class="badge bg-success">Paid</span></td>
                                             <td>
                                                 <button id="pay-button">Bayar Sekarang</button>
+                                                =======
+                                                <button class="btn btn-danger btn-sm">
+                                                    <i class="fas fa-times"></i> Batalkan
+                                                </button>
+                                                <button class="btn btn-success btn-sm" onclick="openPaymentModal()">
+                                                    <i class="fas fa-wallet"></i> Bayar
+                                                </button>
+                                                >>>>>>> 3b5ee3fce06cace15269c31e20053cf50a1b6255
                                             </td>
+
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <script>
-                $(document).ready(function() {
-                    $('#riwayat-table').DataTable();
-                });
-                </script>
             </main>
         </div>
     </div>
 
-
-    <script type="text/javascript">
-    var payButton = document.getElementById('pay-button');
-    payButton.addEventListener('click', function() {
+    <<<<<<< HEAD <script type="text/javascript">
+        var payButton = document.getElementById('pay-button');
+        payButton.addEventListener('click', function() {
         window.snap.embed('data.snap_token', {
-            embedId: 'snap-container'
+        embedId: 'snap-container'
         });
-    });
-    </script>
+        });
+        =======
+        <!-- Modal Pembayaran -->
+        <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title" id="paymentModalLabel">💳 Pilih Metode Pembayaran</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <p class="fw-bold">Silakan pilih metode pembayaran yang tersedia:</p>
+                        <div class="d-grid gap-3">
+                            <button
+                                class="btn btn-outline-primary py-3 fs-5 d-flex align-items-center justify-content-center">
+                                <i class="fas fa-university me-2"></i> Transfer Bank
+                            </button>
+                            <button
+                                class="btn btn-outline-warning py-3 fs-5 d-flex align-items-center justify-content-center">
+                                <i class="fas fa-mobile-alt me-2"></i> E-Wallet (GoPay, OVO, Dana)
+                            </button>
+                            <button
+                                class="btn btn-outline-danger py-3 fs-5 d-flex align-items-center justify-content-center">
+                                <i class="fas fa-credit-card me-2"></i> Kartu Kredit/Debit
+                            </button>
+                            <button
+                                class="btn btn-outline-success py-3 fs-5 d-flex align-items-center justify-content-center">
+                                <i class="fas fa-money-bill-wave me-2"></i> Bayar di Tempat (Cash)
+                            </button>
+                        </div>
+                        <p class="mt-4 text-muted">Pastikan pembayaran sesuai dengan total biaya layanan.</p>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <script>
+        $(document).ready(function() {
+            $('#riwayat-table').DataTable();
+        });
+
+        function openPaymentModal() {
+            var paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
+            paymentModal.show();
+        } >>>
+        >>>
+        >
+        3 b5ee3fce06cace15269c31e20053cf50a1b6255
+        </script>
 </x-admin.admin-layout>

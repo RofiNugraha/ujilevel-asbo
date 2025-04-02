@@ -1,7 +1,7 @@
 <x-landing-layout>
     <h1
-        class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-green-500 to-green-600 mt-12 flex justify-center items-center">
-        Shopping Cart
+        class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 mt-20 flex justify-center items-center animate-pulse">
+        KERANJANG ANDA
     </h1>
 
     <main class="m-8 flex flex-col items-center">
@@ -236,7 +236,8 @@
                                 },
                                 onPending: function(result) {
                                     alert(
-                                        'Payment is pending, please complete your payment');
+                                        'Payment is pending, please complete your payment'
+                                    );
                                     // Tambahkan tombol check status
                                     addCheckStatusButton(data.order_id);
                                     paymentModal.classList.add('hidden');
@@ -250,7 +251,7 @@
                                 onClose: function() {
                                     console.log(
                                         'Customer closed the popup without finishing payment'
-                                        );
+                                    );
                                     // Jika pengguna menutup popup, beri opsi untuk cek status
                                     if (transactionData) {
                                         addCheckStatusButton(transactionData.order_id);

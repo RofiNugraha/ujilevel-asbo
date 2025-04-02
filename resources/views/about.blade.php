@@ -75,7 +75,7 @@
 
     <main class="container mx-auto px-6 py-16 text-white flex flex-col items-center space-y-12">
         <div class="text-center w-full md:w-2/3">
-            <h1 class="text-5xl font-extrabold text-yellow-500 text-center mb-8 drop-shadow-lg">Jam Operasi</h1>
+            <h1 class="text-5xl font-extrabold text-yellow-500 text-center mb-8 drop-shadow-lg">Jam Operasi ASBO</h1>
             <div
                 class="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-xl shadow-xl border border-gray-700 relative">
                 <img src="{{ asset('images/logogold.png') }}" alt="Logo"
