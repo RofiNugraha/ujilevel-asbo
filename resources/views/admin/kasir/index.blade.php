@@ -9,6 +9,9 @@
                             <i class="fas fa-history me-1"></i>
                             Riwayat Booking Anda
                         </div>
+
+                        <!-- @TODO: You can add the desired ID as a reference for the embedId parameter. -->
+                        <div id="snap-container"></div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-hover" id="riwayat-table">
@@ -64,9 +67,7 @@
                                             </td>
                                             <td><span class="badge bg-danger">Unpaid</span></td>
                                             <td>
-                                                <button class="btn btn-danger btn-sm">
-                                                    <i class="fas fa-times"></i> Batalkan
-                                                </button>
+                                                <button id="pay-button">Pay!</button>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -79,9 +80,7 @@
                                             <td><span class="badge bg-warning">Pending</span></td>
                                             <td><span class="badge bg-success">Paid</span></td>
                                             <td>
-                                                <button class="btn btn-secondary btn-sm" disabled>
-                                                    <i class="fas fa-lock"></i> Tidak dapat dibatalkan
-                                                </button>
+                                                <button id="pay-button">Bayar Sekarang</button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -99,4 +98,14 @@
             </main>
         </div>
     </div>
+
+
+    <script type="text/javascript">
+    var payButton = document.getElementById('pay-button');
+    payButton.addEventListener('click', function() {
+        window.snap.embed('data.snap_token', {
+            embedId: 'snap-container'
+        });
+    });
+    </script>
 </x-admin.admin-layout>

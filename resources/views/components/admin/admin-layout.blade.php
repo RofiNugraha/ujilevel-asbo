@@ -12,7 +12,9 @@
     <link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}">
+    <script type="text/javascript" src="https://app.stg.midtrans.com/snap/snap.js"
+        data-client-key="{{config('midtrans.client_key')}}">
+    </script>
     </script>
 </head>
 
@@ -195,6 +197,14 @@ body {
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-concierge-bell"></i>
                                 <span class="ms-3">Layanan</span>
+                            </div>
+                        </a>
+
+                        <a class="nav-link text-warning mt-2 {{ request()->routeIs('admin.order.index') ? 'active' : '' }}"
+                            href="{{ route('admin.order.index') }}">
+                            <div class="sb-nav-link-icon">
+                                <i class="fas fa-concierge-bell"></i>
+                                <span class="ms-3">Belajar Midtrans</span>
                             </div>
                         </a>
                     </div>

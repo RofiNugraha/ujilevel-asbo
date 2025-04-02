@@ -17,6 +17,8 @@ return new class extends Migration
             $table->json('layanan_id');
             $table->integer('total_harga');
             $table->string('metode_pembayaran', 20);
+            $table->string('transaction_id')->nullable();
+            $table->enum('status_transaksi', ['pending', 'success', 'failed'])->default('pending');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');

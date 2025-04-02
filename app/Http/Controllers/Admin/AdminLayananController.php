@@ -33,9 +33,16 @@ class AdminLayananController extends Controller
         $layanan->harga = $request->harga;
 
         if ($request->hasFile('gambar')) {
-            $layanan->gambar = $request->file('gambar')->store('images', 'public');
+            $file = $request->file('gambar');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $destinationPath = storage_path('app/public/images');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+            $file->move($destinationPath, $filename);
+            $layanan->gambar = 'images/' . $filename;
         }
-
+        
         $layanan->save();
 
         return redirect()->route('admin.layanan.index')->with('success', 'Layanan berhasil ditambahkan.');

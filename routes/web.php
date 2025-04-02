@@ -1,28 +1,21 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminBookingController;
-use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminKasirController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\AdminLayananController;
-use App\Http\Controllers\Admin\AdminNotifikasiController;
-use App\Http\Controllers\Admin\AdminProdukController;
-use App\Http\Controllers\CekLoginController;
-use App\Http\Controllers\Admin\AdminRiwayatTransaksiController;
+use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\DownPaymentController;
 use App\Http\Controllers\LayananController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OverviewController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\StatusCheckerController;
 use App\Http\Controllers\UpdateProfileController;
-use App\Http\Middleware\AdminMiddleware;
-use App\Models\Booking;
-use App\Models\Layanan;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -115,7 +108,11 @@ Route::middleware(['auth'])->group(function () {
 
     // contact
     Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
-    
+
+    Route::post('/orders/create', [DownPaymentController::class, 'create'])->name('order.create');
+    Route::post('/orders/update-status', [DownPaymentController::class, 'updateStatus'])->name('order.update-status');
+    Route::post('/orders/notification', [DownPaymentController::class, 'notification'])->name('order.notification');
+    Route::post('/check-payment-status', [StatusCheckerController::class, 'checkStatus'])->name('payment.check-status');
 });
 
 Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
@@ -129,7 +126,7 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(
     Route::get('/admin/layanan/{id}/edit', [AdminLayananController::class, 'edit'])->name('admin.layanan.edit');
     Route::put('/admin/layanan/{id}', [AdminLayananController::class, 'update'])->name('admin.layanan.update');
     Route::delete('/admin/layanan/{layanan}', [AdminLayananController::class, 'destroy'])->name('admin.layanan.destroy');
-
+    
     // booking
     Route::get('/admin/booking', [AdminBookingController::class, 'index'])->name('admin.booking.index');
     Route::get('/admin/booking/create', [AdminBookingController::class, 'create'])->name('admin.booking.create');
@@ -147,9 +144,9 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(
     Route::put('/admin/kasir/{id}', [AdminKasirController::class, 'update'])->name('admin.kasir.update');
     Route::delete('/admin/kasir/{id}', [AdminKasirController::class, 'destroy'])->name('admin.kasir.destroy');
 
-    Route::post('/admin/kasir/{id}', [PaymentController::class, 'createPayment']);
-    Route::post('/admin/kasir/callback', [PaymentController::class, 'callback']);
-    Route::get('/admin/kasir/{id}', [PaymentController::class, 'getPaymentToken']);
+    // payment
+    Route::get('admin/belajar_midtrans', [AdminOrderController::class, 'index'])->name('admin.order.index');
+    Route::post('/admin/belajar_midtrans/checkout', [AdminOrderController::class, 'checkout']);
 });
 
 require __DIR__.'/auth.php';

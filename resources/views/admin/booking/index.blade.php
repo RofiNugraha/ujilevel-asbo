@@ -25,7 +25,6 @@
                                             <th>Booking</th>
                                             <th>Kursi</th>
                                             <th>Status</th>
-                                            <th>Status Pembayaran</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -53,7 +52,6 @@
                                             <td>{{ $item->jam_booking }}</td>
                                             <td>{{ $item->kursi }}</td>
                                             <td>{{ $item->status }}</td>
-                                            <td>{{ $item->status_pembayaran }}</td>
                                             <td>
                                                 <a href="{{ route('admin.booking.edit', $item->id) }}"
                                                     class="btn btn-warning btn-sm">
