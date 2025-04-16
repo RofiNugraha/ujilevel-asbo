@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Services\MidtransService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
@@ -23,7 +24,7 @@ class DownPaymentController extends Controller
     public function create(Request $request)
     {
         try {
-            // Ini perbaikan pertama: kita konversi request JSON menjadi array
+            // Konversi request JSON menjadi array
             $data = $request->json()->all();
             
             // Validasi data
@@ -110,6 +111,9 @@ class DownPaymentController extends Controller
             // Store in session that DP is paid
             Session::put('dp_paid', true);
             Session::put('order_id', $order->id);
+            
+            // Set flash message only for this request
+            Session::flash('dp_paid_now', true);
 
             return response()->json([
                 'success' => true,
@@ -121,32 +125,38 @@ class DownPaymentController extends Controller
         }
     }
 
-    // Webhook for Midtrans notifications
     public function notification(Request $request)
-    {
-        try {
-            $notificationBody = json_decode($request->getContent(), true);
-            $transactionStatus = $notificationBody['transaction_status'];
-            $orderId = $notificationBody['order_id'];
-            
-            // Extract the actual order ID from the Midtrans order ID format (DP-{id}-{timestamp})
-            $orderIdParts = explode('-', $orderId);
-            if (count($orderIdParts) > 1) {
-                $actualOrderId = $orderIdParts[1];
-                
-                $order = Order::findOrFail($actualOrderId);
-                
-                if ($transactionStatus == 'capture' || $transactionStatus == 'settlement') {
-                    $order->update(['status' => 'Paid']); // Sesuaikan dengan enum di migrasi
-                } elseif ($transactionStatus == 'deny' || $transactionStatus == 'expire' || $transactionStatus == 'cancel') {
-                    $order->update(['status' => 'Unpaid']); // Sesuaikan dengan enum di migrasi
-                }
-            }
-            
-            return response()->json(['success' => true]);
-        } catch (\Exception $e) {
-            Log::error('Error handling notification: ' . $e->getMessage());
-            return response()->json(['error' => $e->getMessage()], 500);
+{
+    try {
+        $notificationBody = json_decode($request->getContent(), true);
+        $transactionStatus = $notificationBody['transaction_status'];
+        $orderId = $notificationBody['order_id'];
+        
+        $midtransService = new MidtransService();
+        
+        if (strpos($orderId, 'DP-') === 0) {
+            // Pembayaran DP
+            $midtransService->updateTransactionStatus($orderId, $this->mapStatus($transactionStatus));
+        } else {
+            // Pembayaran full
+            $midtransService->updateTransactionStatus($orderId, $this->mapStatus($transactionStatus));
         }
+        
+        return response()->json(['success' => true]);
+    } catch (\Exception $e) {
+        Log::error('Error handling notification: ' . $e->getMessage());
+        return response()->json(['error' => $e->getMessage()], 500);
     }
+}
+
+private function mapStatus($transactionStatus)
+{
+    if ($transactionStatus == 'capture' || $transactionStatus == 'settlement') {
+        return 'success';
+    } elseif ($transactionStatus == 'pending') {
+        return 'pending';
+    } else {
+        return 'failed';
+    }
+}
 }

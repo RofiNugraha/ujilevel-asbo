@@ -34,6 +34,11 @@ class Booking extends Model
     
     public function checkout()
     {
-        return $this->hasOne(Checkout::class);
+        return $this->belongsTo(Checkout::class, 'checkout_id', 'id');
+    }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'order_id');
     }
 }

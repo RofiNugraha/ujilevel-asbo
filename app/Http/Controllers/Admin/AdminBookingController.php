@@ -6,8 +6,13 @@ use App\Events\BookingUpdated;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\CartItem;
+use App\Models\Checkout;
+use App\Models\Kasir;
 use App\Models\Layanan;
-use App\Models\Produk;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
+use Midtrans\Config as MidtransConfig;
+use Midtrans\Snap;
 use Illuminate\Http\Request;
 
 class AdminBookingController extends Controller
@@ -84,11 +89,75 @@ class AdminBookingController extends Controller
             'status' => $status_baru,
         ]);
 
+        // If status is updated to "konfirmasi", create a kasir record
+        if ($status_lama !== $status_baru && $status_baru === 'konfirmasi') {
+            $this->createKasirRecord($booking);
+        }
+
         if ($status_lama !== $status_baru) {
-            event(new BookingUpdated($booking, $status_baru));
+            event(new \App\Events\BookingUpdated($booking, $status_baru));
         }
 
         return redirect()->route('admin.booking.index')->with('success', 'Booking berhasil diperbarui.');
+    }
+
+    /**
+     * Create a new kasir record for the booking
+     *
+     * @param Booking $booking
+     * @return void
+     */
+    private function createKasirRecord($booking)
+    {
+        // Calculate total price
+        $total = 0;
+        $layananItems = json_decode($booking->layanan_id, true) ?? [];
+        
+        foreach ($layananItems as $layananItem) {
+            // Periksa apakah $layananItem adalah array atau string
+            if (is_array($layananItem) && isset($layananItem['id'])) {
+                $layananId = $layananItem['id'];
+                $quantity = $layananItem['quantity'] ?? 1;
+            } else {
+                // Jika $layananItem adalah string, maka itu adalah ID layanan langsung
+                $layananId = $layananItem;
+                $quantity = 1;
+            }
+            
+            $layanan = \App\Models\Layanan::find($layananId);
+            if ($layanan) {
+                $total += $layanan->harga * $quantity;
+            }
+        }
+        
+        // Generate transaction ID
+        $transactionId = 'TRX-' . time() . '-' . \Illuminate\Support\Str::random(5);
+        
+        // Create kasir record
+        \App\Models\Kasir::create([
+            'id' => $transactionId,
+            'user_id' => $booking->user_id,
+            'layanan_id' => $booking->layanan_id,
+            'booking_id' => $booking->id, // Tambahkan booking_id dari objek booking
+            'total_harga' => $total,
+            'metode_pembayaran' => '', // Will be filled when payment is processed
+            'transaction_id' => $transactionId,
+            'status_transaksi' => 'pending',
+        ]);
+        
+        // Check if checkout record exists, if not create one
+        $checkout = Checkout::where('booking_id', $booking->id)->first();
+        if (!$checkout) {
+            Checkout::create([
+                'id' => 'CHK-' . time() . '-' . \Illuminate\Support\Str::random(5),
+                'user_id' => $booking->user_id,
+                'cart_id' => null,
+                'booking_id' => $booking->id,
+                'total_harga' => $total,
+                'status_pembayaran' => 'unpaid',
+                'metode_pembayaran' => '',
+            ]);
+        }
     }
 
     public function destroy($id)

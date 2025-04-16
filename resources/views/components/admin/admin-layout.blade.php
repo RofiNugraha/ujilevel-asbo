@@ -200,11 +200,11 @@ body {
                             </div>
                         </a>
 
-                        <a class="nav-link text-warning mt-2 {{ request()->routeIs('admin.order.index') ? 'active' : '' }}"
-                            href="{{ route('admin.order.index') }}">
+                        <a class="nav-link text-warning mt-2 {{ request()->routeIs('admin.layanan.index') ? 'active' : '' }}"
+                            href="{{ route('admin.layanan.index') }}">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-concierge-bell"></i>
-                                <span class="ms-3">Belajar Midtrans</span>
+                                <span class="ms-3">Pemasukan</span>
                             </div>
                         </a>
                     </div>

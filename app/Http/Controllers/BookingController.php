@@ -102,7 +102,7 @@ class BookingController extends Controller
             'cart_id' => $cart->id,
             'booking_id' => $generatedId,
             'total_harga' => $total_harga,
-            'status_pembayaran' => 'belum bayar',
+            'status_pembayaran' => 'unpaid',
             'metode_pembayaran' => 'belum dipilih',
             'created_at' => now(),
             'updated_at' => now(),

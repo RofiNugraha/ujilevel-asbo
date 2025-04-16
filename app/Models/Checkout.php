@@ -31,12 +31,8 @@ class Checkout extends Model
         return $this->belongsTo(Cart::class);
     }
 
-    public function payment(): HasOne {
-        return $this->hasOne(Payment::class);
-    }
-
-    public function booking()
+    public function checkout()
     {
-        return $this->hasOne(Booking::class, 'checkout_id');
+        return $this->belongsTo(Checkout::class, 'checkout_id', 'id');
     }
 }

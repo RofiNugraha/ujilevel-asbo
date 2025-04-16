@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 use Midtrans\Config;
 use Midtrans\Transaction;
 
@@ -44,7 +45,9 @@ class StatusCheckerController extends Controller
                 $order->update(['status' => 'Paid']);
                 
                 // Set session
-                session(['dp_paid' => true, 'order_id' => $order->id]);
+                Session::put('dp_paid', true);
+                Session::put('order_id', $order->id);
+                Session::flash('dp_paid_now', true);
                 
                 return response()->json([
                     'success' => true,

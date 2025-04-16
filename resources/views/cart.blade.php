@@ -55,7 +55,7 @@
                 <h3 class="text-xl font-semibold mb-4">Pay Down Payment (DP)</h3>
                 <p class="text-gray-600 mb-4">Before proceeding to checkout, please pay a down payment of Rp. 5.000</p>
 
-                <div id="dp-form" class="{{ session('dp_paid') ? 'hidden' : 'block' }}">
+                <div id="dp-form" class="{{ session('dp_paid_now') ? 'hidden' : 'block' }}">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div>
                             <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
@@ -80,7 +80,7 @@
                     </button>
                 </div>
 
-                <div id="dp-success" class="{{ session('dp_paid') ? 'block' : 'hidden' }}" x-data="{}">
+                <div id="dp-success" class="{{ session('dp_paid_now') ? 'block' : 'hidden' }}">
                     <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
                         <span class="block sm:inline">Down payment has been successfully paid.</span>
                         <input type="hidden" id="order_id" name="order_id" value="{{ session('order_id') ?? '' }}">
@@ -134,8 +134,8 @@
                 <div class="bg-white rounded-3xl shadow-lg w-full max-w-4xl mt-8 p-6">
                     <div class="flex mt-6 gap-4">
                         <button type="submit" id="checkout-button"
-                            class="bg-green-500 text-white font-semibold px-6 py-3 rounded-full shadow-md hover:bg-green-600 transition w-full {{ session('dp_paid') ? '' : 'opacity-50 cursor-not-allowed' }}"
-                            {{ session('dp_paid') ? '' : 'disabled' }}>
+                            class="bg-green-500 text-white font-semibold px-6 py-3 rounded-full shadow-md hover:bg-green-600 transition w-full {{ session('dp_paid_now') ? '' : 'opacity-50 cursor-not-allowed' }}"
+                            {{ session('dp_paid_now') ? '' : 'disabled' }}>
                             Proceed to Checkout
                         </button>
                         <a href="{{ route('booking') }}" class="bg-gray-200 text-gray-700 font-semibold px-6 py-3 rounded-full shadow-md
@@ -352,8 +352,11 @@
                 })
                 .then(data => {
                     if (data.success) {
+                        // Hide payment form and show success message
                         document.getElementById('dp-form').classList.add('hidden');
                         document.getElementById('dp-success').classList.remove('hidden');
+
+                        // Update order ID in both places
                         document.getElementById('order_id').value = orderId;
                         document.getElementById('form_order_id').value = orderId;
 
@@ -362,6 +365,9 @@
                         checkoutButton.removeAttribute('disabled');
 
                         paymentModal.classList.add('hidden');
+
+                        // Reload the page to refresh the session state
+                        window.location.reload();
                     } else {
                         console.error('Failed to update status:', data);
                         alert('Payment successful, but failed to update status');

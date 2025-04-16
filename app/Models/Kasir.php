@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\MidtransService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Midtrans\Snap;
@@ -15,12 +16,18 @@ class Kasir extends Model
     protected $primaryKey = 'id';
     public $incrementing = false;
     protected $keyType = 'string';
+
     protected $fillable = [
         'id',
         'user_id',
         'layanan_id',
+        'booking_id',
         'total_harga',
         'metode_pembayaran',
+        'transaction_id',
+        'status_transaksi',
+        'payment_type', 
+        'dp_order_id'
     ];
 
     protected $casts = [
@@ -29,27 +36,62 @@ class Kasir extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
+    }
+
+    public function getLayananIdAttribute($value)
+    {
+        return json_decode($value, true);
+    }
+
+    public function setLayananIdAttribute($value)
+    {
+        $this->attributes['layanan_id'] = is_array($value) ? json_encode($value) : $value;
     }
 
     public function booking()
     {
-        return $this->belongsTo(Booking::class, 'booking_id');
+        return $this->belongsTo(Booking::class, 'booking_id', 'id');
     }
 
-    public function processPayment()
+    public function checkout()
     {
-        $params = [
-            'transaction_details' => [
-                'order_id' => $this->id,
-                'gross_amount' => $this->total_harga,
-            ],
-            'customer_details' => [
-                'first_name' => $this->nama_customer,
-                'email' => 'customer@example.com',
-            ],
-        ];
+        return $this->belongsTo(Checkout::class, 'user_id', 'user_id');
+    }
 
-        return Snap::getSnapToken($params);
+    public function dpOrder()
+    {
+        return $this->belongsTo(Order::class, 'dp_order_id');
+    }   
+
+    public function processMidtransPayment()
+    {
+        $midtransService = app()->make(MidtransService::class);
+        
+        if ($this->payment_type === 'dp') {
+            return $midtransService->createDpTransaction($this);
+        } else {
+            return $midtransService->createFullPaymentTransaction($this->booking, $this);
+        }
+    }
+
+    public function updatePaymentStatus($status)
+    {
+        $this->status_transaksi = $status;
+        $this->save();
+
+        if ($status === 'success') {
+            if ($this->payment_type === 'full') {
+                $this->booking->status = 'selesai';
+                $this->booking->save();
+
+                if ($this->checkout) {
+                    $this->checkout->update([
+                        'status_pembayaran' => 'paid',
+                        'metode_pembayaran' => 'midtrans'
+                    ]);
+                }
+            }
+        }
     }
 }

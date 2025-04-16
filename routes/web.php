@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\AdminLayananController;
 use App\Http\Controllers\Admin\AdminOrderController;
+use App\Http\Controllers\Admin\AdminPaymentKasirController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ContactController;
@@ -113,6 +114,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/orders/update-status', [DownPaymentController::class, 'updateStatus'])->name('order.update-status');
     Route::post('/orders/notification', [DownPaymentController::class, 'notification'])->name('order.notification');
     Route::post('/check-payment-status', [StatusCheckerController::class, 'checkStatus'])->name('payment.check-status');
+
+    Route::post('/cart', [DownPaymentController::class, 'create'])->name('dp.create');
+    Route::post('/cart/update-status', [DownPaymentController::class, 'updateStatus'])->name('dp.update-status');
+    Route::post('/cart/notification', [DownPaymentController::class, 'notification'])->name('dp.notification');
+    Route::get('/cart/check-status', [DownPaymentController::class, 'checkStatus'])->name('dp.check-status');
+    Route::get('/cart/payment-dp', [DownPaymentController::class, 'showPaymentPage'])->name('payment.dp');
+    Route::get('/cart/payment-status/{order_id}', [DownPaymentController::class, 'paymentStatus'])->name('payment.status');
 });
 
 Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
@@ -139,7 +147,6 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(
     Route::get('/admin/kasir', [AdminKasirController::class, 'index'])->name('admin.kasir.index');
     Route::get('/admin/kasir/create', [AdminKasirController::class, 'create'])->name('admin.kasir.create');
     Route::post('/admin/kasir', [AdminKasirController::class, 'store'])->name('admin.kasir.store');
-    Route::get('/admin/kasir/{id}', [AdminKasirController::class, 'show'])->name('admin.kasir.show');
     Route::get('/admin/kasir/{id}/edit', [AdminKasirController::class, 'edit'])->name('admin.kasir.edit');
     Route::put('/admin/kasir/{id}', [AdminKasirController::class, 'update'])->name('admin.kasir.update');
     Route::delete('/admin/kasir/{id}', [AdminKasirController::class, 'destroy'])->name('admin.kasir.destroy');
@@ -147,6 +154,18 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(
     // payment
     Route::get('admin/belajar_midtrans', [AdminOrderController::class, 'index'])->name('admin.order.index');
     Route::post('/admin/belajar_midtrans/checkout', [AdminOrderController::class, 'checkout']);
+
+    // CRUD midtrans
+    Route::post('/admin/kasir/midtrans/{id}', [AdminKasirController::class, 'processPayment'])->name('admin.kasir.process-payment');
+    Route::post('/admin/kasir/add-non-booking', [AdminKasirController::class, 'addNonBookingCustomer'])->name('admin.kasir.add-non-booking');
+    Route::get('/admin/kasir/payment-options/{id}', [AdminKasirController::class, 'paymentOptions'])->name('admin.kasir.payment-options');
+    Route::post('/admin/kasir/process-non-booking-payment/{id}', [AdminKasirController::class, 'processNonBookingPayment'])->name('admin.kasir.process-non-booking-payment');
+    Route::post('/admin/kasir/midtrans-callback', [AdminKasirController::class, 'midtransCallback'])->name('admin.kasir.midtrans-callback');
+    Route::get('/admin/kasir/midtrans/midtrans-finish', [AdminKasirController::class, 'midtransFinish'])->name('admin.kasir.midtrans-finish');
+    Route::get('/admin/kasir/midtrans/midtrans-unfinish', [AdminKasirController::class, 'midtransUnfinish'])->name('admin.kasir.midtrans-unfinish');
+    Route::get('/admin/kasir/midtrans-error', [AdminKasirController::class, 'midtransError'])->name('admin.kasir.midtrans-error');
 });
+
+Route::post('/midtrans/callback', [App\Http\Controllers\Admin\AdminKasirController::class, 'midtransCallback'])->name('midtrans.callback');
 
 require __DIR__.'/auth.php';

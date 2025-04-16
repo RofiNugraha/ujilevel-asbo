@@ -7,7 +7,8 @@
 
         <section class="flex flex-col items-center py-6">
             <div>
-                <img src="{{ asset('images/google.png') }}" alt="Profile Image" class="w-24 h-24 rounded-full bg-gray-300">
+                <img src="{{ asset('images/google.png') }}" alt="Profile Image"
+                    class="w-24 h-24 rounded-full bg-gray-300">
                 <!-- {{ substr($user->name, 0, 1) }} -->
             </div>
             <h3 class="text-2xl font-bold mt-4">{{ $user->name }}</h3>
@@ -73,7 +74,10 @@
                                 </tr>
                                 <tr class="border-b hover:bg-[gold] transition">
                                     <td class="px-6 py-3 font-semibold text-gray-700">Layanan</td>
-                                    <td class="px-6 py-3 text-gray-600" x-text="selectedBooking.layanan.nama"></td>
+                                    @foreach($booking->layanans as $layanan)
+                                    <td class="px-6 py-3 text-gray-600" x-text="selectedBooking.layanan.nama">
+                                        {{ $layanan->nama_layanan }} | </td>
+                                    @endforeach
                                 </tr>
                                 <tr class="border-b hover:bg-[gold] transition">
                                     <td class="px-6 py-3 font-semibold text-gray-700">Jam Booking</td>
