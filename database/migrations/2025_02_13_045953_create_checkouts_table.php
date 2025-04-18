@@ -1,3 +1,5 @@
+2025_02_13_045906_create_checkouts_table.php
+
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -10,8 +12,8 @@ return new class extends Migration
         Schema::create('checkouts', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->unique()->primary();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->string('booking_id', 20)->after('user_id')->nullable();
             $table->foreignId('cart_id')->constrained('carts')->onDelete('cascade');
+            $table->string('booking_id', 20)->nullable();
             $table->decimal('total_harga', 10, 2);
             $table->string('status_pembayaran', 20);
             $table->string('metode_pembayaran', 20);
