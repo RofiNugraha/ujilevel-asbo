@@ -150,6 +150,8 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(
     Route::get('/admin/kasir/{id}/edit', [AdminKasirController::class, 'edit'])->name('admin.kasir.edit');
     Route::put('/admin/kasir/{id}', [AdminKasirController::class, 'update'])->name('admin.kasir.update');
     Route::delete('/admin/kasir/{id}', [AdminKasirController::class, 'destroy'])->name('admin.kasir.destroy');
+    Route::get('/admin/kasir/riwayat', [AdminKasirController::class, 'riwayatTransaksi'])->name('admin.kasir.riwayat');
+
 
     // payment
     Route::get('admin/belajar_midtrans', [AdminOrderController::class, 'index'])->name('admin.order.index');

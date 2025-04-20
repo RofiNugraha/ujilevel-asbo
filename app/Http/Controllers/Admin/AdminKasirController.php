@@ -483,4 +483,9 @@ class AdminKasirController extends Controller
             return ['error' => $e->getMessage()];
         }
     }
+    public function riwayatTransaksi()
+    {
+        return view('admin.kasir.riwayat');
+    }
+
 }
