@@ -37,7 +37,8 @@
     <title>Responsive Login Page</title>
 </head>
 
-<body class="h-screen flex items-center justify-center" style="background-image: url('{{ asset('images/bgd.jpg') }}'); background-size: cover; background-position: center;">
+<body class="h-screen flex items-center justify-center"
+    style="background-image: url('{{ asset('images/bgd.jpg') }}'); background-size: cover; background-position: center;">
     <div class="bg-[#cccccc] rounded-[50px] w-[90%] max-w-[1006px] p-8 shadow-lg flex flex-col items-center space-y-8">
         <!-- Title -->
         <div class="text-[#000000] font-['Righteous-Regular',_sans-serif] font-bold text-2xl md:text-3xl text-center">
@@ -49,31 +50,64 @@
                 @csrf
                 <!-- Name -->
                 <div>
-                    <x-input-label for="name" :value="__('Nama Lengkap')" class="text-black font-['Roboto-Regular',_sans-serif] text-xl" />
-                    <x-text-input id="name" class="w-full h-12 p-3 bg-[#d9d9d9] rounded-lg text-base border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-[#795757] focus:border-transparent transition duration-300" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" placeholder="Masukkan Nama Lengkap" />
-                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                    <x-input-label for="name" :value="__('Nama Lengkap')" class="text-black text-xl" />
+                    <x-text-input id="name" class="w-full h-12 p-3 bg-[#d9d9d9] rounded-lg" type="text" name="name"
+                        :value="old('name')" autofocus placeholder="Masukan Nama Lengkap" />
+                    @error('name')
+                    <p class="text-red-500 text-sm mt-2">
+                        {{ $message == 'validation.required' ? 'Nama harus diisi.' : $message }}
+                    </p>
+                    @enderror
                 </div>
-                <!-- Email Address -->
+
+                <!-- Email -->
                 <div>
-                    <x-input-label for="email" :value="__('Email')" class="text-black font-['Roboto-Regular',_sans-serif] text-xl" />
-                    <x-text-input id="email" class="w-full h-12 p-3 bg-[#d9d9d9] rounded-lg text-base border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-[#795757] focus:border-transparent transition duration-300" type="email" name="email" :value="old('email')" required autocomplete="username" placeholder="Masukkan Email" />
-                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                    <x-input-label for="email" :value="__('Email')" class="text-black text-xl" />
+                    <x-text-input id="email" class="w-full h-12 p-3 bg-[#d9d9d9] rounded-lg" type="email" name="email"
+                        :value="old('email')" placeholder="Masukan Email" />
+                    @error('email')
+                    <p class="text-red-500 text-sm mt-2">
+                        {{ $message == 'validation.required' ? 'Email harus diisi.' : ($message == 'validation.email' ? 'Format email tidak valid.' : $message) }}
+                    </p>
+                    @enderror
                 </div>
+
                 <!-- Password -->
                 <div>
-                    <x-input-label for="password" :value="__('Password')" class="text-black font-['Roboto-Regular',_sans-serif] text-xl" />
-                    <x-text-input id="password" class="w-full h-12 p-3 bg-[#d9d9d9] rounded-lg text-base border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-[#795757] focus:border-transparent transition duration-300" type="password" name="password" required autocomplete="new-password" placeholder="Masukkan Password" />
-                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                    <x-input-label for="password" :value="__('Password')" class="text-black text-xl" />
+                    <x-text-input id="password" class="w-full h-12 p-3 bg-[#d9d9d9] rounded-lg" type="password"
+                        name="password" placeholder="Masukan Password" />
+                    @error('password')
+                    <p class="text-red-500 text-sm mt-2">
+                        {{ $message == 'validation.required' ? 'Password harus diisi.' : $message }}
+                    </p>
+                    @enderror
+                    <p class="text-sm text-gray-700 mt-1">
+                        Password harus minimal 8 karakter dan cocok dengan konfirmasi password.
+                    </p>
                 </div>
-                <!-- Confirm Password -->
+
+                <!-- Password Confirmation -->
                 <div>
-                    <x-input-label for="password_confirmation" :value="__('Konfirmasi Password')" class="text-black font-['Roboto-Regular',_sans-serif] text-xl" />
-                    <x-text-input id="password_confirmation" class="w-full h-12 p-3 bg-[#d9d9d9] rounded-lg text-base border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-[#795757] focus:border-transparent transition duration-300" type="password" name="password_confirmation" required autocomplete="new-password" placeholder="Konfirmasi Password" />
-                    <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                    <x-input-label for="password_confirmation" :value="__('Konfirmasi Password')"
+                        class="text-black text-xl" />
+                    <x-text-input id="password_confirmation" class="w-full h-12 p-3 bg-[#d9d9d9] rounded-lg"
+                        type="password" name="password_confirmation" placeholder="Konfirmasi Password" />
+                    @error('password_confirmation')
+                    <p class="text-red-500 text-sm mt-2">
+                        {{ $message == 'validation.confirmed' ? 'Konfirmasi password tidak cocok.' : $message }}
+                    </p>
+                    @enderror
+                    <p class="text-sm text-gray-700 mt-1">
+                        Password harus minimal 8 karakter dan cocok dengan konfirmasi password.
+                    </p>
                 </div>
+
+
                 <!-- Submit button -->
                 <div class="flex justify-center mt-4">
-                    <x-primary-button class="bg-[#212E80] text-white rounded-lg w-44 h-12 text-lg flex items-center justify-center hover:bg-[#212E80] transition duration-300 shadow-md hover:shadow-lg">
+                    <x-primary-button
+                        class="bg-[#212E80] text-white rounded-lg w-44 h-12 text-lg flex items-center justify-center hover:bg-[#212E80] transition duration-300 shadow-md hover:shadow-lg">
                         {{ __('Register') }}
                     </x-primary-button>
                 </div>

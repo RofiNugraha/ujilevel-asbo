@@ -7,6 +7,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\AdminLayananController;
 use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\Admin\AdminPaymentKasirController;
+use App\Http\Controllers\Admin\AdminPemasukanController;
+use App\Http\Controllers\Admin\AdminPengeluaranController;
+use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ContactController;
@@ -75,10 +78,14 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
         
     // layanan
     Route::get('/booking', [LayananController::class, 'index'])->name('booking');
@@ -102,6 +109,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/formbook/{layanan_id?}/{produk_id?}', [BookingController::class, 'formBook'])->name('formbook');
     Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store');
     Route::post('/checkout', [BookingController::class, 'checkout'])->name('checkout.store');
+    Route::get('/booking/available-slots', [BookingController::class, 'getAvailableSlots'])->name('booking.get-available-slots');
+    Route::get('/user/check-profile', [BookingController::class, 'checkUserProfile'])->name('user.check-profile');
+
 
     // notification
     Route::get('/notifikasi', [NotificationController::class, 'index'])->name('notifikasi');
@@ -164,8 +174,20 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(
     Route::get('/admin/kasir/midtrans/midtrans-finish', [AdminKasirController::class, 'midtransFinish'])->name('admin.kasir.midtrans-finish');
     Route::get('/admin/kasir/midtrans/midtrans-unfinish', [AdminKasirController::class, 'midtransUnfinish'])->name('admin.kasir.midtrans-unfinish');
     Route::get('/admin/kasir/midtrans-error', [AdminKasirController::class, 'midtransError'])->name('admin.kasir.midtrans-error');
-});
 
-Route::post('/midtrans/callback', [App\Http\Controllers\Admin\AdminKasirController::class, 'midtransCallback'])->name('midtrans.callback');
+    // CRUD Pemasukan
+    Route::get('/admin/pemasukan', [AdminPemasukanController::class, 'index'])->name('admin.pemasukan.index');
+    Route::get('/admin/pemasukan/export', [AdminPemasukanController::class, 'export'])->name('admin.pemasukan.export');
+
+    // CRUD Pengeluaran
+    Route::get('/admin/pengeluaran', [AdminPengeluaranController::class, 'index'])->name('admin.pengeluaran.index');
+    Route::get('/admin/pengeluaran/create', [AdminPengeluaranController::class, 'create'])->name('admin.pengeluaran.create');
+    Route::post('/admin/pengeluaran', [AdminPengeluaranController::class, 'store'])->name('admin.pengeluaran.store');
+    Route::get('/admin/pengeluaran/{id}', [AdminPengeluaranController::class, 'show'])->name('admin.pengeluaran.show');
+    Route::get('/admin/pengeluaran/{id}/edit', [AdminPengeluaranController::class, 'edit'])->name('admin.pengeluaran.edit');
+    Route::put('/admin/pengeluaran/{id}', [AdminPengeluaranController::class, 'update'])->name('admin.pengeluaran.update');
+    Route::delete('/admin/pengeluaran/{id}', [AdminPengeluaranController::class, 'destroy'])->name('admin.pengeluaran.destroy');
+    Route::get('/admin/pengeluaran/export', [AdminPengeluaranController::class, 'export'])->name('admin.pengeluaran.export');
+});
 
 require __DIR__.'/auth.php';

@@ -74,10 +74,11 @@
                                 </tr>
                                 <tr class="border-b hover:bg-[gold] transition">
                                     <td class="px-6 py-3 font-semibold text-gray-700">Layanan</td>
-                                    @foreach($booking->layanans as $layanan)
-                                    <td class="px-6 py-3 text-gray-600" x-text="selectedBooking.layanan.nama">
-                                        {{ $layanan->nama_layanan }} | </td>
-                                    @endforeach
+                                    <td class="px-6 py-3 text-gray-600">
+                                        <template x-for="layanan in selectedBooking.layanans" :key="layanan.id">
+                                            <span x-text="layanan.nama_layanan + ' | '"></span>
+                                        </template>
+                                    </td>
                                 </tr>
                                 <tr class="border-b hover:bg-[gold] transition">
                                     <td class="px-6 py-3 font-semibold text-gray-700">Jam Booking</td>

@@ -19,16 +19,8 @@
                                             <td>{{ $kasir->id }}</td>
                                         </tr>
                                         <tr>
-                                            <th>Nama Customer</th>
-                                            <td>{{ $kasir->customer_name }}</td>
-                                        </tr>
-                                        <tr>
                                             <th>Total Pembayaran</th>
                                             <td>Rp {{ number_format($kasir->total_harga, 0, ',', '.') }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Kursi</th>
-                                            <td>{{ $kasir->kursi }}</td>
                                         </tr>
                                         <tr>
                                             <th>Layanan</th>

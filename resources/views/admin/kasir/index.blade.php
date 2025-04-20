@@ -295,8 +295,8 @@
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="customer_name" class="form-label">Nama Customer</label>
-                            <input type="text" class="form-control" id="customer_name" name="customer_name" required>
+                            <input type="text" class="form-control" id="customer_name" name="customer_name"
+                                value="customer" hidden>
                         </div>
                         <div class="mb-3">
                             <label for="layanan" class="form-label">Layanan</label>
@@ -308,15 +308,15 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="quantity" class="form-label">Quantity</label>
-                            <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1">
-                        </div>
-                        <div class="mb-3">
                             <label for="kursi" class="form-label">Kursi</label>
                             <select class="form-select" id="kursi" name="kursi" required>
                                 <option value="satu">Kursi 1</option>
                                 <option value="dua">Kursi 2</option>
                             </select>
+                        </div>
+                        <div class="mb-3">
+                            <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1"
+                                hidden>
                         </div>
                     </div>
                     <div class="modal-footer">
