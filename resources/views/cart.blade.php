@@ -114,7 +114,40 @@
                     <small class="text-red-500 text-xs">{{ $message }}</small>
                     @enderror
                 </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Pilih Jam Booking</label>
+                    <input type="hidden" name="jam_booking" id="jam_booking" required>
+                    <div id="selected-time" class="mb-4 text-blue-700 font-semibold"></div>
 
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Jam Tersedia -->
+                        <div class="bg-green-50 border border-green-200 rounded-xl p-4 shadow-sm">
+                            <h3 class="text-lg font-semibold text-green-700 mb-3">Jam yang Tersedia</h3>
+                            <div class="space-y-2">
+                                <button type="button"
+                                    class="booking-time-option px-4 py-2 bg-white border border-green-400 text-green-800 rounded-lg w-full text-left hover:bg-green-100 transition"
+                                    data-datetime="2025-04-18T09:00">18 Apr 2025 - 09:00</button>
+                                <button type="button"
+                                    class="booking-time-option px-4 py-2 bg-white border border-green-400 text-green-800 rounded-lg w-full text-left hover:bg-green-100 transition"
+                                    data-datetime="2025-04-18T13:00">18 Apr 2025 - 13:00</button>
+                                <!-- Tambah sesuai jadwal -->
+                            </div>
+                        </div>
+
+                        <!-- Jam Tidak Tersedia -->
+                        <div class="bg-red-50 border border-red-200 rounded-xl p-4 shadow-sm">
+                            <h3 class="text-lg font-semibold text-red-700 mb-3">Jam yang Tidak Tersedia</h3>
+                            <div class="space-y-2">
+                                <span class="px-4 py-2 bg-red-100 border border-red-300 text-red-800 rounded-lg block">
+                                    18 Apr 2025 - 11:00
+                                </span>
+                                <span class="px-4 py-2 bg-red-100 border border-red-300 text-red-800 rounded-lg block">
+                                    18 Apr 2025 - 15:00
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="mb-4">
                     <label for="jam_booking" class="block text-sm font-medium text-gray-700">Jam Booking</label>
                     <input type="datetime-local" name="jam_booking" id="jam_booking"
@@ -383,4 +416,25 @@
         }
     });
     </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const timeOptions = document.querySelectorAll('.booking-time-option');
+        const jamBookingInput = document.getElementById('jam_booking');
+        const selectedTimeDisplay = document.getElementById('selected-time');
+
+        timeOptions.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const datetime = this.getAttribute('data-datetime');
+                jamBookingInput.value = datetime;
+                selectedTimeDisplay.textContent = `Jam booking terpilih: ${datetime}`;
+
+                // Highlight tombol yang dipilih
+                timeOptions.forEach(b => b.classList.remove('ring', 'ring-offset-2',
+                    'bg-green-100'));
+                this.classList.add('ring', 'ring-offset-2', 'bg-green-100');
+            });
+        });
+    });
+    </script>
+
 </x-landing-layout>
