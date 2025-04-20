@@ -28,7 +28,7 @@ class AdminKasirController extends Controller
     
     public function index()
     {
-        $bookings = Booking::with(['user', 'checkout', 'order'])->whereIn('status', ['konfirmasi', 'batal'])->paginate(10);
+        $bookings = Booking::with(['user', 'checkout', 'order'])->whereIn('status', ['konfirmasi', 'selesai', 'batal'])->paginate(10);
         $nonBookingTransactions = Kasir::whereNull('booking_id')->whereNull('user_id')->orderBy('created_at', 'desc')->get();
 
         foreach ($bookings as $booking) {

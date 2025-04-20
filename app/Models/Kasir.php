@@ -94,4 +94,12 @@ class Kasir extends Model
             }
         }
     }
+
+    public function getCustomerTypeAttribute()
+    {
+        if ($this->user_id && $this->booking_id) {
+            return 'booking';
+        }
+        return 'non-booking';
+    }
 }

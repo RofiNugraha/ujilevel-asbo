@@ -34,7 +34,7 @@ class BookingController extends Controller
 
         $jam_booking = Carbon::parse($request->jam_booking);
         $existingBooking = Booking::where('kursi', $request->kursi)
-            ->whereBetween('jam_booking', [$jam_booking->copy()->subMinutes(40), $jam_booking->copy()->addMinutes(40)])
+            ->whereBetween('jam_booking', [$jam_booking->copy()->subMinutes(60), $jam_booking->copy()->addMinutes(60)])
             ->exists();
 
         if ($existingBooking) {
