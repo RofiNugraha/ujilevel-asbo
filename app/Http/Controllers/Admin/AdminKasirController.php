@@ -347,21 +347,18 @@ class AdminKasirController extends Controller
             'kursi' => 'required|string'
         ]);
         
-        // Proses layanan yang dipilih
+        // Proses layanan yang dipilih - format to match booking customer format
         $layananItems = [];
         foreach ($request->layanan_id as $layananId) {
-            $layananItems[] = [
-                'id' => $layananId,
-                'quantity' => $request->quantity
-            ];
+            $layananItems[] = $layananId; // Just store the ID, not as an object
         }
         
         // Hitung total harga
         $totalHarga = 0;
-        foreach ($layananItems as $item) {
-            $layanan = Layanan::find($item['id']);
+        foreach ($layananItems as $layananId) {
+            $layanan = Layanan::find($layananId);
             if ($layanan) {
-                $totalHarga += $layanan->harga * $item['quantity'];
+                $totalHarga += $layanan->harga * $request->quantity;
             }
         }
         
@@ -373,13 +370,13 @@ class AdminKasirController extends Controller
             'id' => $transactionId,
             'user_id' => null, // Customer non-booking
             'booking_id' => null, // Tidak ada booking
-            'layanan_id' => json_encode($layananItems),
+            'layanan_id' => json_encode($layananItems), // Now matches booking format
             'total_harga' => $totalHarga,
             'metode_pembayaran' => '',
             'transaction_id' => $transactionId,
             'status_transaksi' => 'pending',
             'payment_type' => 'full',
-            'customer_name' => $request->customer_name, // Simpan nama customer
+            'customer_name' => $request->customer_name,
             'kursi' => $request->kursi
         ]);
         

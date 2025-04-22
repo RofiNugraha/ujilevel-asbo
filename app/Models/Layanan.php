@@ -18,6 +18,10 @@ class Layanan extends Model
         'id', 'nama_layanan', 'deskripsi', 'harga', 'gambar'
     ];
 
+    protected $casts = [
+        'harga' => 'decimal:2',
+    ];
+
     protected static function boot() {
         parent::boot();
 
@@ -39,5 +43,10 @@ class Layanan extends Model
 
     public function bookings() {
         return $this->hasMany(Booking::class, 'layanan_id');
+    }
+
+    public function kasirs()
+    {
+        return $this->belongsToMany(Kasir::class);
     }
 }

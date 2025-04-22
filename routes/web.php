@@ -136,7 +136,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
-    Route::get('/admin/dashboard', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
+    Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
     // CRUD admin layanan
     Route::get('/admin/layanan', [AdminLayananController::class, 'index'])->name('admin.layanan.index');

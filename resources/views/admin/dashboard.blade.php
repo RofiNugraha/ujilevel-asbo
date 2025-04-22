@@ -1,223 +1,467 @@
 <x-admin.admin-layout>
     <style>
-    #orderChart {
-        width: 100% !important;
-        height: 250px !important;
+    .dashboard-card {
+        border-radius: 12px;
+        transition: transform 0.3s;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        background: #fff;
+        height: 100%;
     }
 
-    .date-container {
-        background: #f8f9fa;
-        padding: 8px 12px;
-        border-radius: 8px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .min-height {
-        min-height: 50px;
-    }
-
-    .carousel-container {
-        position: relative;
-        max-width: 100%;
-        overflow: hidden;
-        margin: auto;
-    }
-
-    .review-carousel {
-        display: flex;
-        overflow-x: auto;
-        scroll-behavior: smooth;
-        gap: 20px;
-        padding-bottom: 10px;
-        white-space: nowrap;
-    }
-
-    .review-card {
-        min-width: 250px;
-        flex: 0 0 auto;
-        text-align: center;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .review-img {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        border: 2px solid #007BFF;
-        object-fit: cover;
-        margin: auto;
-    }
-
-    .nav-btn {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background: #007BFF;
-        color: white;
-        border: none;
-        padding: 10px;
-        border-radius: 50%;
-        cursor: pointer;
-    }
-
-    .nav-btn-left {
-        left: -40px;
-    }
-
-    .nav-btn-right {
-        right: -40px;
+    .dashboard-card:hover {
+        transform: translateY(-5px);
     }
 
     .icon-container {
-        width: 67px;
-        height: 67px;
-        background-color: gold;
-        /* Warna background icon */
-        border-radius: 50%;
-        margin-left: 50px;
+        width: 60px;
+        height: 60px;
+        display: flex;
         align-items: center;
         justify-content: center;
+        border-radius: 50%;
+        margin-bottom: 10px;
+    }
+
+    .bg-profit {
+        background-color: rgba(25, 135, 84, 0.1);
+    }
+
+    .bg-income {
+        background-color: rgba(13, 110, 253, 0.1);
+    }
+
+    .bg-expense {
+        background-color: rgba(220, 53, 69, 0.1);
+    }
+
+    .bg-booking {
+        background-color: rgba(255, 193, 7, 0.1);
+    }
+
+    .bg-nonbooking {
+        background-color: rgba(108, 117, 125, 0.1);
+    }
+
+    .bg-service {
+        background-color: rgba(111, 66, 193, 0.1);
+    }
+
+    .chart-container {
+        position: relative;
+        height: 350px;
+        margin-bottom: 20px;
+    }
+
+    .filter-container {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .table-container {
+        overflow-x: auto;
+        margin-top: 20px;
+    }
+
+    .text-profit {
+        color: #198754;
+    }
+
+    .text-expense {
+        color: #dc3545;
+    }
+
+    .stat-value {
+        font-size: 1.8rem;
+        font-weight: 700;
+    }
+
+    .stat-label {
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+
+    .stat-change {
+        font-size: 0.8rem;
+        margin-top: 5px;
     }
     </style>
 
     <div id="layoutSidenav">
         <div id="layoutSidenav_content">
-            <main class="container mt-4">
-                <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
-                    <div>
-                        <h1 class="fw-semibold">Dashboard</h1>
-                        <p class="text-gray mb-0">Hallo, selamat datang di halaman dashboard</p>
-                    </div>
-                    <div class="date-container mt-3 text-center">
-                        <h5 class="mb-1">Filter Periode</h5>
-                        <div class="d-flex align-items-center gap-2" id="dropdownToggle" style="cursor: pointer;">
-                            <i class="fas fa-calendar-alt text-primary fa-lg"></i>
-                            <span id="currentDate" class="fw-semibold">Pilih rentang tanggal</span>
-                            <i id="toggleDropdown" class="fas fa-chevron-down"></i>
+            <main>
+                <div class="container-fluid px-4 py-4">
+                    <!-- Header -->
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div>
+                            <h1 class="fw-bold mb-1">Dashboard Overview</h1>
+                            <p class="text-muted">Welcome back, Administrator</p>
                         </div>
-                    </div>
-                </div>
-
-                <div class="row g-3 mt-4">
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="card shadow-sm p-4 d-flex flex-row justify-center align-items-center rounded-4">
-                            <div class="icon-container me-3">
-                                <i class="fas fa-shopping-cart mt-3 fa-2x text-primary"></i>
+                        <div class="filter-container d-flex align-items-center">
+                            <div class="me-3">
+                                <i class="fas fa-calendar-alt text-primary"></i>
                             </div>
-                            <div class="text-start">
-                                <h3 class="fs-2 fw-bold">75</h3>
-                                <p class="fs-6 text-muted mb-1">Total Orders</p>
-                                <span class="text-success">
-                                    <i class="fas fa-arrow-up"></i> 4% (30 days)
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="card shadow-sm p-4 d-flex flex-row justify-center align-items-center rounded-4">
-                            <div class="icon-container me-3">
-                                <i class="fas fa-box fa-2x mt-3 text-success"></i>
-                            </div>
-                            <div class="text-start">
-                                <h3 class="fs-2 fw-bold">357</h3>
-                                <p class="fs-6 text-muted mb-1">Total Delivered</p>
-                                <span class="text-success">
-                                    <i class="fas fa-arrow-up"></i> 4% (30 days)
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-4">
-                        <div class="card shadow-sm p-4 d-flex flex-row justify-center align-items-center rounded-4">
-                            <div class="icon-container me-3">
-                                <i class="fas fa-shopping-bag fa-2x mt-3 text-secondary"></i>
-                            </div>
-                            <div class="text-start">
-                                <h3 class="fs-2 fw-bold">$128</h3>
-                                <p class="fs-6 text-muted mb-1">Total Revenue</p>
-                                <span class="text-danger">
-                                    <i class="fas fa-arrow-down"></i> 12% (30 days)
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mt-5 card  p-4 position-relative overflow-hidden"
-                    style="height: 320px; border-radius: 12px; background: linear-gradient(135deg, #f8f9fa, #e9ecef); transition: all 0.3s ease-in-out;">
-
-                    <h3 class="fs-5 fw-semibold mb-3 d-flex align-items-center">
-                        <i class="fas fa-chart-bar me-2 text-primary"></i> Statistik Pesanan
-                    </h3>
-
-                    <canvas id="orderChart"></canvas>
-                </div>
-                <div class="container mt-5 mb-5">
-                    <div class="carousel-container">
-                        <button class="nav-btn nav-btn-left" onclick="scrollLeft()">❮</button>
-                        <div id="reviewCarousel" class="review-carousel">
-                            @foreach ($contacts as $contact)
-                            <div class="card review-card">
-                                <img src="{{ asset($contact->user->image) }}" class="review-img">
-                                <h5 class="mt-3">{{ $contact->user->name }}</h5>
-                                <p class="min-height">{{ $contact->feedback }}</p>
-                                <div class="text-warning">
-                                    {!! str_repeat('⭐', $contact->rating) !!}
+                            <div>
+                                <h6 class="mb-0">Period Filter</h6>
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button"
+                                        id="periodDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                        {{ now()->format('d M Y') }} - {{ now()->addDays(30)->format('d M Y') }}
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="periodDropdown">
+                                        <li><a class="dropdown-item" href="#">Last 7 Days</a></li>
+                                        <li><a class="dropdown-item" href="#">Last 30 Days</a></li>
+                                        <li><a class="dropdown-item" href="#">This Month</a></li>
+                                        <li><a class="dropdown-item" href="#">Custom Range</a></li>
+                                    </ul>
                                 </div>
                             </div>
-                            @endforeach
                         </div>
-                        <button class="nav-btn nav-btn-right" onclick="scrollRight()">❯</button>
+                    </div>
+
+                    <!-- Financial Summary Cards -->
+                    <div class="row g-4 mb-4">
+                        <!-- Net Profit -->
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="dashboard-card p-4">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <div class="icon-container bg-profit">
+                                            <i class="fas fa-wallet fa-2x text-success"></i>
+                                        </div>
+                                        <h3 class="stat-value text-profit">Rp
+                                            {{ number_format($netProfit, 0, ',', '.') }}</h3>
+                                        <p class="stat-label mb-0">Total Net Profit</p>
+                                        <div class="stat-change text-success">
+                                            <i class="fas fa-arrow-up me-1"></i>8.2% from last period
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div id="profitSparkline" style="width: 100px; height: 40px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Total Income -->
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="dashboard-card p-4">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <div class="icon-container bg-income">
+                                            <i class="fas fa-dollar-sign fa-2x text-primary"></i>
+                                        </div>
+                                        <h3 class="stat-value">Rp {{ number_format($totalIncome, 0, ',', '.') }}</h3>
+                                        <p class="stat-label mb-0">Total Income</p>
+                                        <div class="stat-change text-success">
+                                            <i class="fas fa-arrow-up me-1"></i>12.5% from last period
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div id="incomeSparkline" style="width: 100px; height: 40px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Total Expense -->
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="dashboard-card p-4">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <div class="icon-container bg-expense">
+                                            <i class="fas fa-receipt fa-2x text-danger"></i>
+                                        </div>
+                                        <h3 class="stat-value text-expense">Rp
+                                            {{ number_format($totalExpense, 0, ',', '.') }}</h3>
+                                        <p class="stat-label mb-0">Total Expenses</p>
+                                        <div class="stat-change text-danger">
+                                            <i class="fas fa-arrow-up me-1"></i>5.1% from last period
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div id="expenseSparkline" style="width: 100px; height: 40px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Booking Customers -->
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="dashboard-card p-4">
+                                <div class="d-flex align-items-center">
+                                    <div class="icon-container bg-booking me-3">
+                                        <i class="fas fa-calendar-check fa-2x text-warning"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="stat-value">{{ $bookingCustomers }}</h3>
+                                        <p class="stat-label mb-0">Booking Customers</p>
+                                        <div class="stat-change text-success">
+                                            <i class="fas fa-arrow-up me-1"></i>15.3% from last period
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Non-Booking Customers -->
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="dashboard-card p-4">
+                                <div class="d-flex align-items-center">
+                                    <div class="icon-container bg-nonbooking me-3">
+                                        <i class="fas fa-users fa-2x text-secondary"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="stat-value">{{ $nonBookingCustomers }}</h3>
+                                        <p class="stat-label mb-0">Walk-in Customers</p>
+                                        <div class="stat-change text-success">
+                                            <i class="fas fa-arrow-up me-1"></i>3.7% from last period
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Total Services -->
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="dashboard-card p-4">
+                                <div class="d-flex align-items-center">
+                                    <div class="icon-container bg-service me-3">
+                                        <i class="fas fa-cut fa-2x text-purple"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="stat-value">{{ $totalServices }}</h3>
+                                        <p class="stat-label mb-0">Available Services</p>
+                                        <div class="stat-change text-success">
+                                            <i class="fas fa-plus me-1"></i>2 new services added
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Row -->
+                    <div class="row mb-4">
+                        <!-- Income vs Expense Chart -->
+                        <div class="col-lg-8">
+                            <div class="dashboard-card p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 class="fw-bold mb-0">Income vs Expense Analysis</h5>
+                                    <div class="btn-group">
+                                        <button type="button"
+                                            class="btn btn-sm btn-outline-secondary active">Monthly</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">Weekly</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">Daily</button>
+                                    </div>
+                                </div>
+                                <div class="chart-container">
+                                    <canvas id="incomeExpenseChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Services Distribution -->
+                        <div class="col-lg-4">
+                            <div class="dashboard-card p-4">
+                                <h5 class="fw-bold mb-3">Popular Services</h5>
+                                <div class="chart-container">
+                                    <canvas id="servicesChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Transactions and Customer Types -->
+                    <div class="row mb-4">
+                        <!-- Recent Transactions -->
+                        <div class="col-lg-8">
+                            <div class="dashboard-card p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 class="fw-bold mb-0">Recent Transactions</h5>
+                                    <a href="#" class="btn btn-sm btn-outline-primary">View All</a>
+                                </div>
+                                <div class="table-container">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Customer</th>
+                                                <th>Services</th>
+                                                <th>Date</th>
+                                                <th>Amount</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($recentTransactions as $transaction)
+                                            <tr>
+                                                <td>{{ $transaction->id }}</td>
+                                                <td>
+                                                    @if($transaction->user_id)
+                                                    {{ $transaction->user->name }}
+                                                    @else
+                                                    Walk-in Customer
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @php
+                                                    $layananIds = is_array($transaction->layanan_id)
+                                                    ? $transaction->layanan_id
+                                                    : json_decode($transaction->layanan_id, true) ?? [];
+
+                                                    $layananNames = [];
+
+                                                    foreach ($layananIds as $id) {
+                                                    $layanan = \App\Models\Layanan::find($id);
+                                                    if ($layanan) {
+                                                    $layananNames[] = $layanan->nama_layanan;
+                                                    }
+                                                    }
+
+                                                    echo !empty($layananNames) ? implode(', ', $layananNames) : 'Tidak
+                                                    ada layanan';
+                                                    @endphp
+                                                </td>
+                                                <td>{{ $transaction->created_at->format('d M Y') }}</td>
+                                                <td>Rp {{ number_format($transaction->total_harga, 0, ',', '.') }}</td>
+                                                <td>
+                                                    @if($transaction->status_transaksi == 'success')
+                                                    <span class="badge bg-success">Success</span>
+                                                    @elseif($transaction->status_transaksi == 'pending')
+                                                    <span class="badge bg-warning">Pending</span>
+                                                    @else
+                                                    <span class="badge bg-danger">Failed</span>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Customer Type Distribution -->
+                        <div class="col-lg-4">
+                            <div class="dashboard-card p-4">
+                                <h5 class="fw-bold mb-3">Customer Distribution</h5>
+                                <div class="chart-container">
+                                    <canvas id="customerTypeChart"></canvas>
+                                </div>
+                                <div class="mt-3">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>Booking Customers</span>
+                                        <span class="fw-bold">{{ $bookingCustomers }}</span>
+                                    </div>
+                                    <div class="progress mb-3" style="height: 8px;">
+                                        <div class="progress-bar bg-warning" role="progressbar"
+                                            style="width: {{ ($bookingCustomers / ($bookingCustomers + $nonBookingCustomers)) * 100 }}%">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>Walk-in Customers</span>
+                                        <span class="fw-bold">{{ $nonBookingCustomers }}</span>
+                                    </div>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar bg-secondary" role="progressbar"
+                                            style="width: {{ ($nonBookingCustomers / ($bookingCustomers + $nonBookingCustomers)) * 100 }}%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Expense Breakdown -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="dashboard-card p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 class="fw-bold mb-0">Expense Breakdown</h5>
+                                    <div class="btn-group">
+                                        <button type="button"
+                                            class="btn btn-sm btn-outline-secondary active">All</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">Store</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">Personal</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <div class="chart-container">
+                                            <canvas id="expenseBreakdownChart"></canvas>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <h6 class="fw-bold mb-3">Recent Expenses</h6>
+                                        <div class="table-container">
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Category</th>
+                                                        <th>Amount</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach($recentExpenses as $expense)
+                                                    <tr>
+                                                        <td>{{ $expense->nama }}</td>
+                                                        <td><span
+                                                                class="badge {{ $expense->kategori == 'toko' ? 'bg-info' : 'bg-warning' }}">{{ ucfirst($expense->kategori) }}</span>
+                                                        </td>
+                                                        <td>Rp {{ number_format($expense->harga, 0, ',', '.') }}</td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>
         </div>
     </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-    function scrollLeft() {
-        document.getElementById('reviewCarousel').scrollBy({
-            left: -300,
-            behavior: 'smooth'
-        });
-    }
-
-    function scrollRight() {
-        document.getElementById('reviewCarousel').scrollBy({
-            left: 300,
-            behavior: 'smooth'
-        });
-    }
-    </script>
-
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var today = new Date();
-        var options = {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        };
-        document.getElementById("currentDate").textContent = today.toLocaleDateString("id-ID", options);
-
-        var ctx = document.getElementById("orderChart").getContext("2d");
-        var orderChart = new Chart(ctx, {
-            type: "bar",
+    document.addEventListener('DOMContentLoaded', function() {
+        // Income vs Expense Chart
+        const incomeExpenseCtx = document.getElementById('incomeExpenseChart').getContext('2d');
+        const incomeExpenseChart = new Chart(incomeExpenseCtx, {
+            type: 'bar',
             data: {
-                labels: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov",
-                    "Des"
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
+                    'Dec'
                 ],
                 datasets: [{
-                    label: "Jumlah Pesanan",
-                    data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120], // Data tetap
-                    backgroundColor: [
-                        "#A52A2A", "#DAA520", "#A52A2A", "#DAA520", "#A52A2A", "#DAA520",
-                        "#A52A2A", "#DAA520", "#A52A2A", "#DAA520", "#A52A2A", "#DAA520"
-                    ]
-                }]
+                        label: 'Income',
+                        data: json($monthlyIncome),
+                        backgroundColor: 'rgba(13, 110, 253, 0.5)',
+                        borderColor: 'rgba(13, 110, 253, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Expense',
+                        data: json($monthlyExpense),
+                        backgroundColor: 'rgba(220, 53, 69, 0.5)',
+                        borderColor: 'rgba(220, 53, 69, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Net Profit',
+                        data: json($monthlyProfit),
+                        type: 'line',
+                        fill: false,
+                        borderColor: 'rgba(25, 135, 84, 1)',
+                        tension: 0.1
+                    }
+                ]
             },
             options: {
                 responsive: true,
@@ -226,7 +470,7 @@
                     y: {
                         beginAtZero: true,
                         grid: {
-                            display: false
+                            drawBorder: false
                         }
                     },
                     x: {
@@ -238,46 +482,95 @@
             }
         });
 
-
-
-        document.getElementById("dropdownToggle").addEventListener("click", function() {
-            Swal.fire({
-                title: 'Pilih Rentang Tanggal',
-                html: `
-                    <label for="startDate" class="form-label">Tanggal Awal:</label>
-                    <input type="date" id="startDate" class="swal2-input">
-                    <label for="endDate" class="form-label">Tanggal Akhir:</label>
-                    <input type="date" id="endDate" class="swal2-input">
-                `,
-                showCancelButton: true,
-                confirmButtonText: 'Pilih',
-                preConfirm: () => {
-                    const startDate = document.getElementById('startDate').value;
-                    const endDate = document.getElementById('endDate').value;
-                    if (!startDate || !endDate) {
-                        Swal.showValidationMessage('Harap pilih tanggal awal dan akhir!');
+        // Services Chart
+        const servicesCtx = document.getElementById('servicesChart').getContext('2d');
+        const servicesChart = new Chart(servicesCtx, {
+            type: 'doughnut',
+            data: {
+                labels: json($popularServices > pluck('nama_layanan')),
+                datasets: [{
+                    data: json($popularServices > pluck('count')),
+                    backgroundColor: [
+                        'rgba(13, 110, 253, 0.7)',
+                        'rgba(25, 135, 84, 0.7)',
+                        'rgba(255, 193, 7, 0.7)',
+                        'rgba(220, 53, 69, 0.7)',
+                        'rgba(111, 66, 193, 0.7)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
                     }
-                    return {
-                        startDate,
-                        endDate
-                    };
                 }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById("currentDate").innerText =
-                        `${result.value.startDate} - ${result.value.endDate}`;
-
-                    orderChart.data.datasets[0].data = generateRandomData();
-                    orderChart.update();
-                }
-            });
+            }
         });
 
-        function generateRandomData() {
-            return Array.from({
-                length: 12
-            }, () => Math.floor(Math.random() * 100));
-        }
+        // Customer Type Chart
+        const customerTypeCtx = document.getElementById('customerTypeChart').getContext('2d');
+        const customerTypeChart = new Chart(customerTypeCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Booking Customers', 'Walk-in Customers'],
+                datasets: [{
+                    data: [json($bookingCustomers), json($nonBookingCustomers)],
+                    backgroundColor: [
+                        'rgba(255, 193, 7, 0.7)',
+                        'rgba(108, 117, 125, 0.7)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        // Expense Breakdown Chart
+        const expenseBreakdownCtx = document.getElementById('expenseBreakdownChart').getContext('2d');
+        const expenseBreakdownChart = new Chart(expenseBreakdownCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
+                    'Dec'
+                ],
+                datasets: [{
+                        label: 'Store Expenses',
+                        data: json($storeExpenses),
+                        backgroundColor: 'rgba(13, 110, 253, 0.5)'
+                    },
+                    {
+                        label: 'Personal Expenses',
+                        data: json($personalExpenses),
+                        backgroundColor: 'rgba(255, 193, 7, 0.5)'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        stacked: true
+                    },
+                    x: {
+                        stacked: true
+                    }
+                }
+            }
+        });
     });
     </script>
 </x-admin.admin-layout>

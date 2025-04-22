@@ -90,4 +90,60 @@ class User extends Authenticatable
     {
         return $this->hasOne(Cart::class);
     }
+
+    public function transactions()
+    {
+        return $this->hasMany(Kasir::class);
+    }
+
+    public function hasBookings()
+    {
+        return $this->bookings()->exists();
+    }
+
+    public function mostUsedServices()
+    {
+        $popularServices = collect();
+
+        // Get all successful transactions
+        $kasirs = Kasir::where('status_transaksi', 'success')->get();
+
+        // Create a frequency counter for each service
+        $serviceCounter = [];
+
+        // Loop through each transaction
+        foreach ($kasirs as $kasir) {
+            // Get layanan IDs from the JSON column
+            $layananIds = json_decode($kasir->layanan_id);
+            
+            // Count each service occurrence
+            foreach ($layananIds as $layananId) {
+                $layanan = Layanan::find($layananId);
+                if ($layanan) {
+                    $serviceName = $layanan->nama_layanan;
+                    if (!isset($serviceCounter[$serviceName])) {
+                        $serviceCounter[$serviceName] = 0;
+                    }
+                    $serviceCounter[$serviceName]++;
+                }
+            }
+        }
+
+        // Sort by count (popularity)
+        arsort($serviceCounter);
+
+        // Take top 5 and convert to collection format
+        $counter = 0;
+        foreach ($serviceCounter as $name => $count) {
+            if ($counter < 5) {
+                $popularServices->push((object)[
+                    'nama_layanan' => $name,
+                    'count' => $count
+                ]);
+                $counter++;
+            } else {
+                break;
+            }
+        }
+    }
 }

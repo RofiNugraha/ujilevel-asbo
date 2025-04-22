@@ -35,4 +35,14 @@ class Pengeluaran extends Model
         }
         return null;
     }
+
+    public function isStoreCost()
+    {
+        return $this->kategori === 'toko';
+    }
+
+    public function isPersonalCost()
+    {
+        return $this->kategori === 'pribadi';
+    }
 }
