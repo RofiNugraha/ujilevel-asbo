@@ -5,13 +5,13 @@
         <!-- Header Profile -->
         <section
             class="bg-gradient-to-r from-blue-700 to-indigo-900 text-white p-10 text-center rounded-b-3xl shadow-md">
-            <h2 class="text-4xl font-bold drop-shadow">👤 My Profile</h2>
+            <h2 class="text-4xl font-bold drop-shadow">👤 Profil Saya</h2>
         </section>
 
         <!-- Profile Info -->
         <section class="flex flex-col items-center py-6 px-4">
             <div class="relative group w-28 h-28">
-                <img src="{{ asset('images/google.png') }}" alt="Profile Image"
+                <img src="{{ asset('images/google.png') }}" alt="Foto Profil"
                     class="w-full h-full rounded-full object-cover border-4 border-white shadow-lg" />
             </div>
             <h3 class="text-2xl font-bold mt-4">{{ $user->name }}</h3>
@@ -22,37 +22,37 @@
 
         <!-- Personal Info -->
         <section class="p-6">
-            <h3 class="text-xl font-semibold text-gray-700 mb-2">📋 Personal Details</h3>
-            <p class="text-gray-600">Phone Number: <span class="font-medium">{{ $user->nomor_hp }}</span></p>
+            <h3 class="text-xl font-semibold text-gray-700 mb-2">📋 Detail Pribadi</h3>
+            <p class="text-gray-600">Nomor HP: <span class="font-medium">{{ $user->nomor_hp }}</span></p>
         </section>
 
         <hr class="border-t border-gray-300 my-4">
 
         <!-- Booking Details -->
         <section class="p-6" x-data="{ selectedBooking: null }">
-            <h3 class="text-xl font-semibold text-gray-700 mb-4">📅 Booking History</h3>
+            <h3 class="text-xl font-semibold text-gray-700 mb-4">📅 Riwayat Booking</h3>
 
             @forelse($bookings as $booking)
             <div
                 class="bg-white rounded-xl p-4 mb-4 shadow-md hover:shadow-lg transition flex justify-between items-center">
                 <div>
-                    <p class="text-gray-800 font-medium">Name: <span class="font-semibold">{{ $user->name }}</span></p>
-                    <p class="text-gray-800 font-medium">Services:
+                    <p class="text-gray-800 font-medium">Nama: <span class="font-semibold">{{ $user->name }}</span></p>
+                    <p class="text-gray-800 font-medium">Layanan:
                         @foreach($booking->layanans as $layanan)
                         <span class="font-semibold text-blue-700">{{ $layanan->nama_layanan }}</span>@if(!$loop->last),
                         @endif
                         @endforeach
                     </p>
-                    <p class="text-gray-800 font-medium">Time: <span
+                    <p class="text-gray-800 font-medium">Jam: <span
                             class="font-semibold">{{ $booking->jam_booking }}</span></p>
                 </div>
                 <button @click="selectedBooking = {{ json_encode($booking) }}"
                     class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition">
-                    View
+                    Lihat
                 </button>
             </div>
             @empty
-            <p class="text-gray-500 italic">No bookings found.</p>
+            <p class="text-gray-500 italic">Belum ada booking.</p>
             @endforelse
 
             <!-- Modal Detail -->
@@ -68,15 +68,15 @@
                     <table class="w-full text-left">
                         <tbody>
                             <tr class="border-b hover:bg-blue-50">
-                                <td class="py-3 font-semibold w-40">Name</td>
+                                <td class="py-3 font-semibold w-40">Nama</td>
                                 <td x-text="selectedBooking.user.name"></td>
                             </tr>
                             <tr class="border-b hover:bg-blue-50">
-                                <td class="py-3 font-semibold">Booking ID</td>
+                                <td class="py-3 font-semibold">ID Booking</td>
                                 <td x-text="selectedBooking.id"></td>
                             </tr>
                             <tr class="border-b hover:bg-blue-50">
-                                <td class="py-3 font-semibold">Service(s)</td>
+                                <td class="py-3 font-semibold">Layanan</td>
                                 <td>
                                     <template x-for="layanan in selectedBooking.layanans">
                                         <span
@@ -86,11 +86,11 @@
                                 </td>
                             </tr>
                             <tr class="border-b hover:bg-blue-50">
-                                <td class="py-3 font-semibold">Time</td>
+                                <td class="py-3 font-semibold">Jam</td>
                                 <td x-text="selectedBooking.jam_booking"></td>
                             </tr>
                             <tr class="border-b hover:bg-blue-50">
-                                <td class="py-3 font-semibold">Chair</td>
+                                <td class="py-3 font-semibold">Kursi</td>
                                 <td x-text="selectedBooking.kursi"></td>
                             </tr>
                             <tr class="border-b hover:bg-blue-50">
@@ -98,7 +98,7 @@
                                 <td x-text="selectedBooking.status"></td>
                             </tr>
                             <tr class="border-b hover:bg-blue-50">
-                                <td class="py-3 font-semibold">Total Price</td>
+                                <td class="py-3 font-semibold">Total Harga</td>
                                 <td class="font-bold text-green-600">Rp
                                     <span
                                         x-text="Number(selectedBooking.checkout.total_harga).toLocaleString('id-ID', {minimumFractionDigits: 2})"></span>
@@ -116,18 +116,17 @@
         <div class="flex justify-between p-6">
             <a href="{{ route('editprofil') }}"
                 class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg shadow font-semibold transition">
-                ✏️ Edit Profile
+                ✏️ Edit Profil
             </a>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit"
                     class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg shadow font-semibold transition">
-                    🔒 Logout
+                    🔒 Keluar
                 </button>
             </form>
         </div>
     </main>
-
 </x-landing-layout>
 
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
