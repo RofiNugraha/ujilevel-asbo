@@ -7,19 +7,19 @@
     <main class="m-8 flex flex-col items-center">
         <div class="bg-white rounded-3xl shadow-lg w-full max-w-4xl p-8">
             <div class="flex justify-between items-center border-b pb-4 mb-4">
-                <h2 class="text-2xl font-semibold">Your Cart</h2>
-                <p class="text-gray-500">{{ $cartItems->count() }} items</p>
+                <h2 class="text-2xl font-semibold">Keranjang Anda</h2>
+                <p class="text-gray-500">{{ $cartItems->count() }} barang</p>
             </div>
 
             <div class="space-y-6">
                 @forelse ($cartItems as $item)
                 <div class="flex items-center justify-between border-b pb-4">
-                    <img src="{{ Storage::url($item->layanan->gambar) }}" alt="Item Image"
+                    <img src="{{ Storage::url($item->layanan->gambar) }}" alt="Gambar Item"
                         class="w-20 h-20 object-cover rounded-xl">
 
                     <div class="flex-1 ml-4">
                         <h3 class="font-semibold text-lg">
-                            {{ optional($item->layanan)->nama_layanan ?? 'No Service Name' }}
+                            {{ optional($item->layanan)->nama_layanan ?? 'Nama Layanan Tidak Ada' }}
                         </h3>
                         <p class="text-gray-500">
                             {{ $item->produk_id ? optional($item->produk)->deskripsi : optional($item->layanan)->deskripsi }}
@@ -35,50 +35,51 @@
                         @method('DELETE')
                         <button type="submit"
                             class="bg-red-500 text-white px-4 py-2 rounded-full shadow-md hover:bg-red-600 transition">
-                            Remove
+                            Hapus
                         </button>
                     </form>
                 </div>
                 @empty
-                <p class="text-center text-gray-500">Your cart is empty.</p>
+                <p class="text-center text-gray-500">Keranjang Anda kosong.</p>
                 @endforelse
 
                 <div class="flex justify-between items-center">
-                    <h3 class="font-semibold text-lg">Total Price:</h3>
+                    <h3 class="font-semibold text-lg">Total Harga:</h3>
                     <p class="font-bold text-2xl text-gray-800">Rp.
                         {{ number_format($total, 0, ',', '.') }}</p>
                 </div>
             </div>
 
             @if ($cartItems->isNotEmpty())
-            <!-- Profile Check Alert -->
+            <!-- Peringatan Cek Profil -->
             @if(Auth::check() && (!Auth::user()->name || !Auth::user()->email || !Auth::user()->phone))
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-4" role="alert">
-                <strong class="font-bold">Profile Incomplete!</strong>
-                <span class="block sm:inline">You need to complete your profile before booking.</span>
-                <a href="{{ route('profile.edit') }}" class="underline font-semibold">Complete your profile here</a>
+                <strong class="font-bold">Profil Tidak Lengkap!</strong>
+                <span class="block sm:inline">Anda perlu melengkapi profil Anda sebelum melanjutkan pemesanan.</span>
+                <a href="{{ route('profile.edit') }}" class="underline font-semibold">Lengkapi profil Anda di sini</a>
             </div>
             @endif
 
             <div id="dp-payment-section" class="mt-8 border-t pt-6">
-                <h3 class="text-xl font-semibold mb-4">Pay Down Payment (DP)</h3>
-                <p class="text-gray-600 mb-4">Before proceeding to checkout, please pay a down payment of Rp. 5.000</p>
+                <h3 class="text-xl font-semibold mb-4">Bayar Uang Muka (DP)</h3>
+                <p class="text-gray-600 mb-4">Sebelum melanjutkan ke checkout, silakan bayar uang muka sebesar Rp. 5.000
+                </p>
 
                 <div id="dp-form" class="{{ session('dp_paid_now') ? 'hidden' : 'block' }}">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div>
-                            <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                            <label for="name" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
                             <input type="text" id="name" name="name"
                                 class="mt-1 block w-full p-2.5 border-2 border-gray-300 rounded-md" required>
                         </div>
                         <div>
-                            <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                            <label for="phone" class="block text-sm font-medium text-gray-700">Nomor Telepon</label>
                             <input type="text" id="phone" name="phone"
                                 class="mt-1 block w-full p-2.5 border-2 border-gray-300 rounded-md" required>
                         </div>
                     </div>
                     <div class="mb-4">
-                        <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
+                        <label for="address" class="block text-sm font-medium text-gray-700">Alamat</label>
                         <textarea id="address" name="address" rows="2"
                             class="mt-1 block w-full p-2.5 border-2 border-gray-300 rounded-md" required></textarea>
                     </div>
@@ -86,21 +87,21 @@
                     <button type="button" id="pay-dp-button"
                         class="bg-blue-500 text-white font-semibold px-6 py-3 rounded-full shadow-md hover:bg-blue-600 transition w-full"
                         {{ (auth()->check() && (!auth()->user()->name || !auth()->user()->email || !auth()->user()->phone)) ? 'disabled' : '' }}>
-                        Pay Down Payment (Rp. 5.000)
+                        Bayar Uang Muka (Rp. 5.000)
                     </button>
                 </div>
 
                 <div id="dp-success" class="{{ session('dp_paid_now') ? 'block' : 'hidden' }}">
                     <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
-                        <span class="block sm:inline">Down payment has been successfully paid.</span>
+                        <span class="block sm:inline">Uang muka telah berhasil dibayar.</span>
                         <input type="hidden" id="order_id" name="order_id" value="{{ session('order_id') ?? '' }}">
                     </div>
                 </div>
             </div>
 
-            <!-- Booking Form - Only visible after DP payment -->
+            <!-- Form Pemesanan - Hanya tampil setelah pembayaran DP -->
             <div id="booking-section" class="{{ session('dp_paid_now') ? 'block' : 'hidden' }} mt-8 border-t pt-6">
-                <h1 class="text-3xl font-semibold text-center text-gray-800 mb-4">Pengisian Data Booking</h1>
+                <h1 class="text-3xl font-semibold text-center text-gray-800 mb-4">Pengisian Data Pemesanan</h1>
 
                 @if ($errors->any())
                 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
@@ -115,32 +116,32 @@
                 <form action="{{ route('booking.store') }}" method="post" id="booking-form">
                     @csrf
 
-                    <!-- Date Selector -->
+                    <!-- Pilihan Tanggal -->
                     <div class="mb-6">
-                        <label for="booking_date" class="block text-sm font-medium text-gray-700 mb-2">Select
-                            Date</label>
+                        <label for="booking_date" class="block text-sm font-medium text-gray-700 mb-2">Pilih
+                            Tanggal</label>
                         <input type="date" id="booking_date" name="booking_date"
                             class="block w-full p-2.5 border-2 border-gray-300 rounded-md" min="{{ date('Y-m-d') }}"
                             required>
                     </div>
 
-                    <!-- Time Slots Table -->
+                    <!-- Tabel Jam dan Kursi -->
                     <div class="mb-6">
-                        <h3 class="text-lg font-medium text-gray-700 mb-2">Select Time Slot & Chair</h3>
+                        <h3 class="text-lg font-medium text-gray-700 mb-2">Pilih Jam & Kursi</h3>
                         <div class="overflow-x-auto">
                             <table class="min-w-full bg-white border border-gray-200">
                                 <thead>
                                     <tr>
-                                        <th class="py-2 px-4 border-b">Time</th>
-                                        <th class="py-2 px-4 border-b">Chair 1 (Satu)</th>
-                                        <th class="py-2 px-4 border-b">Chair 2 (Dua)</th>
+                                        <th class="py-2 px-4 border-b">Jam</th>
+                                        <th class="py-2 px-4 border-b">Kursi 1 (Satu)</th>
+                                        <th class="py-2 px-4 border-b">Kursi 2 (Dua)</th>
                                     </tr>
                                 </thead>
                                 <tbody id="booking-slots">
-                                    <!-- Time slots will be populated dynamically -->
+                                    <!-- Slot waktu akan diisi dinamis -->
                                     <tr>
                                         <td colspan="3" class="py-4 text-center text-gray-500">
-                                            Please select a date to view available time slots
+                                            Silakan pilih tanggal untuk melihat slot waktu yang tersedia
                                         </td>
                                     </tr>
                                 </tbody>
@@ -148,7 +149,7 @@
                         </div>
                     </div>
 
-                    <!-- Hidden inputs for form submission -->
+                    <!-- Input tersembunyi untuk pengiriman formulir -->
                     <input type="hidden" name="kursi" id="selected_kursi" required>
                     <input type="hidden" name="jam_booking" id="selected_jam_booking" required>
 
@@ -165,7 +166,7 @@
                             <button type="submit" id="checkout-button"
                                 class="bg-green-500 text-white font-semibold px-6 py-3 rounded-full shadow-md hover:bg-green-600 transition w-full opacity-50 cursor-not-allowed"
                                 disabled>
-                                Proceed to Checkout
+                                Lanjutkan ke Checkout
                             </button>
                         </div>
                     </div>
@@ -175,7 +176,7 @@
                 <div class="flex mt-6 gap-4">
                     <a href="{{ route('booking') }}" class="bg-gray-200 text-gray-700 font-semibold px-6 py-3 rounded-full shadow-md
                                 hover:bg-gray-300 transition w-full text-center">
-                        Continue Shopping
+                        Lanjutkan Belanja
                     </a>
                 </div>
             </div>
@@ -185,7 +186,7 @@
         </div>
     </main>
 
-    <!-- Modal for payment loading -->
+    <!-- Modal untuk pembayaran loading -->
     <div id="payment-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 hidden">
         <div class="bg-white p-6 rounded-lg shadow-lg w-96">
             <div id="snap-container"></div>
@@ -197,18 +198,18 @@
         class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
         <div class="bg-white p-6 rounded-lg shadow-lg w-96 text-center">
             @if(session('error'))
-            <h2 class="text-lg font-semibold text-red-600">Error</h2>
+            <h2 class="text-lg font-semibold text-red-600">Kesalahan</h2>
             <p class="mt-2 text-red-500">{{ session('error') }}</p>
             @endif
 
             @if(session('success'))
-            <h2 class="text-lg font-semibold text-green-600">Success</h2>
+            <h2 class="text-lg font-semibold text-green-600">Berhasil</h2>
             <p class="mt-2 text-green-500">{{ session('success') }}</p>
             @endif
 
             <button @click="show = false"
                 class="mt-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition">
-                Close
+                Tutup
             </button>
         </div>
     </div>
@@ -216,7 +217,7 @@
 
     <!-- Midtrans Script -->
     <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}">
-    </script>
+    </script>>
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
