@@ -5,6 +5,7 @@
     <title>ASBO - Asgar System Booking Online</title>
     <link rel="icon" href="{{ asset('images/logo.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com/3.2.0"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 
 <body class="flex flex-col min-h-screen" style="background-color: black;">

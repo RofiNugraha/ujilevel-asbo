@@ -18,4 +18,8 @@ export default {
     },
 
     plugins: [forms],
+
+    safelist: [
+        'fa-cut', 'fas', 'fa-user', 'fa-calendar', 'fa-chair', // Tambahkan ikon yang digunakan di sini
+    ],
 };

@@ -1,4 +1,4 @@
-<x-admin.admin-layout>
+ <x-admin.admin-layout>
     <div id="layoutSidenav">
         <div id="layoutSidenav_content">
             <main>

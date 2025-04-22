@@ -26,17 +26,20 @@
     </style>
 
     <div class="image-container relative w-full h-screen bg-cover bg-center flex items-center justify-center">
-        <div class="container text-center p-8 rounded-lg">
-            <h1
-                class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 animate-pulse">
-                Welcome to Our Barbershop!
-            </h1>
-            <p class="mt-6 text-xl text-gray-200">Experience the best haircut and grooming services.</p>
-            <div class="mt-8">
-                <a href="#booking"
-                    class="px-6 py-3 text-lg font-semibold text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700">
-                    Book an Appointment
-                </a>
+        <div class="image-container relative w-full h-screen bg-cover bg-center flex items-center justify-center">
+            <div class="container text-center p-8 rounded-lg">
+                <h1
+                    class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 animate-pulse">
+                    </i>Selamat Datang di Barbershop Kami!
+                </h1>
+                <p class="mt-6 text-xl text-gray-200"></i>Rasakan layanan potong rambut dan perawatan terbaik.
+                </p>
+                <div class="mt-8">
+                    <a href="#booking"
+                        class="px-6 py-3 text-lg font-semibold text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
+                        <i class="fas fa-calendar-check mr-2"></i>Buat Janji Sekarang
+                    </a>
+                </div>
             </div>
         </div>
     </div>
