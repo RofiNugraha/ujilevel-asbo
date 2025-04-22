@@ -108,6 +108,7 @@ Route::middleware(['auth'])->group(function () {
     // Booking
     Route::get('/formbook/{layanan_id?}/{produk_id?}', [BookingController::class, 'formBook'])->name('formbook');
     Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store');
+    Route::post('/booking/available-slots', [BookingController::class, 'getAvailableSlots'])->name('booking.available-slots');
     Route::post('/checkout', [BookingController::class, 'checkout'])->name('checkout.store');
     Route::get('/booking/available-slots', [BookingController::class, 'getAvailableSlots'])->name('booking.get-available-slots');
     Route::get('/user/check-profile', [BookingController::class, 'checkUserProfile'])->name('user.check-profile');
@@ -131,6 +132,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/cart/check-status', [DownPaymentController::class, 'checkStatus'])->name('dp.check-status');
     Route::get('/cart/payment-dp', [DownPaymentController::class, 'showPaymentPage'])->name('payment.dp');
     Route::get('/cart/payment-status/{order_id}', [DownPaymentController::class, 'paymentStatus'])->name('payment.status');
+    Route::post('payment/notification', [StatusCheckerController::class, 'handleNotification'])->name('payment.notification');
 });
 
 Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(function () {

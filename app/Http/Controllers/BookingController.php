@@ -15,10 +15,32 @@ use Illuminate\Support\Str;
 
 class BookingController extends Controller
 {  
+    public function getAvailableSlots(Request $request)
+    {
+        $request->validate([
+            'date' => 'required|date|after_or_equal:today',
+        ]);
+
+        $date = $request->date;
+        
+        // Get all bookings for the requested date
+        $startDateTime = Carbon::parse($date)->startOfDay();
+        $endDateTime = Carbon::parse($date)->endOfDay();
+        
+        $bookedSlots = Booking::whereBetween('jam_booking', [$startDateTime, $endDateTime])
+                            ->select('kursi', 'jam_booking')
+                            ->get();
+        
+        return response()->json([
+            'date' => $date,
+            'booked_slots' => $bookedSlots
+        ]);
+    }
+    
     public function store(Request $request)
     {
         $request->validate([
-            'kursi' => 'required|string',
+            'kursi' => 'required|in:satu,dua',
             'jam_booking' => 'required|date|after:now',
             'items' => 'required|array',
             'items.*.layanan_id' => 'nullable|exists:layanans,id',
@@ -26,6 +48,13 @@ class BookingController extends Controller
         ]);
 
         $user = Auth::user();
+    
+        // Check if user profile is complete
+        if (!$user->name || !$user->email || !$user->phone) {
+            return redirect()->route('profil')
+                ->withErrors(['profil' => 'Please complete your profile before booking.']);
+        }
+
         $cart = Cart::where('user_id', $user->id)->first();
 
         if (!$cart || $cart->cartItems->isEmpty()) {
@@ -33,8 +62,10 @@ class BookingController extends Controller
         }
 
         $jam_booking = Carbon::parse($request->jam_booking);
+
+        // Check for conflicting bookings (60 minutes buffer)
         $existingBooking = Booking::where('kursi', $request->kursi)
-            ->whereBetween('jam_booking', [$jam_booking->copy()->subMinutes(60), $jam_booking->copy()->addMinutes(60)])
+            ->whereBetween('jam_booking', [$jam_booking->copy()->subMinutes(50), $jam_booking->copy()->addMinutes(50)])
             ->exists();
 
         if ($existingBooking) {
@@ -44,13 +75,12 @@ class BookingController extends Controller
         $layananIds = [];
         $total_harga = 0;
 
-        foreach ($request->items as $item) {
-            if (!empty($item['layanan_id'])) {
-                $layanan = Layanan::find($item['layanan_id']);
-                if ($layanan) {
-                    $layananIds[] = $item['layanan_id'];
-                    $total_harga += $layanan->harga * $item['quantity'];
-                }
+        // Use cart items instead of request items
+        foreach ($cart->cartItems as $item) {
+            $layanan = Layanan::find($item->layanan_id);
+            if ($layanan) {
+                $layananIds[] = $item->layanan_id;
+                $total_harga += $layanan->harga * $item->quantity;
             }
         }
 
@@ -108,6 +138,7 @@ class BookingController extends Controller
             'updated_at' => now(),
         ]);
 
+        // Clear the cart after successful checkout
         $cart->cartItems()->delete();
 
         return redirect()->route('dashboard')->with('success', 'Booking dan checkout berhasil!');

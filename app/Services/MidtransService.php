@@ -11,6 +11,8 @@ use App\Models\Kasir;
 use App\Models\Layanan;
 use App\Models\Order;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class MidtransService
 {
@@ -26,38 +28,52 @@ class MidtransService
     // Untuk pembayaran DP
     public function createDpTransaction(Order $order)
     {
-        $transactionData = [
-            'transaction_details' => [
-                'order_id' => 'DP-' . $order->id . '-' . time(),
-                'gross_amount' => $order->dp,
-            ],
-            'item_details' => [
-                [
-                    'id' => 'DP-1',
-                    'price' => $order->dp,
-                    'quantity' => 1,
-                    'name' => 'Down Payment Booking',
-                ]
-            ],
-            'customer_details' => [
-                'first_name' => $order->name,
-                'phone' => $order->phone,
-                'billing_address' => [
-                    'address' => $order->address,
-                ]
-            ]
-        ];
-
+        DB::beginTransaction();
         try {
-            $snapToken = Snap::getSnapToken($transactionData);
-            $order->update(['transaction_id' => $transactionData['transaction_details']['order_id']]);
+            $transactionId = 'DP-' . $order->id . '-' . time();
             
+            $transactionData = [
+                'transaction_details' => [
+                    'order_id' => $transactionId,
+                    'gross_amount' => $order->dp,
+                ],
+                'item_details' => [
+                    [
+                        'id' => 'DP-1',
+                        'price' => $order->dp,
+                        'quantity' => 1,
+                        'name' => 'Down Payment Booking',
+                    ]
+                ],
+                'customer_details' => [
+                    'first_name' => $order->name,
+                    'phone' => $order->phone,
+                    'billing_address' => [
+                        'address' => $order->address,
+                    ]
+                ]
+            ];
+
+            $snapToken = Snap::getSnapToken($transactionData);
+            
+            $order->transaction_id = $transactionId;
+            $order->save();
+            
+            DB::commit();
+
+            Log::info('Transaction created successfully', [
+                'order_id' => $order->id,
+                'transaction_id' => $transactionId
+            ]);
+
             return [
                 'snap_token' => $snapToken,
                 'order_id' => $order->id,
-                'transaction_id' => $transactionData['transaction_details']['order_id']
+                'transaction_id' => $transactionId
             ];
         } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Failed to create DP transaction: ' . $e->getMessage());
             return ['error' => $e->getMessage()];
         }
     }

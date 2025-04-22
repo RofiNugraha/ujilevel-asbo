@@ -51,6 +51,15 @@
             </div>
 
             @if ($cartItems->isNotEmpty())
+            <!-- Profile Check Alert -->
+            @if(Auth::check() && (!Auth::user()->name || !Auth::user()->email || !Auth::user()->phone))
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-4" role="alert">
+                <strong class="font-bold">Profile Incomplete!</strong>
+                <span class="block sm:inline">You need to complete your profile before booking.</span>
+                <a href="{{ route('profile.edit') }}" class="underline font-semibold">Complete your profile here</a>
+            </div>
+            @endif
+
             <div id="dp-payment-section" class="mt-8 border-t pt-6">
                 <h3 class="text-xl font-semibold mb-4">Pay Down Payment (DP)</h3>
                 <p class="text-gray-600 mb-4">Before proceeding to checkout, please pay a down payment of Rp. 5.000</p>
@@ -75,7 +84,8 @@
                     </div>
 
                     <button type="button" id="pay-dp-button"
-                        class="bg-blue-500 text-white font-semibold px-6 py-3 rounded-full shadow-md hover:bg-blue-600 transition w-full">
+                        class="bg-blue-500 text-white font-semibold px-6 py-3 rounded-full shadow-md hover:bg-blue-600 transition w-full"
+                        {{ (auth()->check() && (!auth()->user()->name || !auth()->user()->email || !auth()->user()->phone)) ? 'disabled' : '' }}>
                         Pay Down Payment (Rp. 5.000)
                     </button>
                 </div>
@@ -88,96 +98,87 @@
                 </div>
             </div>
 
-            <h1 class="text-3xl font-semibold text-center text-gray-800 mb-4 mt-8">Pengisian Data Customer</h1>
+            <!-- Booking Form - Only visible after DP payment -->
+            <div id="booking-section" class="{{ session('dp_paid_now') ? 'block' : 'hidden' }} mt-8 border-t pt-6">
+                <h1 class="text-3xl font-semibold text-center text-gray-800 mb-4">Pengisian Data Booking</h1>
 
-            @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                    <li style="color: red;">{{ $error }}</li>
+                @if ($errors->any())
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+
+                <form action="{{ route('booking.store') }}" method="post" id="booking-form">
+                    @csrf
+
+                    <!-- Date Selector -->
+                    <div class="mb-6">
+                        <label for="booking_date" class="block text-sm font-medium text-gray-700 mb-2">Select
+                            Date</label>
+                        <input type="date" id="booking_date" name="booking_date"
+                            class="block w-full p-2.5 border-2 border-gray-300 rounded-md" min="{{ date('Y-m-d') }}"
+                            required>
+                    </div>
+
+                    <!-- Time Slots Table -->
+                    <div class="mb-6">
+                        <h3 class="text-lg font-medium text-gray-700 mb-2">Select Time Slot & Chair</h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full bg-white border border-gray-200">
+                                <thead>
+                                    <tr>
+                                        <th class="py-2 px-4 border-b">Time</th>
+                                        <th class="py-2 px-4 border-b">Chair 1 (Satu)</th>
+                                        <th class="py-2 px-4 border-b">Chair 2 (Dua)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="booking-slots">
+                                    <!-- Time slots will be populated dynamically -->
+                                    <tr>
+                                        <td colspan="3" class="py-4 text-center text-gray-500">
+                                            Please select a date to view available time slots
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Hidden inputs for form submission -->
+                    <input type="hidden" name="kursi" id="selected_kursi" required>
+                    <input type="hidden" name="jam_booking" id="selected_jam_booking" required>
+
+                    @foreach ($cartItems as $index => $item)
+                    <input type="hidden" name="items[{{ $index }}][layanan_id]"
+                        value="{{ optional($item->layanan)->id }}">
+                    <input type="hidden" name="items[{{ $index }}][quantity]" value="{{ $item->quantity }}">
                     @endforeach
-                </ul>
+
+                    <input type="hidden" name="order_id" id="form_order_id" value="{{ session('order_id') ?? '' }}">
+
+                    <div class="bg-white rounded-3xl shadow-lg w-full max-w-4xl mt-8 p-6">
+                        <div class="flex mt-6 gap-4">
+                            <button type="submit" id="checkout-button"
+                                class="bg-green-500 text-white font-semibold px-6 py-3 rounded-full shadow-md hover:bg-green-600 transition w-full opacity-50 cursor-not-allowed"
+                                disabled>
+                                Proceed to Checkout
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
-            @endif
-
-            <form action="{{ route('booking.store') }}" method="post" id="booking-form">
-                @csrf
-                <div class="mb-4">
-                    <label for="kursi" class="block text-sm font-medium text-gray-700">Kursi</label>
-                    <select name="kursi" id="kursi" class="mt-1 block w-full p-2.5 border-2 border-gray-300 rounded-md"
-                        required>
-                        <option value="">Pilih Kursi</option>
-                        <option value="satu">Satu</option>
-                        <option value="dua">Dua</option>
-                    </select>
-                    @error('kursi')
-                    <small class="text-red-500 text-xs">{{ $message }}</small>
-                    @enderror
+            <div class="bg-white rounded-3xl shadow-lg w-full max-w-4xl mt-8 p-6">
+                <div class="flex mt-6 gap-4">
+                    <a href="{{ route('booking') }}" class="bg-gray-200 text-gray-700 font-semibold px-6 py-3 rounded-full shadow-md
+                                hover:bg-gray-300 transition w-full text-center">
+                        Continue Shopping
+                    </a>
                 </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Pilih Jam Booking</label>
-                    <input type="hidden" name="jam_booking" id="jam_booking" required>
-                    <div id="selected-time" class="mb-4 text-blue-700 font-semibold"></div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Jam Tersedia -->
-                        <div class="bg-green-50 border border-green-200 rounded-xl p-4 shadow-sm">
-                            <h3 class="text-lg font-semibold text-green-700 mb-3">Jam yang Tersedia</h3>
-                            <div class="space-y-2">
-                                <button type="button"
-                                    class="booking-time-option px-4 py-2 bg-white border border-green-400 text-green-800 rounded-lg w-full text-left hover:bg-green-100 transition"
-                                    data-datetime="2025-04-18T09:00">18 Apr 2025 - 09:00</button>
-                                <button type="button"
-                                    class="booking-time-option px-4 py-2 bg-white border border-green-400 text-green-800 rounded-lg w-full text-left hover:bg-green-100 transition"
-                                    data-datetime="2025-04-18T13:00">18 Apr 2025 - 13:00</button>
-                                <!-- Tambah sesuai jadwal -->
-                            </div>
-                        </div>
-
-                        <!-- Jam Tidak Tersedia -->
-                        <div class="bg-red-50 border border-red-200 rounded-xl p-4 shadow-sm">
-                            <h3 class="text-lg font-semibold text-red-700 mb-3">Jam yang Tidak Tersedia</h3>
-                            <div class="space-y-2">
-                                <span class="px-4 py-2 bg-red-100 border border-red-300 text-red-800 rounded-lg block">
-                                    18 Apr 2025 - 11:00
-                                </span>
-                                <span class="px-4 py-2 bg-red-100 border border-red-300 text-red-800 rounded-lg block">
-                                    18 Apr 2025 - 15:00
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-4">
-                    <label for="jam_booking" class="block text-sm font-medium text-gray-700">Jam Booking</label>
-                    <input type="datetime-local" name="jam_booking" id="jam_booking"
-                        class="mt-1 block w-full p-2.5 border-2 border-gray-300 rounded-md" required>
-                    @error('jam_booking')
-                    <small class="text-red-500 text-xs">{{ $message }}</small>
-                    @enderror
-                </div>
-
-                @foreach ($cartItems as $index => $item)
-                <input type="hidden" name="items[{{ $index }}][layanan_id]" value="{{ optional($item->layanan)->id }}">
-                <input type="hidden" name="items[{{ $index }}][quantity]" value="{{ $item->quantity }}">
-                @endforeach
-
-                <input type="hidden" name="order_id" id="form_order_id" value="{{ session('order_id') ?? '' }}">
-
-                <div class="bg-white rounded-3xl shadow-lg w-full max-w-4xl mt-8 p-6">
-                    <div class="flex mt-6 gap-4">
-                        <button type="submit" id="checkout-button"
-                            class="bg-green-500 text-white font-semibold px-6 py-3 rounded-full shadow-md hover:bg-green-600 transition w-full {{ session('dp_paid_now') ? '' : 'opacity-50 cursor-not-allowed' }}"
-                            {{ session('dp_paid_now') ? '' : 'disabled' }}>
-                            Proceed to Checkout
-                        </button>
-                        <a href="{{ route('booking') }}" class="bg-gray-200 text-gray-700 font-semibold px-6 py-3 rounded-full shadow-md
-                            hover:bg-gray-300 transition w-full text-center">
-                            Continue Shopping
-                        </a>
-                    </div>
-                </div>
-            </form>
+            </div>
             @else
             <p class="text-red-500">Keranjang Anda kosong!</p>
             @endif
@@ -216,12 +217,155 @@
     <!-- Midtrans Script -->
     <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}">
     </script>
+
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         const payDpButton = document.getElementById('pay-dp-button');
         const checkoutButton = document.getElementById('checkout-button');
         const paymentModal = document.getElementById('payment-modal');
+        const bookingDateInput = document.getElementById('booking_date');
         let transactionData = null;
+
+        // Initialize with today's date
+        if (bookingDateInput) {
+            bookingDateInput.valueAsDate = new Date();
+            fetchAvailableSlots(bookingDateInput.value);
+        }
+
+        // Event listener for date change
+        if (bookingDateInput) {
+            bookingDateInput.addEventListener('change', function() {
+                fetchAvailableSlots(this.value);
+            });
+        }
+
+        // Function to fetch available slots for a date
+        function fetchAvailableSlots(date) {
+            const tableBody = document.getElementById('booking-slots');
+
+            // Show loading state
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="3" class="py-4 text-center text-gray-500">
+                        Loading available slots...
+                    </td>
+                </tr>
+            `;
+
+            // Fetch available slots from server
+            fetch('{{ route("booking.available-slots") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        date: date
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Clear previous slots
+                    tableBody.innerHTML = '';
+
+                    const startHour = 8; // 8 AM
+                    const endHour = 20; // 8 PM
+
+                    for (let hour = startHour; hour < endHour; hour++) {
+                        const timeString = `${hour.toString().padStart(2, '0')}:00`;
+                        const dateTimeString = `${date}T${timeString}:00`;
+
+                        // Check if this slot is available for each chair
+                        const chair1Booked = data.booked_slots.some(slot =>
+                            slot.kursi === 'satu' &&
+                            isTimeInRange(slot.jam_booking, dateTimeString, 60)
+                        );
+
+                        const chair2Booked = data.booked_slots.some(slot =>
+                            slot.kursi === 'dua' &&
+                            isTimeInRange(slot.jam_booking, dateTimeString, 60)
+                        );
+
+                        // Create row
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                        <td class="py-3 px-4 border-b">${formatTimeDisplay(hour)}</td>
+                        <td class="py-3 px-4 border-b text-center">
+                            ${chair1Booked ? 
+                                '<span class="px-4 py-2 bg-red-100 text-red-600 rounded">Booked</span>' : 
+                                `<button type="button" class="slot-btn px-4 py-2 bg-green-100 text-green-600 rounded hover:bg-green-200" 
+                                  data-kursi="satu" data-time="${dateTimeString}">Available</button>`
+                            }
+                        </td>
+                        <td class="py-3 px-4 border-b text-center">
+                            ${chair2Booked ? 
+                                '<span class="px-4 py-2 bg-red-100 text-red-600 rounded">Booked</span>' : 
+                                `<button type="button" class="slot-btn px-4 py-2 bg-green-100 text-green-600 rounded hover:bg-green-200" 
+                                  data-kursi="dua" data-time="${dateTimeString}">Available</button>`
+                            }
+                        </td>
+                    `;
+
+                        tableBody.appendChild(row);
+                    }
+
+                    // Add event listeners to slot buttons
+                    document.querySelectorAll('.slot-btn').forEach(button => {
+                        button.addEventListener('click', function() {
+                            selectTimeSlot(this);
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching available slots:', error);
+                    tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="3" class="py-4 text-center text-red-500">
+                            Error loading available slots. Please try again.
+                        </td>
+                    </tr>
+                `;
+                });
+        }
+
+        // Helper function to format time display
+        function formatTimeDisplay(hour) {
+            if (hour === 0) return '12:00 AM';
+            if (hour === 12) return '12:00 PM';
+            return hour < 12 ? `${hour}:00 AM` : `${hour-12}:00 PM`;
+        }
+
+        // Helper function to check if a time is within a range
+        function isTimeInRange(bookedTime, checkTime, rangeMinutes) {
+            const bookedDate = new Date(bookedTime);
+            const checkDate = new Date(checkTime);
+
+            const diffMs = Math.abs(bookedDate - checkDate);
+            const diffMinutes = Math.floor(diffMs / 1000 / 60);
+
+            return diffMinutes < rangeMinutes;
+        }
+
+        // Function to handle time slot selection
+        function selectTimeSlot(button) {
+            // Clear previous selections
+            document.querySelectorAll('.slot-btn').forEach(btn => {
+                btn.classList.remove('bg-blue-500', 'text-white');
+                btn.classList.add('bg-green-100', 'text-green-600');
+            });
+
+            // Highlight selected slot
+            button.classList.remove('bg-green-100', 'text-green-600');
+            button.classList.add('bg-blue-500', 'text-white');
+
+            // Update hidden inputs
+            document.getElementById('selected_kursi').value = button.dataset.kursi;
+            document.getElementById('selected_jam_booking').value = button.dataset.time;
+
+            // Enable checkout button
+            checkoutButton.classList.remove('opacity-50', 'cursor-not-allowed');
+            checkoutButton.removeAttribute('disabled');
+        }
 
         if (payDpButton) {
             payDpButton.addEventListener('click', function() {
@@ -330,8 +474,8 @@
         }
 
         function checkPaymentStatus(orderId) {
-            // Show loading
             const statusBtn = document.getElementById('check-status-button');
+            const originalText = statusBtn.textContent;
             statusBtn.textContent = 'Checking...';
             statusBtn.disabled = true;
 
@@ -347,25 +491,27 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    statusBtn.textContent = 'Check Payment Status';
+                    statusBtn.textContent = originalText;
                     statusBtn.disabled = false;
 
-                    if (data.success) {
+                    if (data.app_status === 'success') {
                         handlePaymentSuccess(orderId);
                     } else {
-                        alert('Payment status: ' + data.status + '. ' + data.message);
+                        let message = data.message || 'Payment status unknown';
+                        if (data.status === 'not_found') {
+                            message = 'Transaction not found. Please try making payment again.';
+                        }
+                        alert('Payment status: ' + (data.status || 'unknown') + '. ' + message);
                     }
                 })
                 .catch(error => {
-                    console.error('Error checking status:', error);
-                    statusBtn.textContent = 'Check Payment Status';
+                    statusBtn.textContent = originalText;
                     statusBtn.disabled = false;
                     alert('Error checking payment status: ' + error.message);
                 });
         }
 
         function handlePaymentSuccess(orderId) {
-            // Update the UI to show success message
             fetch('{{ route("order.update-status") }}', {
                     method: 'POST',
                     headers: {
@@ -388,19 +534,18 @@
                         // Hide payment form and show success message
                         document.getElementById('dp-form').classList.add('hidden');
                         document.getElementById('dp-success').classList.remove('hidden');
+                        document.getElementById('booking-section').classList.remove('hidden');
 
                         // Update order ID in both places
                         document.getElementById('order_id').value = orderId;
                         document.getElementById('form_order_id').value = orderId;
 
-                        // Enable checkout button
-                        checkoutButton.classList.remove('opacity-50', 'cursor-not-allowed');
-                        checkoutButton.removeAttribute('disabled');
-
                         paymentModal.classList.add('hidden');
 
-                        // Reload the page to refresh the session state
-                        window.location.reload();
+                        // Fetch available slots for today
+                        if (bookingDateInput) {
+                            fetchAvailableSlots(bookingDateInput.value);
+                        }
                     } else {
                         console.error('Failed to update status:', data);
                         alert('Payment successful, but failed to update status');
@@ -416,25 +561,4 @@
         }
     });
     </script>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const timeOptions = document.querySelectorAll('.booking-time-option');
-        const jamBookingInput = document.getElementById('jam_booking');
-        const selectedTimeDisplay = document.getElementById('selected-time');
-
-        timeOptions.forEach(btn => {
-            btn.addEventListener('click', function() {
-                const datetime = this.getAttribute('data-datetime');
-                jamBookingInput.value = datetime;
-                selectedTimeDisplay.textContent = `Jam booking terpilih: ${datetime}`;
-
-                // Highlight tombol yang dipilih
-                timeOptions.forEach(b => b.classList.remove('ring', 'ring-offset-2',
-                    'bg-green-100'));
-                this.classList.add('ring', 'ring-offset-2', 'bg-green-100');
-            });
-        });
-    });
-    </script>
-
 </x-landing-layout>

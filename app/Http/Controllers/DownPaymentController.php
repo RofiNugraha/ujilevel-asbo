@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Midtrans\Config;
 use Midtrans\Snap;
+use Illuminate\Support\Facades\DB;
 
 class DownPaymentController extends Controller
 {
@@ -23,11 +24,11 @@ class DownPaymentController extends Controller
 
     public function create(Request $request)
     {
+        DB::beginTransaction();
         try {
-            // Konversi request JSON menjadi array
             $data = $request->json()->all();
+            Log::info('DP create request:', $data);
             
-            // Validasi data
             $validated = validator($data, [
                 'name' => 'required|string|max:255',
                 'phone' => 'required|string|max:20',
@@ -35,69 +36,53 @@ class DownPaymentController extends Controller
                 'dp' => 'required|numeric'
             ])->validate();
 
-            // Create order dengan status yang sesuai enum di migrasi
             $order = Order::create([
                 'name' => $validated['name'],
                 'phone' => $validated['phone'],
                 'address' => $validated['address'],
                 'dp' => $validated['dp'],
-                'status' => 'Unpaid' // Sesuaikan dengan enum di migrasi
+                'status' => 'Unpaid'
             ]);
 
-            // Prepare transaction data for Midtrans
-            $transaction_details = [
-                'order_id' => 'DP-' . $order->id . '-' . time(),
-                'gross_amount' => (int)$validated['dp'],
-            ];
+            $midtransService = new MidtransService();
+            $transaction = $midtransService->createDpTransaction($order);
 
-            $customer_details = [
-                'first_name' => $validated['name'],
-                'phone' => $validated['phone'],
-                'billing_address' => [
-                    'address' => $validated['address'],
-                ]
-            ];
+            if (isset($transaction['error'])) {
+                throw new \Exception($transaction['error']);
+            }
 
-            $item_details = [
-                [
-                    'id' => 'DP-1',
-                    'price' => (int)$validated['dp'],
-                    'quantity' => 1,
-                    'name' => 'Down Payment for Booking',
-                ]
-            ];
+            DB::commit();
 
-            $transaction_data = [
-                'transaction_details' => $transaction_details,
-                'customer_details' => $customer_details,
-                'item_details' => $item_details
-            ];
-
-            // Get Snap token
-            $snapToken = Snap::getSnapToken($transaction_data);
-
-            // Update the order with transaction ID
-            $order->update([
-                'transaction_id' => $transaction_details['order_id']
+            Log::info('DP created successfully', [
+                'order_id' => $order->id,
+                'transaction_id' => $order->transaction_id
             ]);
 
             return response()->json([
-                'snap_token' => $snapToken,
-                'order_id' => $order->id
+                'snap_token' => $transaction['snap_token'],
+                'order_id' => $order->id,
+                'transaction_id' => $order->transaction_id
             ]);
+
         } catch (\Exception $e) {
-            Log::error('Error creating order: ' . $e->getMessage());
-            return response()->json(['error' => $e->getMessage()], 500);
+            DB::rollBack();
+            Log::error('DP create error:', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            return response()->json([
+                'error' => $e->getMessage(),
+                'debug' => env('APP_DEBUG') ? $e->getTraceAsString() : null
+            ], 500);
         }
     }
 
     public function updateStatus(Request $request)
     {
         try {
-            // Perbaikan konversi JSON request
             $data = $request->json()->all();
+            Log::info('Update status request:', $data);
             
-            // Validasi data
             $validated = validator($data, [
                 'order_id' => 'required|numeric',
                 'status' => 'required|string'
@@ -105,58 +90,64 @@ class DownPaymentController extends Controller
 
             $order = Order::findOrFail($validated['order_id']);
             
-            // Update status sesuai enum di migrasi
-            $order->update(['status' => 'Paid']);
+            $order->status = 'Paid';
+            $order->save();
 
-            // Store in session that DP is paid
             Session::put('dp_paid', true);
             Session::put('order_id', $order->id);
-            
-            // Set flash message only for this request
             Session::flash('dp_paid_now', true);
+
+            Log::info('Order status updated', $order->toArray());
 
             return response()->json([
                 'success' => true,
-                'message' => 'Order status updated successfully'
+                'message' => 'Order status updated successfully',
+                'order' => $order
             ]);
         } catch (\Exception $e) {
-            Log::error('Error updating order status: ' . $e->getMessage());
-            return response()->json(['error' => $e->getMessage()], 500);
+            Log::error('Update status error:', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            return response()->json([
+                'error' => $e->getMessage(),
+                'debug' => env('APP_DEBUG') ? $e->getTraceAsString() : null
+            ], 500);
         }
     }
 
     public function notification(Request $request)
-{
-    try {
-        $notificationBody = json_decode($request->getContent(), true);
-        $transactionStatus = $notificationBody['transaction_status'];
-        $orderId = $notificationBody['order_id'];
-        
-        $midtransService = new MidtransService();
-        
-        if (strpos($orderId, 'DP-') === 0) {
-            // Pembayaran DP
-            $midtransService->updateTransactionStatus($orderId, $this->mapStatus($transactionStatus));
-        } else {
-            // Pembayaran full
-            $midtransService->updateTransactionStatus($orderId, $this->mapStatus($transactionStatus));
+    {
+        try {
+            $notificationBody = json_decode($request->getContent(), true);
+            $transactionStatus = $notificationBody['transaction_status'];
+            $orderId = $notificationBody['order_id'];
+            
+            $midtransService = new MidtransService();
+            
+            if (strpos($orderId, 'DP-') === 0) {
+                // Pembayaran DP
+                $midtransService->updateTransactionStatus($orderId, $this->mapStatus($transactionStatus));
+            } else {
+                // Pembayaran full
+                $midtransService->updateTransactionStatus($orderId, $this->mapStatus($transactionStatus));
+            }
+            
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            Log::error('Error handling notification: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-        
-        return response()->json(['success' => true]);
-    } catch (\Exception $e) {
-        Log::error('Error handling notification: ' . $e->getMessage());
-        return response()->json(['error' => $e->getMessage()], 500);
     }
-}
 
-private function mapStatus($transactionStatus)
-{
-    if ($transactionStatus == 'capture' || $transactionStatus == 'settlement') {
-        return 'success';
-    } elseif ($transactionStatus == 'pending') {
-        return 'pending';
-    } else {
-        return 'failed';
+    private function mapStatus($transactionStatus)
+    {
+        if ($transactionStatus == 'capture' || $transactionStatus == 'settlement') {
+            return 'success';
+        } elseif ($transactionStatus == 'pending') {
+            return 'pending';
+        } else {
+            return 'failed';
+        }
     }
-}
 }
