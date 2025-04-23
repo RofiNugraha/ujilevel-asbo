@@ -8,23 +8,85 @@
             <h2 class="text-4xl font-bold drop-shadow">👤 Profil Saya</h2>
         </section>
 
-        <!-- Profile Info -->
-        <section class="flex flex-col items-center py-6 px-4">
-            <div class="relative group w-28 h-28">
-                <img src="{{ asset('images/google.png') }}" alt="Foto Profil"
-                    class="w-full h-full rounded-full object-cover border-4 border-white shadow-lg" />
+        <div class="max-w-lg mx-auto bg-white rounded-lg shadow-sm overflow-hidden">
+            <!-- Profile Header -->
+            <div class="bg-gradient-to-r from-blue-500 to-blue-600 p-6 text-center">
+                <div class="w-24 h-24 mx-auto mb-4 relative">
+                    <img src="{{ $user->image ? asset('storage/'.$user->image) : asset('images/default-avatar.jpg') }}"
+                        alt="Profile Photo"
+                        class="w-full h-full rounded-full object-cover border-4 border-white shadow-md" />
+                </div>
+                <h2 class="text-xl font-bold text-white">{{ $user->name }}</h2>
+                <p class="text-blue-100">{{ $user->email }}</p>
             </div>
-            <h3 class="text-2xl font-bold mt-4">{{ $user->name }}</h3>
-            <p class="text-lg text-gray-600">{{ $user->email }}</p>
-        </section>
 
-        <hr class="border-t border-gray-300 my-4">
+            <!-- Profile Content -->
+            <div class="p-6 space-y-6">
+                <!-- Personal Info Section -->
+                <div class="space-y-4">
+                    <div class="flex items-center">
+                        <div class="w-8 text-blue-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-700">Informasi Pribadi</h3>
+                    </div>
+                    <table>
+                        <tr>
+                            <td><span class="text-gray-500 w-28">Nama Lengkap</span></td>
+                            <td><span
+                                    class="text-gray-800 font-medium">{{ $user->nama_lengkap ?? 'Belum diisi' }}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="text-gray-500 w-28">Nomor HP</span></td>
+                            <td><span class="text-gray-800 font-medium">{{ $user->phone ?? 'Belum diisi' }}</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="text-gray-500 w-28">Alamat</span></td>
+                            <td><span class="text-gray-800 font-medium">{{ $user->address ?? 'Belum diisi' }}</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
 
-        <!-- Personal Info -->
-        <section class="p-6">
-            <h3 class="text-xl font-semibold text-gray-700 mb-2">📋 Detail Pribadi</h3>
-            <p class="text-gray-600">Nomor HP: <span class="font-medium">{{ $user->nomor_hp }}</span></p>
-        </section>
+                <!-- Account Info Section -->
+                <div class="space-y-4">
+                    <div class="flex items-center">
+                        <div class="w-8 text-blue-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-700">Informasi Akun</h3>
+                    </div>
+
+                    <table>
+                        <tr>
+                            <td><span class="text-gray-500 w-28">Username</span></td>
+                            <td><span class="text-gray-800 font-medium">{{ $user->name }}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="text-gray-500 w-28">Email</span></td>
+                            <td><span class="text-gray-800 font-medium">{{ $user->email }}</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="text-gray-500 w-28">Tipe Akun</span></td>
+                            <td><span class="text-gray-800 font-medium">{{ $user->usertype }}</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
 
         <hr class="border-t border-gray-300 my-4">
 
