@@ -31,28 +31,26 @@ class ProfileController extends Controller
         $bookings = Booking::with(['user', 'checkout'])
             ->where('user_id', $user->id)
             ->whereIn('status', ['pending', 'konfirmasi'])
-            ->get();
-
-            foreach ($bookings as $booking) {
-                $layananIds = json_decode($booking->layanan_id, true);
-                $booking->layanans = Layanan::whereIn('id', $layananIds)->get();
-            }
-
+            ->get()
+            ->each(function ($booking) {
+                $booking->layanans = Layanan::whereIn('id', json_decode($booking->layanan_id, true))->get();
+            });
+        
         return view('profil', compact('user', 'bookings'));
     }
 
-    
-    public function showBooking(string $id) {
-        $user = Auth::user();
-        
-        $booking = Booking::with(['user', 'checkout'])
-                ->where('id', $id)
-                ->firstOrFail();
+    public function cancel($id)
+    {
+        $booking = Booking::findOrFail($id);
 
-        $layananIds = json_decode($booking->layanan_id, true);
-        $booking->layanans = Layanan::whereIn('id', $layananIds)->get();
-        
-        return view('viewbooking', compact('booking'));
+        if ($booking->status === 'batal') {
+            return back()->with('error', 'Pesanan sudah dibatalkan sebelumnya.');
+        }
+
+        $booking->status = 'batal';
+        $booking->save();
+
+        return back()->with('success', 'Pesanan berhasil dibatalkan.');
     }
 
     /**

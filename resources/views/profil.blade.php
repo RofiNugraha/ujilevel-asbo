@@ -92,7 +92,7 @@
 
         <!-- Booking Details -->
         <section class="p-6" x-data="{ selectedBooking: null }">
-            <h3 class="text-xl font-semibold text-gray-700 mb-4">📅 Riwayat Booking</h3>
+            <h3 class="text-xl font-semibold text-gray-700 mb-4">📅 Pesanan Anda</h3>
 
             @forelse($bookings as $booking)
             <div
@@ -108,7 +108,27 @@
                     <p class="text-gray-800 font-medium">Jam: <span
                             class="font-semibold">{{ $booking->jam_booking }}</span></p>
                 </div>
-                <button @click="selectedBooking = {{ json_encode($booking) }}"
+                <form id="cancel-booking-form" method="POST"
+                    action="{{ route('bookings.cancel', ['id' => $booking->id]) }}">
+                    @csrf
+                    <button type="submit" onclick="return confirm('Yakin ingin membatalkan pesanan ini?')"
+                        class="bg-red-600 text-white px-4 py-2 rounded-xl hover:bg-red-700 transition">
+                        Batalkan Pesanan
+                    </button>
+                </form>
+
+                @if(session('success'))
+                <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
+                    {{ session('success') }}
+                </div>
+                @endif
+                @if(session('error'))
+                <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+                    {{ session('error') }}
+                </div>
+                @endif
+
+                <button @click='selectedBooking = {{ json_encode($booking) }}'
                     class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition">
                     Lihat
                 </button>
@@ -122,7 +142,7 @@
                 class="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center p-4">
                 <div x-transition
                     class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full p-8 relative overflow-hidden text-gray-800">
-                    <button @click="selectedBooking = null"
+                    <button @click='selectedBooking = null'
                         class="absolute top-4 right-4 bg-red-600 text-white w-8 h-8 rounded-full text-xl leading-none hover:bg-red-700 transition">
                         ×
                     </button>
@@ -159,13 +179,6 @@
                                 <td class="py-3 font-semibold">Status</td>
                                 <td x-text="selectedBooking.status"></td>
                             </tr>
-                            <tr class="border-b hover:bg-blue-50">
-                                <td class="py-3 font-semibold">Total Harga</td>
-                                <td class="font-bold text-green-600">Rp
-                                    <span
-                                        x-text="Number(selectedBooking.checkout.total_harga).toLocaleString('id-ID', {minimumFractionDigits: 2})"></span>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -189,6 +202,37 @@
             </form>
         </div>
     </main>
-</x-landing-layout>
 
-<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+    function bookingDetail() {
+        return {
+            selectedBooking: null,
+            cancelBooking(bookingId) {
+                if (confirm('Apakah Anda yakin ingin membatalkan pesanan ini?')) {
+                    fetch(`/bookings/${bookingId}/cancel`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                this.selectedBooking.status = 'batal';
+                                alert('Pesanan berhasil dibatalkan');
+                            } else {
+                                alert('Gagal membatalkan pesanan');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Terjadi kesalahan');
+                        });
+                }
+            }
+        }
+    }
+    </script>
+</x-landing-layout>
