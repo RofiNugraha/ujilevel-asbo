@@ -96,7 +96,7 @@ Route::middleware(['auth'])->group(function () {
     // Profil
     Route::get('/profil', [ProfileController::class, 'show'])->name('profil');
     Route::put('/profil', [UpdateProfileController::class, 'updateProfile'])->name('profil.update');
-    Route::get('/viewbooking/{id}', [ProfileController::class, 'showBooking'])->name('viewbooking.show');
+    Route::post('/profil/{id}/batal', [ProfileController::class, 'cancel'])->name('bookings.cancel');
 
     // Cart 
     Route::get('cart', [CartController::class, 'index'])->name('cart.index');
