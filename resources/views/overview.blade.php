@@ -63,7 +63,8 @@
     <div class="image-container relative w-full h-screen bg-cover bg-center flex items-center justify-center">
         <div class="container text-center p-8 rounded-lg">
             <h1
-                class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 animate-pulse"></i>Selamat Datang di Barbershop Kami!
+                class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 animate-pulse">
+                </i>Selamat Datang di Barbershop Kami!
             </h1>
             <p class="mt-6 text-xl text-gray-200"></i>Rasakan layanan potong rambut dan perawatan terbaik.
             </p>
@@ -79,7 +80,7 @@
     <!-- SECTION JUDUL -->
     <h1
         class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 mt-20 flex justify-center items-center animate-pulse">
-        <i class="fas fa-list mr-3"></i>Daftar Booking Hari Ini
+        Daftar Booking Hari Ini
     </h1>
 
     <!-- WRAPPER -->
@@ -88,19 +89,20 @@
 
             <!-- DESKRIPSI -->
             <div class="mb-6 text-center">
-                <h2 class="text-2xl font-bold text-white">
-                    <i class="fas fa-users mr-2 text-yellow-400"></i>Daftar Booking Hari Ini
-                </h2>
-                <p class="text-gray-300 mt-2">
-                    <i class="fas fa-clock mr-1 text-blue-400"></i>Lihat siapa saja yang sudah melakukan reservasi hari ini dan pastikan
-                    pelayanan berjalan lancar dan tepat waktu. Yuk cek daftarnya!
+                <p class="text-gray-300 mt-2 leading-relaxed max-w-2xl mx-auto">
+                    <span class="align-middle">
+                        Lihat siapa saja yang sudah melakukan reservasi hari ini dan pastikan pelayanan berjalan lancar
+                        serta tepat waktu. Yuk cek daftarnya!
+                    </span>
                 </p>
             </div>
+
 
             <!-- MARQUEE -->
             <div class="bg-white rounded-[39px] shadow-lg p-4 h-[60px] flex items-center marquee-container">
                 <h1 class="text-lg font-semibold marquee">
-                    <i class="fas fa-bullhorn mr-2"></i>Daftar Booking: {{ now()->setTimezone('Asia/Jakarta')->format('l, d F Y') }}
+                    <i class="fas fa-bullhorn mr-2"></i>Daftar Booking:
+                    {{ now()->setTimezone('Asia/Jakarta')->format('l, d F Y') }}
                 </h1>
             </div>
 
@@ -108,13 +110,14 @@
             <div class="flex justify-center mt-6">
                 <div
                     class="card mb-4 shadow-2xl rounded-lg overflow-hidden w-full bg-white transform hover:-translate-y-1 hover:shadow-3xl transition duration-300">
-                    
+
                     <!-- HEADER -->
                     <div class="card-header bg-gray-100 text-[#0e2094] font-bold flex items-center justify-between p-4">
                         <span><i class="fas fa-table me-1"></i> Lihat Daftar</span>
                         <div class="flex items-center space-x-2">
                             <div class="relative">
-                                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                <i
+                                    class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                                 <input type="text"
                                     class="pl-10 pr-4 py-2 border border-[#0e2094] rounded focus:outline-none focus:ring-2 focus:ring-[#0e2094]"
                                     placeholder="Cari...">
@@ -129,16 +132,20 @@
                                 <thead class="bg-[gold] text-black">
                                     <tr>
                                         <th class="py-4 border-b-2 border-gray-300"><i class="fas fa-hashtag"></i></th>
-                                        <th class="py-4 border-b-2 border-gray-300"><i class="fas fa-user"></i> Nama</th>
-                                        <th class="py-4 border-b-2 border-gray-300"><i class="fas fa-chair"></i> Kursi</th>
-                                        <th class="py-4 border-b-2 border-gray-300"><i class="fas fa-clock"></i> Jam Booking</th>
+                                        <th class="py-4 border-b-2 border-gray-300"><i class="fas fa-user"></i> Nama
+                                        </th>
+                                        <th class="py-4 border-b-2 border-gray-300"><i class="fas fa-chair"></i> Kursi
+                                        </th>
+                                        <th class="py-4 border-b-2 border-gray-300"><i class="fas fa-clock"></i> Jam
+                                            Booking</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse ($bookings as $booking)
                                     <tr class="border-b border-gray-300 hover:bg-gray-100 transition duration-200">
                                         <td class="p-4">{{ $loop->iteration }}</td>
-                                        <td class="p-4">{{ $booking->user ? $booking->user->name : 'Tidak Diketahui' }}</td>
+                                        <td class="p-4">{{ $booking->user ? $booking->user->name : 'Tidak Diketahui' }}
+                                        </td>
                                         <td class="p-4">{{ ucfirst($booking->kursi) }}</td>
                                         <td class="p-4">{{ $booking->jam_booking }}</td>
                                     </tr>

@@ -43,28 +43,6 @@
             </div>
         </div>
     </div>
-    <section id="services" class="py-16 bg-black">
-        <div class="container mx-auto px-6 text-center m-4">
-            <h2 class="text-4xl font-bold text-[gold]">Our Services</h2>
-            <p class="mt-4 text-gray-300">We provide top-quality grooming services for men.</p>
-            <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="p-6 bg-gray-50 rounded-lg shadow-lg">
-                    <img src="{{ asset('images/haircut.jpg') }}" alt="Pomade"
-                        class="w-full h-40 object-cover rounded-lg">
-                    <h3 class="text-2xl font-bold text-gray-800 mt-4">Potong Rambut</h3>
-                </div>
-                <div class="p-6 bg-gray-50 rounded-lg shadow-lg">
-                    <img src="{{ asset('images/semir.jpg') }}" alt="Pomade" class="w-full h-40 object-cover rounded-lg">
-                    <h3 class="text-2xl font-bold text-gray-800 mt-4">Semir Rambut</h3>
-                </div>
-                <div class="p-6 bg-gray-50 rounded-lg shadow-lg">
-                    <img src="{{ asset('images/pijat.jpg') }}" alt="Pomade" class="w-full h-40 object-cover rounded-lg">
-                    <h3 class="text-2xl font-bold text-gray-800 mt-4">Pijat Kepala</h3>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <main
         class="container mx-auto px-6 py-16 text-white flex flex-col md:flex-row items-center space-y-12 md:space-y-0 md:space-x-12">
         <img src="{{ asset('images/tempat.jpg') }}" alt="Barbershop"

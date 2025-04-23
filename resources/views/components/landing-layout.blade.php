@@ -136,28 +136,28 @@
         <div class="absolute inset-0 opacity-10 bg-[url('/path-to-pattern.png')] bg-cover"></div>
         <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
-                <!-- Logo and Description -->
+                <!-- Logo dan Deskripsi -->
                 <div class="flex flex-col items-center md:items-start">
-                    <img src="{{ asset('images/logogold.png')}}" alt="ASBO Logo"
+                    <img src="{{ asset('images/logogold.png')}}" alt="Logo ASBO"
                         class="w-[160px] transition-transform duration-300 hover:scale-105">
                     <p class="mt-3 text-gray-400 leading-relaxed">
-                        Your trusted partner for financial management solutions.
+                        Mitra terpercaya Anda dalam solusi manajemen keuangan.
                     </p>
                 </div>
-                <!-- Links Section -->
+                <!-- Bagian Tautan -->
                 <div class="flex flex-col items-center md:items-start">
-                    <h2 class="text-lg text-gold font-semibold border-b-2 border-gold pb-2">Quick Links</h2>
+                    <h2 class="text-lg text-[gold] font-semibold border-b-2 border-[gold] pb-2">Tautan Cepat</h2>
                     <ul class="mt-4 space-y-3">
-                        <li><a href="#" class="text-gray-400 hover:text-gold transition duration-300">About Us</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-gold transition duration-300">Services</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-gold transition duration-300">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-gold transition duration-300">About</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-gold transition duration-300">Overview</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-gold transition duration-300">Booking</a></li>
                         <li><a href="#" class="text-gray-400 hover:text-gold transition duration-300">Contact</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-gold transition duration-300">Privacy Policy</a>
-                        </li>
                     </ul>
                 </div>
-                <!-- Social Media Section -->
+                <!-- Bagian Media Sosial -->
                 <div class="flex flex-col items-center md:items-start">
-                    <h2 class="text-lg text-gold font-semibold border-b-2 border-gold pb-2">Follow Us</h2>
+                    <h2 class="text-lg text-[gold] font-semibold border-b-2 border-[gold] pb-2">Ikuti Kami</h2>
                     <div class="flex mt-4 space-x-4">
                         <a href="#" class="text-gray-400 hover:text-gold transition duration-300">
                             <i class="fab fa-facebook text-xl"></i>
@@ -172,14 +172,15 @@
                             <i class="fab fa-linkedin text-xl"></i>
                         </a>
                     </div>
-                    <p class="mt-4 text-gray-500 text-sm">Stay connected with us for the latest updates.</p>
+                    <p class="mt-4 text-gray-500 text-sm">Tetap terhubung dengan kami untuk info terbaru.</p>
                 </div>
             </div>
             <div class="mt-8 border-t border-gray-700 pt-4 text-center">
-                <p class="text-sm text-gray-500">© 2025 ASBO. All Rights Reserved.</p>
+                <p class="text-sm text-gray-500">© 2025 ASBO. Hak Cipta Dilindungi.</p>
             </div>
         </div>
     </footer>
+
 
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </body>
