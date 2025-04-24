@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com/3.2.0"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.10.1/sweetalert2.all.min.js"></script>
+    @include('partials.sweetalert');
     <style>
     a,
     button,
@@ -117,6 +119,33 @@
             </div>
         </div>
     </div>
+
+    <script>
+    if (session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: '{{ session('
+            success ') }}',
+            confirmButtonColor: '#212E80',
+        });
+    endif
+
+    if ($errors - > any())
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            html: `
+                <ul class="text-left">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            `,
+            confirmButtonColor: '#212E80',
+        });
+    endif
+    </script>
 </body>
 
 

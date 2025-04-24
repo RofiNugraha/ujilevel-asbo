@@ -141,6 +141,6 @@ class BookingController extends Controller
         // Clear the cart after successful checkout
         $cart->cartItems()->delete();
 
-        return redirect()->route('dashboard')->with('success', 'Booking dan checkout berhasil!');
+        return redirect()->route('profil')->with('success', 'Booking dan checkout berhasil!');
     }
 }

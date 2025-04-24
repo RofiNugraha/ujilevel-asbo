@@ -1,4 +1,5 @@
 <x-admin.admin-layout>
+    @include('partials.sweetalert')
     <style>
     .dashboard-card {
         border-radius: 12px;
@@ -85,6 +86,10 @@
     .stat-change {
         font-size: 0.8rem;
         margin-top: 5px;
+    }
+
+    .rating {
+        font-size: 0.9rem;
     }
     </style>
 
@@ -242,37 +247,6 @@
                         </div>
                     </div>
 
-                    <!-- Charts Row -->
-                    <div class="row mb-4">
-                        <!-- Income vs Expense Chart -->
-                        <div class="col-lg-8">
-                            <div class="dashboard-card p-4">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h5 class="fw-bold mb-0">Income vs Expense Analysis</h5>
-                                    <div class="btn-group">
-                                        <button type="button"
-                                            class="btn btn-sm btn-outline-secondary active">Monthly</button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Weekly</button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Daily</button>
-                                    </div>
-                                </div>
-                                <div class="chart-container">
-                                    <canvas id="incomeExpenseChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Services Distribution -->
-                        <div class="col-lg-4">
-                            <div class="dashboard-card p-4">
-                                <h5 class="fw-bold mb-3">Popular Services</h5>
-                                <div class="chart-container">
-                                    <canvas id="servicesChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- Recent Transactions and Customer Types -->
                     <div class="row mb-4">
                         <!-- Recent Transactions -->
@@ -347,9 +321,6 @@
                         <div class="col-lg-4">
                             <div class="dashboard-card p-4">
                                 <h5 class="fw-bold mb-3">Customer Distribution</h5>
-                                <div class="chart-container">
-                                    <canvas id="customerTypeChart"></canvas>
-                                </div>
                                 <div class="mt-3">
                                     <div class="d-flex justify-content-between mb-2">
                                         <span>Booking Customers</span>
@@ -379,7 +350,7 @@
                         <div class="col-12">
                             <div class="dashboard-card p-4">
                                 <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h5 class="fw-bold mb-0">Expense Breakdown</h5>
+                                    <h5 class="fw-bold mb-0">Feedback</h5>
                                     <div class="btn-group">
                                         <button type="button"
                                             class="btn btn-sm btn-outline-secondary active">All</button>
@@ -389,8 +360,43 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-8">
-                                        <div class="chart-container">
-                                            <canvas id="expenseBreakdownChart"></canvas>
+                                        <!-- Tampilkan daftar feedback -->
+                                        <div class="feedback-list">
+                                            @foreach($contacts as $contact)
+                                            <div class="feedback-item mb-4 p-3 border rounded">
+                                                <div class="d-flex align-items-center mb-2">
+                                                    <div>
+                                                        <h6 class="mb-0 fw-bold">
+                                                            {{ $contact->user ? $contact->user->name : 'Anonymous' }}
+                                                        </h6>
+                                                        <!-- Tampilkan rating dalam bentuk bintang -->
+                                                        <div class="rating">
+                                                            @for($i = 1; $i <= 5; $i++) <i
+                                                                class="fas fa-star {{ $i <= $contact->rating ? 'text-warning' : 'text-secondary' }}">
+                                                                </i>
+                                                                @endfor
+                                                        </div>
+                                                    </div>
+                                                    <small class="text-muted ms-auto">
+                                                        {{ $contact->created_at->diffForHumans() }}
+                                                    </small>
+                                                </div>
+
+                                                <!-- Tampilkan feedback jika ada -->
+                                                @if($contact->feedback)
+                                                <div class="feedback-content mt-2">
+                                                    <p class="mb-0">{{ $contact->feedback }}</p>
+                                                </div>
+                                                @endif
+                                            </div>
+                                            @endforeach
+
+                                            <!-- Pagination jika diperlukan -->
+                                            @if($contacts->hasPages())
+                                            <div class="mt-3">
+                                                {{ $contacts->links() }}
+                                            </div>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
@@ -482,95 +488,127 @@
             }
         });
 
-        // Services Chart
-        const servicesCtx = document.getElementById('servicesChart').getContext('2d');
-        const servicesChart = new Chart(servicesCtx, {
-            type: 'doughnut',
-            data: {
-                labels: json($popularServices > pluck('nama_layanan')),
-                datasets: [{
-                    data: json($popularServices > pluck('count')),
-                    backgroundColor: [
-                        'rgba(13, 110, 253, 0.7)',
-                        'rgba(25, 135, 84, 0.7)',
-                        'rgba(255, 193, 7, 0.7)',
-                        'rgba(220, 53, 69, 0.7)',
-                        'rgba(111, 66, 193, 0.7)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }
-        });
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('sweet_alert')) {
+            const message = atob(urlParams.get('sweet_alert')); // Decode base64
 
-        // Customer Type Chart
-        const customerTypeCtx = document.getElementById('customerTypeChart').getContext('2d');
-        const customerTypeChart = new Chart(customerTypeCtx, {
-            type: 'pie',
-            data: {
-                labels: ['Booking Customers', 'Walk-in Customers'],
-                datasets: [{
-                    data: [json($bookingCustomers), json($nonBookingCustomers)],
-                    backgroundColor: [
-                        'rgba(255, 193, 7, 0.7)',
-                        'rgba(108, 117, 125, 0.7)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }
-        });
+            Swal.fire({
+                title: 'Berhasil!',
+                text: message,
+                icon: 'success',
+                customClass: {
+                    container: 'custom-swal-container',
+                    popup: 'custom-swal-popup',
+                    title: 'custom-swal-title',
+                    content: 'custom-swal-content',
+                    confirmButton: 'custom-swal-confirm'
+                },
+                buttonsStyling: false
+            });
 
-        // Expense Breakdown Chart
-        const expenseBreakdownCtx = document.getElementById('expenseBreakdownChart').getContext('2d');
-        const expenseBreakdownChart = new Chart(expenseBreakdownCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
-                    'Dec'
+            // Clean up URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    });
+
+    // Services Chart
+    const servicesCtx = document.getElementById('servicesChart').getContext('2d');
+    const servicesChart = new Chart(servicesCtx, {
+        type: 'doughnut',
+        data: {
+            labels: json($popularServices > pluck('nama_layanan')),
+            datasets: [{
+                data: json($popularServices > pluck('count')),
+                backgroundColor: [
+                    'rgba(13, 110, 253, 0.7)',
+                    'rgba(25, 135, 84, 0.7)',
+                    'rgba(255, 193, 7, 0.7)',
+                    'rgba(220, 53, 69, 0.7)',
+                    'rgba(111, 66, 193, 0.7)'
                 ],
-                datasets: [{
-                        label: 'Store Expenses',
-                        data: json($storeExpenses),
-                        backgroundColor: 'rgba(13, 110, 253, 0.5)'
-                    },
-                    {
-                        label: 'Personal Expenses',
-                        data: json($personalExpenses),
-                        backgroundColor: 'rgba(255, 193, 7, 0.5)'
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        stacked: true
-                    },
-                    x: {
-                        stacked: true
-                    }
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom'
                 }
             }
-        });
+        }
+    });
+
+    // Customer Type Chart
+    const customerTypeCtx = document.getElementById('customerTypeChart').getContext('2d');
+    const customerTypeChart = new Chart(customerTypeCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Booking Customers', 'Walk-in Customers'],
+            datasets: [{
+                data: [json($bookingCustomers), json($nonBookingCustomers)],
+                backgroundColor: [
+                    'rgba(255, 193, 7, 0.7)',
+                    'rgba(108, 117, 125, 0.7)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+
+    // Expense Breakdown Chart
+    const expenseBreakdownCtx = document.getElementById('expenseBreakdownChart').getContext('2d');
+    const expenseBreakdownChart = new Chart(expenseBreakdownCtx, {
+    type: 'bar',
+    data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
+            'Dec'
+        ],
+        datasets: [{
+                label: 'Store Expenses',
+                data: json($storeExpenses),
+                backgroundColor: 'rgba(13, 110, 253, 0.5)'
+            },
+            {
+                label: 'Personal Expenses',
+                data: json($personalExpenses),
+                backgroundColor: 'rgba(255, 193, 7, 0.5)'
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: {
+                beginAtZero: true,
+                stacked: true
+            },
+            x: {
+                stacked: true
+            }
+        }
+    }
+    });
     });
     </script>
+    @if(session()->has('success'))
+    <script>
+    console.log("Success message exists: {{ session('success') }}");
+    </script>
+    @else
+    <script>
+    console.log("No success message in session");
+    </script>
+    @endif
 </x-admin.admin-layout>

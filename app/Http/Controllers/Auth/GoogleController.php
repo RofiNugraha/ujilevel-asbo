@@ -34,22 +34,36 @@ class GoogleController extends Controller
 
             if ($finduser) {
                 Auth::login($finduser);
-                return redirect()->intended('dashboard');
+                
+                // Add success message for SweetAlert
+                $message = 'Login dengan Google berhasil! Selamat datang kembali, ' . $finduser->name;
+                
+                // Redirect berdasarkan usertype
+                if ($finduser->usertype === 'admin') {
+                    return redirect()->route('admin.dashboard', ['sweet_alert' => base64_encode($message)]);
+                }
+                return redirect()->intended(route('dashboard', ['sweet_alert' => base64_encode($message)]));
             } else {
                 $newUser = User::create([
                     'name' => $user->name,
                     'email' => $user->email,
-                    'password' => bcrypt(rand(100000, 999999)), // Generate random password
+                    'password' => bcrypt(rand(100000, 999999)),
                     'usertype' => 'user',
                     'image' => $user->avatar,
                     'nama_lengkap' => $user->name,
                 ]);
 
                 Auth::login($newUser);
+                
+                // Add success message for SweetAlert
+                session()->flash('success', 'Pendaftaran dengan Google berhasil! Selamat datang, ' . $newUser->name);
+                
                 return redirect()->intended('dashboard');
             }
         } catch (Exception $e) {
-            return redirect('login')->withErrors('Google authentication failed. Please try again.');
+            // Add error message for SweetAlert
+            session()->flash('error', 'Autentikasi Google gagal. Silakan coba lagi.');
+            return redirect('login');
         }
     }
 }

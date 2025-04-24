@@ -21,7 +21,7 @@ class DashboardController extends Controller
         
         try {
             // Get contact data
-            $contacts = Contact::with('user:id,name,image,email')->get();
+            $contacts = Contact::with('user:id,name,image,email')->latest()->paginate(10);
             
             // Financial metrics
             $totalIncome = (float) Kasir::where('status_transaksi', 'success')->sum('total_harga');
@@ -94,6 +94,7 @@ class DashboardController extends Controller
                 'monthlyProfit' => array_fill(0, 12, 0),
                 'storeExpenses' => array_fill(0, 12, 0),
                 'personalExpenses' => array_fill(0, 12, 0),
+                'contacts',
             ]);
         }
     }
