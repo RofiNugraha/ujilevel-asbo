@@ -356,8 +356,8 @@
                                         <span class="fw-bold">{{ $bookingCustomers }}</span>
                                     </div>
                                     <div class="progress mb-3" style="height: 8px;">
-                                        <div class="progress-bar bg-warning" role="progressbar"
-                                            style="width: {{ ($bookingCustomers / ($bookingCustomers + $nonBookingCustomers)) * 100 }}%">
+                                        <div class="progress-bar bg-warning"
+                                            style="width: {{ ($bookingCustomers + $nonBookingCustomers) > 0 ? ($bookingCustomers / ($bookingCustomers + $nonBookingCustomers) * 100) : 0 }}%">
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-between mb-2">
@@ -365,8 +365,8 @@
                                         <span class="fw-bold">{{ $nonBookingCustomers }}</span>
                                     </div>
                                     <div class="progress" style="height: 8px;">
-                                        <div class="progress-bar bg-secondary" role="progressbar"
-                                            style="width: {{ ($nonBookingCustomers / ($bookingCustomers + $nonBookingCustomers)) * 100 }}%">
+                                        <div class="progress-bar bg-secondary"
+                                            style="width: {{ ($bookingCustomers + $nonBookingCustomers) > 0 ? ($nonBookingCustomers / ($bookingCustomers + $nonBookingCustomers) * 100) : 0 }}%">
                                         </div>
                                     </div>
                                 </div>
