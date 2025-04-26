@@ -9,8 +9,10 @@
     <meta name="author" content="" />
     <title>Dashboard - SB Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="{{ asset('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -214,6 +216,13 @@ body {
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-concierge-bell"></i>
                                 <span class="ms-3">pengeluaran</span>
+                            </div>
+                        </a>
+                        <a class="nav-link text-warning mt-2 {{ request()->routeIs('admin.riwayat.index') ? 'active' : '' }}"
+                            href="{{ route('admin.riwayat.index') }}">
+                            <div class="sb-nav-link-icon">
+                                <i class="fas fa-concierge-bell"></i>
+                                <span class="ms-3">Riwayat Customer</span>
                             </div>
                         </a>
                     </div>

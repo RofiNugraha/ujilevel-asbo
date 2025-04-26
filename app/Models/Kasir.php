@@ -34,6 +34,8 @@ class Kasir extends Model
         'layanan_id' => 'array',
     ];
 
+    protected $appends = ['customer_type'];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -101,5 +103,18 @@ class Kasir extends Model
             return 'booking';
         }
         return 'non-booking';
+    }
+
+    public function getLayananDetailsAttribute()
+    {
+        $layananIds = $this->layanan_id ?? [];
+        
+        if (isset($layananIds[0]) && is_array($layananIds[0])) {
+            return $layananIds;
+        }
+        
+        return Layanan::whereIn('id', $layananIds)
+            ->get(['id', 'nama_layanan', 'harga'])
+            ->toArray();
     }
 }

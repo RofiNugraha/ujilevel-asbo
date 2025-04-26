@@ -24,17 +24,21 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
+        try {
+            $request->authenticate();
+            $request->session()->regenerate();
 
-        $request->session()->regenerate();
+            $user = Auth::user(); 
+            
+            if ($user && $user->usertype === 'admin') {
+                return redirect()->intended(route('admin.dashboard', ['show_welcome' => true]));
+            }
 
-        $user = Auth::user(); 
-
-        if ($user && $user->usertype === 'admin') {
-            return redirect()->intended(route('admin.dashboard'));
+            return redirect()->intended(route('dashboard', ['show_welcome' => true]));
+        } catch (\Exception $e) {
+            session()->flash('error', 'Login gagal! Periksa email dan password Anda.');
+            return back()->withInput($request->only('email'));
         }
-
-        return redirect()->intended(route('dashboard'));
     }
 
     /**
@@ -47,6 +51,9 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
+
+        // Add success message for SweetAlert
+        session()->flash('success', 'Anda telah berhasil logout.');
 
         return redirect('/login');
     }

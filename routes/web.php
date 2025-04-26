@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\Admin\AdminPaymentKasirController;
 use App\Http\Controllers\Admin\AdminPemasukanController;
 use App\Http\Controllers\Admin\AdminPengeluaranController;
+use App\Http\Controllers\Admin\AdminRiwayatController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CartController;
@@ -192,6 +193,10 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(
     Route::put('/admin/pengeluaran/{id}', [AdminPengeluaranController::class, 'update'])->name('admin.pengeluaran.update');
     Route::delete('/admin/pengeluaran/{id}', [AdminPengeluaranController::class, 'destroy'])->name('admin.pengeluaran.destroy');
     Route::get('/admin/pengeluaran/export', [AdminPengeluaranController::class, 'export'])->name('admin.pengeluaran.export');
+
+    // CRUD riwayat
+    Route::get('/admin/riwayat', [AdminRiwayatController::class, 'index'])->name('admin.riwayat.index');
+    Route::get('/transaksi/{id}', [AdminRiwayatController::class, 'show'])->name('admin.riwayat.show');
 });
 
 require __DIR__.'/auth.php';

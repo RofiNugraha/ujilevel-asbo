@@ -1,4 +1,5 @@
 <x-landing-layout>
+    @include('partials.sweetalert')
     <style>
     .image-container {
         height: 550px;
@@ -166,4 +167,30 @@
                 onclick="scrollRight()">❯</button>
         </div>
     </div>
+
+    <!-- In your dashboard view -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check if the URL has the show_welcome parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('show_welcome')) {
+            Swal.fire({
+                title: 'Berhasil!',
+                text: 'Login berhasil! Selamat datang kembali.',
+                icon: 'success',
+                customClass: {
+                    container: 'custom-swal-container',
+                    popup: 'custom-swal-popup',
+                    title: 'custom-swal-title',
+                    content: 'custom-swal-content',
+                    confirmButton: 'custom-swal-confirm'
+                },
+                buttonsStyling: false
+            });
+
+            // Clean up the URL by removing the parameter (optional)
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    });
+    </script>
 </x-landing-layout>

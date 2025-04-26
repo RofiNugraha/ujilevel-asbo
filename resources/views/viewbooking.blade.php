@@ -42,10 +42,12 @@
                         <td class="px-4 py-2 font-bold text-gray-700">Status</td>
                         <td class="px-4 py-2 text-gray-600">{{ $booking->status }}</td>
                     </tr>
-                    <tr>
-                        <td class="px-4 py-2 font-bold text-gray-700">Total Harga</td>
-                        <td class="px-4 py-2 text-gray-600">Rp
-                            {{ number_format(optional($booking->checkout)->total_harga, 2, ',', '.') }}</td>
+                    <tr class="border-b hover:bg-blue-50">
+                        <td class="py-3 font-semibold">Total Harga</td>
+                        <td class="font-bold text-green-600">Rp
+                            <span
+                                x-text="selectedBooking.checkout ? Number(selectedBooking.checkout.total_harga).toLocaleString('id-ID', {minimumFractionDigits: 2}) : '0'"></span>
+                        </td>
                     </tr>
                 </tbody>
             </table>

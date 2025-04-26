@@ -1,5 +1,7 @@
 <x-admin.admin-layout>
+    @include('partials.sweetalert')
     <style>
+    /* CSS tetap sama */
     .dashboard-card {
         border-radius: 12px;
         transition: transform 0.3s;
@@ -86,6 +88,10 @@
         font-size: 0.8rem;
         margin-top: 5px;
     }
+
+    .rating {
+        font-size: 0.9rem;
+    }
     </style>
 
     <div id="layoutSidenav">
@@ -95,25 +101,25 @@
                     <!-- Header -->
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <div>
-                            <h1 class="fw-bold mb-1">Dashboard Overview</h1>
-                            <p class="text-muted">Welcome back, Administrator</p>
+                            <h1 class="fw-bold mb-1">Ikhtisar Dashboard</h1>
+                            <p class="text-muted">Selamat datang kembali, Administrator</p>
                         </div>
                         <div class="filter-container d-flex align-items-center">
                             <div class="me-3">
                                 <i class="fas fa-calendar-alt text-primary"></i>
                             </div>
                             <div>
-                                <h6 class="mb-0">Period Filter</h6>
+                                <h6 class="mb-0">Filter Periode</h6>
                                 <div class="dropdown">
                                     <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button"
                                         id="periodDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                         {{ now()->format('d M Y') }} - {{ now()->addDays(30)->format('d M Y') }}
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="periodDropdown">
-                                        <li><a class="dropdown-item" href="#">Last 7 Days</a></li>
-                                        <li><a class="dropdown-item" href="#">Last 30 Days</a></li>
-                                        <li><a class="dropdown-item" href="#">This Month</a></li>
-                                        <li><a class="dropdown-item" href="#">Custom Range</a></li>
+                                        <li><a class="dropdown-item" href="#">7 Hari Terakhir</a></li>
+                                        <li><a class="dropdown-item" href="#">30 Hari Terakhir</a></li>
+                                        <li><a class="dropdown-item" href="#">Bulan Ini</a></li>
+                                        <li><a class="dropdown-item" href="#">Rentang Kustom</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -132,9 +138,9 @@
                                         </div>
                                         <h3 class="stat-value text-profit">Rp
                                             {{ number_format($netProfit, 0, ',', '.') }}</h3>
-                                        <p class="stat-label mb-0">Total Net Profit</p>
+                                        <p class="stat-label mb-0">Total Laba Bersih</p>
                                         <div class="stat-change text-success">
-                                            <i class="fas fa-arrow-up me-1"></i>8.2% from last period
+                                            <i class="fas fa-arrow-up me-1"></i>8.2% dari periode sebelumnya
                                         </div>
                                     </div>
                                     <div>
@@ -153,9 +159,9 @@
                                             <i class="fas fa-dollar-sign fa-2x text-primary"></i>
                                         </div>
                                         <h3 class="stat-value">Rp {{ number_format($totalIncome, 0, ',', '.') }}</h3>
-                                        <p class="stat-label mb-0">Total Income</p>
+                                        <p class="stat-label mb-0">Total Pendapatan</p>
                                         <div class="stat-change text-success">
-                                            <i class="fas fa-arrow-up me-1"></i>12.5% from last period
+                                            <i class="fas fa-arrow-up me-1"></i>12.5% dari periode sebelumnya
                                         </div>
                                     </div>
                                     <div>
@@ -175,9 +181,9 @@
                                         </div>
                                         <h3 class="stat-value text-expense">Rp
                                             {{ number_format($totalExpense, 0, ',', '.') }}</h3>
-                                        <p class="stat-label mb-0">Total Expenses</p>
+                                        <p class="stat-label mb-0">Total Pengeluaran</p>
                                         <div class="stat-change text-danger">
-                                            <i class="fas fa-arrow-up me-1"></i>5.1% from last period
+                                            <i class="fas fa-arrow-up me-1"></i>5.1% dari periode sebelumnya
                                         </div>
                                     </div>
                                     <div>
@@ -196,9 +202,9 @@
                                     </div>
                                     <div>
                                         <h3 class="stat-value">{{ $bookingCustomers }}</h3>
-                                        <p class="stat-label mb-0">Booking Customers</p>
+                                        <p class="stat-label mb-0">Pelanggan Booking</p>
                                         <div class="stat-change text-success">
-                                            <i class="fas fa-arrow-up me-1"></i>15.3% from last period
+                                            <i class="fas fa-arrow-up me-1"></i>15.3% dari periode sebelumnya
                                         </div>
                                     </div>
                                 </div>
@@ -214,9 +220,9 @@
                                     </div>
                                     <div>
                                         <h3 class="stat-value">{{ $nonBookingCustomers }}</h3>
-                                        <p class="stat-label mb-0">Walk-in Customers</p>
+                                        <p class="stat-label mb-0">Pelanggan Walk-in</p>
                                         <div class="stat-change text-success">
-                                            <i class="fas fa-arrow-up me-1"></i>3.7% from last period
+                                            <i class="fas fa-arrow-up me-1"></i>3.7% dari periode sebelumnya
                                         </div>
                                     </div>
                                 </div>
@@ -232,42 +238,11 @@
                                     </div>
                                     <div>
                                         <h3 class="stat-value">{{ $totalServices }}</h3>
-                                        <p class="stat-label mb-0">Available Services</p>
+                                        <p class="stat-label mb-0">Layanan Tersedia</p>
                                         <div class="stat-change text-success">
-                                            <i class="fas fa-plus me-1"></i>2 new services added
+                                            <i class="fas fa-plus me-1"></i>2 layanan baru ditambahkan
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Charts Row -->
-                    <div class="row mb-4">
-                        <!-- Income vs Expense Chart -->
-                        <div class="col-lg-8">
-                            <div class="dashboard-card p-4">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h5 class="fw-bold mb-0">Income vs Expense Analysis</h5>
-                                    <div class="btn-group">
-                                        <button type="button"
-                                            class="btn btn-sm btn-outline-secondary active">Monthly</button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Weekly</button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Daily</button>
-                                    </div>
-                                </div>
-                                <div class="chart-container">
-                                    <canvas id="incomeExpenseChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Services Distribution -->
-                        <div class="col-lg-4">
-                            <div class="dashboard-card p-4">
-                                <h5 class="fw-bold mb-3">Popular Services</h5>
-                                <div class="chart-container">
-                                    <canvas id="servicesChart"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -279,18 +254,18 @@
                         <div class="col-lg-8">
                             <div class="dashboard-card p-4">
                                 <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h5 class="fw-bold mb-0">Recent Transactions</h5>
-                                    <a href="#" class="btn btn-sm btn-outline-primary">View All</a>
+                                    <h5 class="fw-bold mb-0">Transaksi Terbaru</h5>
+                                    <a href="#" class="btn btn-sm btn-outline-primary">Lihat Semua</a>
                                 </div>
                                 <div class="table-container">
                                     <table class="table">
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Customer</th>
-                                                <th>Services</th>
-                                                <th>Date</th>
-                                                <th>Amount</th>
+                                                <th>Pelanggan</th>
+                                                <th>Layanan</th>
+                                                <th>Tanggal</th>
+                                                <th>Jumlah</th>
                                                 <th>Status</th>
                                             </tr>
                                         </thead>
@@ -302,7 +277,7 @@
                                                     @if($transaction->user_id)
                                                     {{ $transaction->user->name }}
                                                     @else
-                                                    Walk-in Customer
+                                                    Pelanggan Walk-in
                                                     @endif
                                                 </td>
                                                 <td>
@@ -328,11 +303,11 @@
                                                 <td>Rp {{ number_format($transaction->total_harga, 0, ',', '.') }}</td>
                                                 <td>
                                                     @if($transaction->status_transaksi == 'success')
-                                                    <span class="badge bg-success">Success</span>
+                                                    <span class="badge bg-success">Berhasil</span>
                                                     @elseif($transaction->status_transaksi == 'pending')
                                                     <span class="badge bg-warning">Pending</span>
                                                     @else
-                                                    <span class="badge bg-danger">Failed</span>
+                                                    <span class="badge bg-danger">Gagal</span>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -346,27 +321,24 @@
                         <!-- Customer Type Distribution -->
                         <div class="col-lg-4">
                             <div class="dashboard-card p-4">
-                                <h5 class="fw-bold mb-3">Customer Distribution</h5>
-                                <div class="chart-container">
-                                    <canvas id="customerTypeChart"></canvas>
-                                </div>
+                                <h5 class="fw-bold mb-3">Distribusi Pelanggan</h5>
                                 <div class="mt-3">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <span>Booking Customers</span>
+                                        <span>Pelanggan Booking</span>
                                         <span class="fw-bold">{{ $bookingCustomers }}</span>
                                     </div>
                                     <div class="progress mb-3" style="height: 8px;">
-                                        <div class="progress-bar bg-warning" role="progressbar"
-                                            style="width: {{ ($bookingCustomers / ($bookingCustomers + $nonBookingCustomers)) * 100 }}%">
+                                        <div class="progress-bar bg-warning"
+                                            style="width: {{ ($bookingCustomers + $nonBookingCustomers) > 0 ? ($bookingCustomers / ($bookingCustomers + $nonBookingCustomers) * 100) : 0 }}%">
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-between mb-2">
-                                        <span>Walk-in Customers</span>
+                                        <span>Pelanggan Walk-in</span>
                                         <span class="fw-bold">{{ $nonBookingCustomers }}</span>
                                     </div>
                                     <div class="progress" style="height: 8px;">
-                                        <div class="progress-bar bg-secondary" role="progressbar"
-                                            style="width: {{ ($nonBookingCustomers / ($bookingCustomers + $nonBookingCustomers)) * 100 }}%">
+                                        <div class="progress-bar bg-secondary"
+                                            style="width: {{ ($bookingCustomers + $nonBookingCustomers) > 0 ? ($nonBookingCustomers / ($bookingCustomers + $nonBookingCustomers) * 100) : 0 }}%">
                                         </div>
                                     </div>
                                 </div>
@@ -379,29 +351,64 @@
                         <div class="col-12">
                             <div class="dashboard-card p-4">
                                 <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h5 class="fw-bold mb-0">Expense Breakdown</h5>
+                                    <h5 class="fw-bold mb-0">Umpan Balik</h5>
                                     <div class="btn-group">
                                         <button type="button"
-                                            class="btn btn-sm btn-outline-secondary active">All</button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Store</button>
+                                            class="btn btn-sm btn-outline-secondary active">Semua</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">Toko</button>
                                         <button type="button" class="btn btn-sm btn-outline-secondary">Personal</button>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-8">
-                                        <div class="chart-container">
-                                            <canvas id="expenseBreakdownChart"></canvas>
+                                        <!-- Tampilkan daftar feedback -->
+                                        <div class="feedback-list">
+                                            @foreach($contacts as $contact)
+                                            <div class="feedback-item mb-4 p-3 border rounded">
+                                                <div class="d-flex align-items-center mb-2">
+                                                    <div>
+                                                        <h6 class="mb-0 fw-bold">
+                                                            {{ $contact->user ? $contact->user->name : 'Anonim' }}
+                                                        </h6>
+                                                        <!-- Tampilkan rating dalam bentuk bintang -->
+                                                        <div class="rating">
+                                                            @for($i = 1; $i <= 5; $i++) <i
+                                                                class="fas fa-star {{ $i <= $contact->rating ? 'text-warning' : 'text-secondary' }}">
+                                                                </i>
+                                                                @endfor
+                                                        </div>
+                                                    </div>
+                                                    <small class="text-muted ms-auto">
+                                                        {{ $contact->created_at->diffForHumans() }}
+                                                    </small>
+                                                </div>
+
+                                                <!-- Tampilkan feedback jika ada -->
+                                                @if($contact->feedback)
+                                                <div class="feedback-content mt-2">
+                                                    <p class="mb-0">{{ $contact->feedback }}</p>
+                                                </div>
+                                                @endif
+                                            </div>
+                                            @endforeach
+
+                                            <!-- Pagination jika diperlukan -->
+                                            @if($contacts->hasPages())
+                                            <div class="mt-3">
+                                                {{ $contacts->links() }}
+                                            </div>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
-                                        <h6 class="fw-bold mb-3">Recent Expenses</h6>
+                                        <h6 class="fw-bold mb-3">Pengeluaran Terbaru</h6>
                                         <div class="table-container">
                                             <table class="table table-sm">
                                                 <thead>
                                                     <tr>
-                                                        <th>Name</th>
-                                                        <th>Category</th>
-                                                        <th>Amount</th>
+                                                        <th>Nama</th>
+                                                        <th>Kategori</th>
+                                                        <th>Jumlah</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -427,7 +434,6 @@
         </div>
     </div>
 
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -436,25 +442,25 @@
         const incomeExpenseChart = new Chart(incomeExpenseCtx, {
             type: 'bar',
             data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
-                    'Dec'
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov',
+                    'Des'
                 ],
                 datasets: [{
-                        label: 'Income',
+                        label: 'Pendapatan',
                         data: json($monthlyIncome),
                         backgroundColor: 'rgba(13, 110, 253, 0.5)',
                         borderColor: 'rgba(13, 110, 253, 1)',
                         borderWidth: 1
                     },
                     {
-                        label: 'Expense',
+                        label: 'Pengeluaran',
                         data: json($monthlyExpense),
                         backgroundColor: 'rgba(220, 53, 69, 0.5)',
                         borderColor: 'rgba(220, 53, 69, 1)',
                         borderWidth: 1
                     },
                     {
-                        label: 'Net Profit',
+                        label: 'Laba Bersih',
                         data: json($monthlyProfit),
                         type: 'line',
                         fill: false,
@@ -482,95 +488,124 @@
             }
         });
 
-        // Services Chart
-        const servicesCtx = document.getElementById('servicesChart').getContext('2d');
-        const servicesChart = new Chart(servicesCtx, {
-            type: 'doughnut',
-            data: {
-                labels: json($popularServices > pluck('nama_layanan')),
-                datasets: [{
-                    data: json($popularServices > pluck('count')),
-                    backgroundColor: [
-                        'rgba(13, 110, 253, 0.7)',
-                        'rgba(25, 135, 84, 0.7)',
-                        'rgba(255, 193, 7, 0.7)',
-                        'rgba(220, 53, 69, 0.7)',
-                        'rgba(111, 66, 193, 0.7)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }
-        });
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('sweet_alert')) {
+            const message = atob(urlParams.get('sweet_alert')); // Decode base64
 
-        // Customer Type Chart
-        const customerTypeCtx = document.getElementById('customerTypeChart').getContext('2d');
-        const customerTypeChart = new Chart(customerTypeCtx, {
-            type: 'pie',
-            data: {
-                labels: ['Booking Customers', 'Walk-in Customers'],
-                datasets: [{
-                    data: [json($bookingCustomers), json($nonBookingCustomers)],
-                    backgroundColor: [
-                        'rgba(255, 193, 7, 0.7)',
-                        'rgba(108, 117, 125, 0.7)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }
-        });
+            Swal.fire({
+                title: 'Berhasil!',
+                text: message,
+                icon: 'success',
+                customClass: {
+                    container: 'custom-swal-container',
+                    popup: 'custom-swal-popup',
+                    title: 'custom-swal-title',
+                    content: 'custom-swal-content',
+                    confirmButton: 'custom-swal-confirm'
+                },
+                buttonsStyling: false
+            });
 
-        // Expense Breakdown Chart
-        const expenseBreakdownCtx = document.getElementById('expenseBreakdownChart').getContext('2d');
-        const expenseBreakdownChart = new Chart(expenseBreakdownCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
-                    'Dec'
+            // Clean up URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    });
+
+    // Services Chart
+    const servicesCtx = document.getElementById('servicesChart').getContext('2d');
+    const servicesChart = new Chart(servicesCtx, {
+        type: 'doughnut',
+        data: {
+            labels: json($popularServices > pluck('nama_layanan')),
+            datasets: [{
+                data: json($popularServices > pluck('count')),
+                backgroundColor: [
+                    'rgba(13, 110, 253, 0.7)',
+                    'rgba(25, 135, 84, 0.7)',
+                    'rgba(255, 193, 7, 0.7)',
+                    'rgba(220, 53, 69, 0.7)',
+                    'rgba(111, 66, 193, 0.7)'
                 ],
-                datasets: [{
-                        label: 'Store Expenses',
-                        data: json($storeExpenses),
-                        backgroundColor: 'rgba(13, 110, 253, 0.5)'
-                    },
-                    {
-                        label: 'Personal Expenses',
-                        data: json($personalExpenses),
-                        backgroundColor: 'rgba(255, 193, 7, 0.5)'
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        stacked: true
-                    },
-                    x: {
-                        stacked: true
-                    }
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom'
                 }
             }
-        });
+        }
+    });
+
+    // Customer Type Chart
+    const customerTypeCtx = document.getElementById('customerTypeChart').getContext('2d');
+    const customerTypeChart = new Chart(customerTypeCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Pelanggan Booking', 'Pelanggan Walk-in'],
+            datasets: [{
+                data: [json($bookingCustomers), json($nonBookingCustomers)],
+                backgroundColor: [
+                    'rgba(255, 193, 7, 0.7)',
+                    'rgba(108, 117, 125, 0.7)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+
+    // Expense Breakdown Chart
+    const expenseBreakdownCtx = document.getElementById('expenseBreakdownChart').getContext('2d');
+    const expenseBreakdownChart = new Chart(expenseBreakdownCtx, {
+    type: 'bar',
+    data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+        datasets: [{
+                label: 'Pengeluaran Toko',
+                data: json($storeExpenses),
+                backgroundColor: 'rgba(13, 110, 253, 0.5)'
+            },
+            {
+                label: 'Pengeluaran Personal',
+                data: json($personalExpenses),
+                backgroundColor: 'rgba(255, 193, 7, 0.5)'
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: {
+                beginAtZero: true,
+                stacked: true
+            },
+            x: {
+                stacked: true
+            }
+        }
+    }
     });
     </script>
+    @if(session()->has('success'))
+    <script>
+    console.log("Pesan sukses ada: {{ session('success') }}");
+    </script>
+    @else
+    <script>
+    console.log("Tidak ada pesan sukses di sesi");
+    </script>
+    @endif
 </x-admin.admin-layout>

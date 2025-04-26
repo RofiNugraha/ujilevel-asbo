@@ -2,13 +2,7 @@
     <main
         class="bg-white bg-opacity-10 backdrop-blur-lg w-full max-w-4xl min-h-screen my-12 mx-auto rounded-3xl shadow-2xl overflow-hidden text-gray-800">
 
-        <!-- Header Profile -->
-        <section
-            class="bg-gradient-to-r from-blue-700 to-indigo-900 text-white p-10 text-center rounded-b-3xl shadow-md">
-            <h2 class="text-4xl font-bold drop-shadow">👤 Profil Saya</h2>
-        </section>
-
-        <div class="max-w-lg mx-auto bg-white rounded-lg shadow-sm overflow-hidden">
+        <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-sm overflow-hidden">
             <!-- Profile Header -->
             <div class="bg-gradient-to-r from-blue-500 to-blue-600 p-6 text-center">
                 <div class="w-24 h-24 mx-auto mb-4 relative">
@@ -34,24 +28,22 @@
                         </div>
                         <h3 class="text-lg font-semibold text-gray-700">Informasi Pribadi</h3>
                     </div>
-                    <table>
+                    <table class="w-full">
                         <tr>
-                            <td><span class="text-gray-500 w-28">Nama Lengkap</span></td>
-                            <td><span
-                                    class="text-gray-800 font-medium">{{ $user->nama_lengkap ?? 'Belum diisi' }}</span>
-                            </td>
+                            <td class="text-gray-500 w-1/4">Nama Lengkap</td>
+                            <td class="text-gray-800 font-medium">{{ $user->nama_lengkap ?? 'Belum diisi' }}</td>
                         </tr>
                         <tr>
-                            <td><span class="text-gray-500 w-28">Nomor HP</span></td>
-                            <td><span class="text-gray-800 font-medium">{{ $user->phone ?? 'Belum diisi' }}</span></td>
+                            <td class="text-gray-500">Nomor HP</td>
+                            <td class="text-gray-800 font-medium">{{ $user->phone ?? 'Belum diisi' }}</td>
                         </tr>
                         <tr>
-                            <td><span class="text-gray-500 w-28">Alamat</span></td>
-                            <td><span class="text-gray-800 font-medium">{{ $user->address ?? 'Belum diisi' }}</span>
-                            </td>
+                            <td class="text-gray-500">Alamat</td>
+                            <td class="text-gray-800 font-medium">{{ $user->address ?? 'Belum diisi' }}</td>
                         </tr>
                     </table>
                 </div>
+                <hr class="border-t border-black my-4">
 
                 <!-- Account Info Section -->
                 <div class="space-y-4">
@@ -68,138 +60,131 @@
                         <h3 class="text-lg font-semibold text-gray-700">Informasi Akun</h3>
                     </div>
 
-                    <table>
+                    <table class="w-full">
                         <tr>
-                            <td><span class="text-gray-500 w-28">Username</span></td>
-                            <td><span class="text-gray-800 font-medium">{{ $user->name }}</span>
-                            </td>
+                            <td class="text-gray-500 w-1/4">Username</td>
+                            <td class="text-gray-800 font-medium">{{ $user->name }}</td>
                         </tr>
                         <tr>
-                            <td><span class="text-gray-500 w-28">Email</span></td>
-                            <td><span class="text-gray-800 font-medium">{{ $user->email }}</span></td>
+                            <td class="text-gray-500">Email</td>
+                            <td class="text-gray-800 font-medium">{{ $user->email }}</td>
                         </tr>
                         <tr>
-                            <td><span class="text-gray-500 w-28">Tipe Akun</span></td>
-                            <td><span class="text-gray-800 font-medium">{{ $user->usertype }}</span>
-                            </td>
+                            <td class="text-gray-500">Tipe Akun</td>
+                            <td class="text-gray-800 font-medium">{{ $user->usertype }}</td>
                         </tr>
                     </table>
                 </div>
             </div>
-        </div>
+            <hr class="border-t border-black my-4 mx-6">
+            <section class="p-6" x-data="{ selectedBooking: null }">
+                <h3 class="text-xl font-semibold text-gray-700 mb-4"><i class="fas fa-calendar-check"></i> Pesanan Anda</h3>
 
-        <hr class="border-t border-gray-300 my-4">
+                @forelse($bookings as $booking)
+                <div
+                    class="bg-white rounded-xl p-4 mb-4 shadow-md hover:shadow-lg transition flex justify-between items-center">
+                    <div>
+                        <p class="text-gray-800 font-medium">Nama: <span class="font-semibold">{{ $user->name }}</span>
+                        </p>
+                        <p class="text-gray-800 font-medium">Layanan:
+                            @foreach($booking->layanans as $layanan)
+                            <span
+                                class="font-semibold text-blue-700">{{ $layanan->nama_layanan }}</span>@if(!$loop->last),
+                            @endif
+                            @endforeach
+                        </p>
+                        <p class="text-gray-800 font-medium">Jam: <span
+                                class="font-semibold">{{ $booking->jam_booking }}</span></p>
+                    </div>
+                    <form id="cancel-booking-form" method="POST"
+                        action="{{ route('bookings.cancel', ['id' => $booking->id]) }}">
+                        @csrf
+                        <button type="submit" onclick="return confirm('Yakin ingin membatalkan pesanan ini?')"
+                            class="bg-red-600 text-white px-4 py-2 rounded-xl hover:bg-red-700 transition">
+                            Batalkan Pesanan
+                        </button>
+                    </form>
+                    @if(session('success'))
+                    <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
+                        {{ session('success') }}
+                    </div>
+                    @endif
+                    @if(session('error'))
+                    <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+                        {{ session('error') }}
+                    </div>
+                    @endif
 
-        <!-- Booking Details -->
-        <section class="p-6" x-data="{ selectedBooking: null }">
-            <h3 class="text-xl font-semibold text-gray-700 mb-4">📅 Pesanan Anda</h3>
-
-            @forelse($bookings as $booking)
-            <div
-                class="bg-white rounded-xl p-4 mb-4 shadow-md hover:shadow-lg transition flex justify-between items-center">
-                <div>
-                    <p class="text-gray-800 font-medium">Nama: <span class="font-semibold">{{ $user->name }}</span></p>
-                    <p class="text-gray-800 font-medium">Layanan:
-                        @foreach($booking->layanans as $layanan)
-                        <span class="font-semibold text-blue-700">{{ $layanan->nama_layanan }}</span>@if(!$loop->last),
-                        @endif
-                        @endforeach
-                    </p>
-                    <p class="text-gray-800 font-medium">Jam: <span
-                            class="font-semibold">{{ $booking->jam_booking }}</span></p>
+                    <button @click='selectedBooking = {{ json_encode($booking) }}'
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition">
+                        Lihat
+                    </button>
                 </div>
-                <form id="cancel-booking-form" method="POST"
-                    action="{{ route('bookings.cancel', ['id' => $booking->id]) }}">
+                @empty
+                <p class="text-gray-500 italic">Belum ada booking.</p>
+                @endforelse
+
+                <!-- Modal Detail -->
+                <div x-show="selectedBooking" x-cloak
+                    class="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center p-4">
+                    <div x-transition
+                        class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full p-8 relative overflow-hidden text-gray-800">
+                        <button @click='selectedBooking = null'
+                            class="absolute top-4 right-4 bg-red-600 text-white w-8 h-8 rounded-full text-xl leading-none hover:bg-red-700 transition">
+                            ×
+                        </button>
+                        <h2 class="text-3xl font-bold text-center mb-6 text-blue-800">Detail Booking</h2>
+                        <table class="w-full text-left">
+                            <tbody>
+                                <tr class="border-b hover:bg-blue-50">
+                                    <td class="py-3 font-semibold w-40">Nama</td>
+                                    <td x-text="selectedBooking.user.name"></td>
+                                </tr>
+                                <tr class="border-b hover:bg-blue-50">
+                                    <td class="py-3 font-semibold">ID Booking</td>
+                                    <td x-text="selectedBooking.id"></td>
+                                </tr>
+                                <tr class="border-b hover:bg-blue-50">
+                                    <td class="py-3 font-semibold">Layanan</td>
+                                    <td>
+                                        <template x-for="layanan in selectedBooking.layanans">
+                                            <span
+                                                class="inline-block mr-2 px-2 py-1 bg-blue-100 text-blue-700 rounded text-sm"
+                                                x-text="layanan.nama_layanan + ' | '"></span>
+                                        </template>
+                                    </td>
+                                </tr>
+                                <tr class="border-b hover:bg-blue-50">
+                                    <td class="py-3 font-semibold">Jam</td>
+                                    <td x-text="selectedBooking.jam_booking"></td>
+                                </tr>
+                                <tr class="border-b hover:bg-blue-50">
+                                    <td class="py-3 font-semibold">Kursi</td>
+                                    <td x-text="selectedBooking.kursi"></td>
+                                </tr>
+                                <tr class="border-b hover:bg-blue-50">
+                                    <td class="py-3 font-semibold">Status</td>
+                                    <td x-text="selectedBooking.status"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            <hr class="border-t border-black my-4 mx-6">
+            <div class="flex justify-between p-6">
+                <a href="{{ route('editprofil') }}"
+                    class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg shadow font-semibold transition">
+                    <i class="fas fa-user-edit"></i> Edit Profil
+                </a>
+                <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit" onclick="return confirm('Yakin ingin membatalkan pesanan ini?')"
-                        class="bg-red-600 text-white px-4 py-2 rounded-xl hover:bg-red-700 transition">
-                        Batalkan Pesanan
+                    <button type="submit"
+                        class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg shadow font-semibold transition">
+                        <i class="fas fa-sign-out-alt"></i> Keluar
                     </button>
                 </form>
-
-                @if(session('success'))
-                <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
-                    {{ session('success') }}
-                </div>
-                @endif
-                @if(session('error'))
-                <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
-                    {{ session('error') }}
-                </div>
-                @endif
-
-                <button @click='selectedBooking = {{ json_encode($booking) }}'
-                    class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition">
-                    Lihat
-                </button>
             </div>
-            @empty
-            <p class="text-gray-500 italic">Belum ada booking.</p>
-            @endforelse
-
-            <!-- Modal Detail -->
-            <div x-show="selectedBooking" x-cloak
-                class="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center p-4">
-                <div x-transition
-                    class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full p-8 relative overflow-hidden text-gray-800">
-                    <button @click='selectedBooking = null'
-                        class="absolute top-4 right-4 bg-red-600 text-white w-8 h-8 rounded-full text-xl leading-none hover:bg-red-700 transition">
-                        ×
-                    </button>
-                    <h2 class="text-3xl font-bold text-center mb-6 text-blue-800">Detail Booking</h2>
-                    <table class="w-full text-left">
-                        <tbody>
-                            <tr class="border-b hover:bg-blue-50">
-                                <td class="py-3 font-semibold w-40">Nama</td>
-                                <td x-text="selectedBooking.user.name"></td>
-                            </tr>
-                            <tr class="border-b hover:bg-blue-50">
-                                <td class="py-3 font-semibold">ID Booking</td>
-                                <td x-text="selectedBooking.id"></td>
-                            </tr>
-                            <tr class="border-b hover:bg-blue-50">
-                                <td class="py-3 font-semibold">Layanan</td>
-                                <td>
-                                    <template x-for="layanan in selectedBooking.layanans">
-                                        <span
-                                            class="inline-block mr-2 px-2 py-1 bg-blue-100 text-blue-700 rounded text-sm"
-                                            x-text="layanan.nama_layanan + ' | '"></span>
-                                    </template>
-                                </td>
-                            </tr>
-                            <tr class="border-b hover:bg-blue-50">
-                                <td class="py-3 font-semibold">Jam</td>
-                                <td x-text="selectedBooking.jam_booking"></td>
-                            </tr>
-                            <tr class="border-b hover:bg-blue-50">
-                                <td class="py-3 font-semibold">Kursi</td>
-                                <td x-text="selectedBooking.kursi"></td>
-                            </tr>
-                            <tr class="border-b hover:bg-blue-50">
-                                <td class="py-3 font-semibold">Status</td>
-                                <td x-text="selectedBooking.status"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <hr class="border-t border-gray-300 my-4">
-
-        <!-- Action Buttons -->
-        <div class="flex justify-between p-6">
-            <a href="{{ route('editprofil') }}"
-                class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg shadow font-semibold transition">
-                ✏️ Edit Profil
-            </a>
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit"
-                    class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg shadow font-semibold transition">
-                    🔒 Keluar
-                </button>
-            </form>
         </div>
     </main>
 

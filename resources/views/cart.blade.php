@@ -100,12 +100,15 @@
             </div>
 
             <!-- Form Pemesanan - Hanya tampil setelah pembayaran DP -->
-            <div id="booking-section" class="{{ session('dp_paid_now') ? 'block' : 'hidden' }} mt-8 border-t pt-6">
-                <h1 class="text-3xl font-semibold text-center text-gray-800 mb-4">Pengisian Data Pemesanan</h1>
+            <div id="booking-section"
+                class="{{ session('dp_paid_now') ? 'block' : 'hidden' }} mt-10 p-8 bg-white rounded-3xl shadow-2xl max-w-6xl mx-auto border border-gray-200">
+                <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">
+                    <i class="fas fa-calendar-check text-blue-500 mr-2"></i> Pengisian Data Pemesanan
+                </h1>
 
                 @if ($errors->any())
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
-                    <ul>
+                <div class="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded-lg shadow animate-pulse">
+                    <ul class="list-disc ml-5">
                         @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                         @endforeach
@@ -118,30 +121,35 @@
 
                     <!-- Pilihan Tanggal -->
                     <div class="mb-6">
-                        <label for="booking_date" class="block text-sm font-medium text-gray-700 mb-2">Pilih
-                            Tanggal</label>
-                        <input type="date" id="booking_date" name="booking_date"
-                            class="block w-full p-2.5 border-2 border-gray-300 rounded-md" min="{{ date('Y-m-d') }}"
+                        <label for="booking_date" class="block text-sm font-semibold text-gray-700 mb-1">
+                            <i class="fas fa-calendar-day text-green-600 mr-2"></i> Pilih Tanggal
+                        </label>
+                        <input type="date" id="booking_date" name="booking_date" min="{{ date('Y-m-d') }}"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-300 focus:outline-none"
                             required>
                     </div>
 
-                    <!-- Tabel Jam dan Kursi -->
-                    <div class="mb-6">
-                        <h3 class="text-lg font-medium text-gray-700 mb-2">Pilih Jam & Kursi</h3>
+                    <!-- Tabel Jam & Kursi -->
+                    <div class="mb-8 text-center">
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4">
+                            <i class="fas fa-clock text-yellow-500 mr-2"></i> Pilih Jam & Kursi
+                        </h3>
                         <div class="overflow-x-auto">
-                            <table class="min-w-full bg-white border border-gray-200">
-                                <thead>
-                                    <tr>
-                                        <th class="py-2 px-4 border-b">Jam</th>
-                                        <th class="py-2 px-4 border-b">Kursi 1 (Satu)</th>
-                                        <th class="py-2 px-4 border-b">Kursi 2 (Dua)</th>
+                            <table class="min-w-full border border-gray-300 shadow rounded-lg bg-white mx-auto text-sm">
+                                <thead class="bg-gray-100">
+                                    <tr class="text-gray-700 text-center">
+                                        <th class="py-3 px-6 font-medium"><i
+                                                class="fas fa-clock text-blue-600 mr-1"></i>Jam</th>
+                                        <th class="py-3 px-6 font-medium"><i
+                                                class="fas fa-chair text-green-600 mr-1"></i>Kursi 1</th>
+                                        <th class="py-3 px-6 font-medium"><i
+                                                class="fas fa-chair text-purple-600 mr-1"></i>Kursi 2</th>
                                     </tr>
                                 </thead>
-                                <tbody id="booking-slots">
-                                    <!-- Slot waktu akan diisi dinamis -->
+                                <tbody id="booking-slots" class="text-center">
                                     <tr>
-                                        <td colspan="3" class="py-4 text-center text-gray-500">
-                                            Silakan pilih tanggal untuk melihat slot waktu yang tersedia
+                                        <td colspan="3" class="py-5 text-gray-400 italic">
+                                            Pilih tanggal terlebih dahulu untuk melihat slot waktu yang tersedia.
                                         </td>
                                     </tr>
                                 </tbody>
@@ -149,7 +157,7 @@
                         </div>
                     </div>
 
-                    <!-- Input tersembunyi untuk pengiriman formulir -->
+                    <!-- Hidden Inputs -->
                     <input type="hidden" name="kursi" id="selected_kursi" required>
                     <input type="hidden" name="jam_booking" id="selected_jam_booking" required>
 
@@ -161,17 +169,17 @@
 
                     <input type="hidden" name="order_id" id="form_order_id" value="{{ session('order_id') ?? '' }}">
 
-                    <div class="bg-white rounded-3xl shadow-lg w-full max-w-4xl mt-8 p-6">
-                        <div class="flex mt-6 gap-4">
-                            <button type="submit" id="checkout-button"
-                                class="bg-green-500 text-white font-semibold px-6 py-3 rounded-full shadow-md hover:bg-green-600 transition w-full opacity-50 cursor-not-allowed"
-                                disabled>
-                                Lanjutkan ke Checkout
-                            </button>
-                        </div>
+                    <!-- Tombol Submit -->
+                    <div class="mt-8">
+                        <button type="submit" id="checkout-button"
+                            class="w-full bg-gradient-to-r from-green-400 to-green-600 text-white text-lg font-semibold px-6 py-3 rounded-full shadow-lg hover:opacity-90 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                            disabled>
+                            <i class="fas fa-arrow-right-to-bracket mr-2"></i> Lanjutkan ke Checkout
+                        </button>
                     </div>
                 </form>
             </div>
+
             <div class="bg-white rounded-3xl shadow-lg w-full max-w-4xl mt-8 p-6">
                 <div class="flex mt-6 gap-4">
                     <a href="{{ route('booking') }}" class="bg-gray-200 text-gray-700 font-semibold px-6 py-3 rounded-full shadow-md

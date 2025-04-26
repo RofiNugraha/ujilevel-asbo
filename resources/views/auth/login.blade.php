@@ -6,12 +6,47 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com/3.2.0"></script>
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.10.1/sweetalert2.all.min.js"></script>
     <title>Halaman Login Responsif</title>
+    <style>
+    /* Custom SweetAlert styles for white and yellow theme */
+    .custom-swal-container {
+        background-color: rgba(255, 255, 255, 0.9);
+    }
+
+    .custom-swal-popup {
+        background-color: white;
+        border: 2px solid #FFD700;
+        border-radius: 20px;
+    }
+
+    .custom-swal-title {
+        color: #212E80;
+    }
+
+    .custom-swal-content {
+        color: #333;
+    }
+
+    .custom-swal-confirm {
+        background-color: #FFD700 !important;
+        color: #212E80 !important;
+        border-radius: 10px !important;
+        font-weight: bold !important;
+    }
+
+    .custom-swal-cancel {
+        background-color: #f1f1f1 !important;
+        color: #333 !important;
+        border-radius: 10px !important;
+    }
+    </style>
 </head>
 
 <body class="bg-cover bg-center bg-no-repeat h-screen flex items-center justify-center"
     style="background-image: url('{{ asset('images/bgd.jpg') }}'); background-size: cover; background-position: center;">
-    <form method="POST" action="{{ route('login') }}"
+    <form method="POST" action="{{ route('login') }}" id="loginForm"
         class="bg-[#cccccc] rounded-[50px] w-[90%] max-w-[1006px] p-5 md:p-10 flex flex-col md:flex-row items-center justify-between shadow-lg">
         @csrf
         <!-- Laravel directive untuk perlindungan CSRF -->
@@ -23,7 +58,7 @@
             <!-- Input Email -->
             <div class="w-full max-w-md mb-4">
                 <label for="email">Email</label>
-                <input type="email" name="email" placeholder="Masukan Email"
+                <input type="email" name="email" id="email" placeholder="Masukan Email"
                     class="w-full h-12 bg-[#d9d9d9] rounded px-4 text-lg focus:outline-none @error('email') border-red-500 @enderror">
                 @error('email')
                 <span class="text-red-500 text-sm">
@@ -34,8 +69,8 @@
 
             <!-- Input Password -->
             <div class="w-full max-w-md mb-4">
-                <label for="email">Password</label>
-                <input type="password" name="password" placeholder="Masukan Password"
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" placeholder="Masukan Password"
                     class="w-full h-12 bg-[#d9d9d9] rounded px-4 text-lg focus:outline-none @error('password') border-red-500 @enderror">
                 @error('password')
                 <span class="text-red-500 text-sm">
@@ -48,7 +83,8 @@
             </div>
 
             <!-- Tombol Login -->
-            <button type="submit" class="bg-[#212E80] text-white rounded-lg w-32 h-12 text-xl">LOGIN</button>
+            <button type="button" id="loginButton"
+                class="bg-[#212E80] text-white rounded-lg w-32 h-12 text-xl">LOGIN</button>
 
             <div class="flex items-center justify-end mt-4">
                 <a href="{{ route('auth.google') }}"
@@ -72,6 +108,86 @@
             <img class="w-3/4 max-w-xs h-auto object-cover" src="{{ asset('images/Logo.png') }}" alt="Logo">
         </div>
     </form>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Flash message dari Laravel
+        @if(session('success'))
+        Swal.fire({
+            title: 'Berhasil!',
+            text: '{{ session('
+            success ') }}',
+            icon: 'success',
+            customClass: {
+                container: 'custom-swal-container',
+                popup: 'custom-swal-popup',
+                title: 'custom-swal-title',
+                content: 'custom-swal-content',
+                confirmButton: 'custom-swal-confirm'
+            },
+            buttonsStyling: false
+        });
+        @endif
+
+        @if(session('error'))
+        Swal.fire({
+            title: 'Gagal!',
+            text: '{{ session('
+            error ') }}',
+            icon: 'error',
+            customClass: {
+                container: 'custom-swal-container',
+                popup: 'custom-swal-popup',
+                title: 'custom-swal-title',
+                content: 'custom-swal-content',
+                confirmButton: 'custom-swal-confirm'
+            },
+            buttonsStyling: false
+        });
+        @endif
+
+        // Validasi Login
+        document.getElementById('loginButton').addEventListener('click', function() {
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            if (!email || !password) {
+                Swal.fire({
+                    title: 'Perhatian!',
+                    text: 'Email dan password harus diisi.',
+                    icon: 'warning',
+                    customClass: {
+                        container: 'custom-swal-container',
+                        popup: 'custom-swal-popup',
+                        title: 'custom-swal-title',
+                        content: 'custom-swal-content',
+                        confirmButton: 'custom-swal-confirm'
+                    },
+                    buttonsStyling: false
+                });
+            } else {
+                Swal.fire({
+                    title: 'Memproses...',
+                    text: 'Sedang memverifikasi data login Anda',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    },
+                    customClass: {
+                        container: 'custom-swal-container',
+                        popup: 'custom-swal-popup',
+                        title: 'custom-swal-title',
+                        content: 'custom-swal-content'
+                    }
+                });
+
+                // Submit form
+                document.getElementById('loginForm').submit();
+            }
+        });
+    });
+    </script>
+
 </body>
 
 </html>
