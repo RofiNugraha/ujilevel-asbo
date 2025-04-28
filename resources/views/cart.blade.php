@@ -56,7 +56,7 @@
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-4" role="alert">
                 <strong class="font-bold">Profil Tidak Lengkap!</strong>
                 <span class="block sm:inline">Anda perlu melengkapi profil Anda sebelum melanjutkan pemesanan.</span>
-                <a href="{{ route('profile.edit') }}" class="underline font-semibold">Lengkapi profil Anda di sini</a>
+                <a href="{{ route('profil') }}" class="underline font-semibold">Lengkapi profil Anda di sini</a>
             </div>
             @endif
 
@@ -222,10 +222,15 @@
         </div>
     </div>
     @endif
+    <!-- Tambahkan div error khusus -->
+    <div id="payment-error" class="hidden bg-red-100 text-red-700 p-4 mb-4 rounded">
+        <span id="error-message"></span>
+        <button onclick="retryPayment()">Coba Lagi</button>
+    </div>
 
-    <!-- Midtrans Script -->
+    <!-- Untuk mode sandbox, gunakan URL yang benar -->
     <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}">
-    </script>>
+    </script>
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -401,7 +406,7 @@
                             name: name,
                             phone: phone,
                             address: address,
-                            dp: 5000
+                            dp: 10000
                         })
                     })
                     .then(response => {
@@ -418,27 +423,32 @@
                             // Open Midtrans Snap
                             window.snap.pay(data.snap_token, {
                                 onSuccess: function(result) {
+                                    console.log('Payment success:', result);
                                     handlePaymentSuccess(data.order_id);
                                 },
                                 onPending: function(result) {
+                                    console.log('Payment pending:', result);
                                     alert(
                                         'Payment is pending, please complete your payment'
                                     );
-                                    // Tambahkan tombol check status
                                     addCheckStatusButton(data.order_id);
                                     paymentModal.classList.add('hidden');
                                 },
                                 onError: function(result) {
-                                    console.error('Payment error:', result);
-                                    alert('Payment failed: ' + (result.status_message ||
-                                        'Unknown error'));
+                                    console.error('Payment error details:', result);
+                                    let errorMsg = 'Payment failed';
+                                    if (result.status_message) {
+                                        errorMsg += ': ' + result.status_message;
+                                    } else if (result.message) {
+                                        errorMsg += ': ' + result.message;
+                                    }
+                                    alert(errorMsg);
                                     paymentModal.classList.add('hidden');
                                 },
                                 onClose: function() {
                                     console.log(
                                         'Customer closed the popup without finishing payment'
                                     );
-                                    // Jika pengguna menutup popup, beri opsi untuk cek status
                                     if (transactionData) {
                                         addCheckStatusButton(transactionData.order_id);
                                     }

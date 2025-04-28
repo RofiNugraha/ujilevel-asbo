@@ -58,6 +58,6 @@ class UpdateProfileController extends Controller
             'image' => $user->image
         ]);
 
-        return redirect()->route('profil')->with('success', 'Profile updated successfully.');
+        return redirect()->route('dashboard')->with('success', 'Profile updated successfully.');
     }
 }
