@@ -117,7 +117,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store');
     Route::post('/booking/available-slots', [BookingController::class, 'getAvailableSlots'])->name('booking.available-slots');
     Route::get('/booking/available', [BookingController::class, 'getAvailableKursis'])->name('kursi.available');
-    Route::get('/booking', [BookingController::class, 'showCart'])->name('cart');
     Route::post('/checkout', [BookingController::class, 'checkout'])->name('checkout.store');
     Route::get('/booking/available-slots', [BookingController::class, 'getAvailableSlots'])->name('booking.get-available-slots');
     Route::get('/user/check-profile', [BookingController::class, 'checkUserProfile'])->name('user.check-profile');
