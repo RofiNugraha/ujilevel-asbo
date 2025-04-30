@@ -50,7 +50,7 @@ class BookingController extends Controller
         $user = Auth::user();
     
         // Check if user profile is complete
-        if (!$user->name || !$user->email || !$user->phone) {
+        if (!$user->nama_lengkap || !$user->email || !$user->phone) {
             return redirect()->route('profil')
                 ->withErrors(['profil' => 'Please complete your profile before booking.']);
         }
