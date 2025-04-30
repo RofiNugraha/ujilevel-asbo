@@ -128,39 +128,24 @@ body {
             <i class="fas fa-bars m-1"></i>
         </button>
         <div class="container-fluid d-flex justify-content-between">
-            <form class="d-none d-md-inline-block form-inline">
-                <div class="input-group search-container" style="width: 500px;">
-                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" />
-                    <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
-                </div>
-            </form>
             <ul class="navbar-nav ms-auto me-3 me-lg-4 m-2">
-                <li class="nav-item notification">
+                <!-- <li class="nav-item notification">
                     <a class="nav-link text-warning" href="#">
                         <i class="fas fa-bell"></i>
                         <span class="badge">3</span>
                     </a>
-                </li>
-                <li class="nav-item mx-2">
+                </li> -->
+                <!-- <li class="nav-item mx-2">
                     <a class="nav-link text-warning" href="#" id="darkModeToggle">
                         <i class="fas fa-moon"></i>
                     </a>
-                </li>
+                </li> -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-warning profile-container" href="#" id="profileDropdown"
-                        role="button" data-bs-toggle="dropdown">
-                        <span class="me-2">Hallo, Admin</span>
-                        <img src="{{ asset('images/google.png') }}" alt="Profile" class="rounded-circle" width="30"
-                            height="30">
+                    <a class="nav-link text-warning profile-container" href="{{ route('admin.profil.profil') }}">
+                        <span class="me-2">Profil</span>
+                        <!-- <img src="{{ asset('images/google.png') }}" alt="Profile" class="rounded-circle" width="30"
+                            height="30"> -->
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
-                        <li><a class="dropdown-item" href="#">Activity Log</a></li>
-                        <li>
-                            <hr class="dropdown-divider" />
-                        </li>
-                        <li><a class="dropdown-item" href="#">Logout</a></li>
-                    </ul>
                 </li>
             </ul>
         </div>
@@ -199,7 +184,7 @@ body {
                         <a class="nav-link text-warning mt-2 {{ request()->routeIs('admin.layanan.index') ? 'active' : '' }}"
                             href="{{ route('admin.layanan.index') }}">
                             <div class="sb-nav-link-icon">
-                                <i class="fas fa-concierge-bell"></i>
+                                <i class="fas fa-tools"></i>
                                 <span class="ms-3">Layanan</span>
                             </div>
                         </a>
@@ -207,22 +192,22 @@ body {
                         <a class="nav-link text-warning mt-2 {{ request()->routeIs('admin.pemasukan.index') ? 'active' : '' }}"
                             href="{{ route('admin.pemasukan.index') }}">
                             <div class="sb-nav-link-icon">
-                                <i class="fas fa-concierge-bell"></i>
+                                <i class="fas fa-money-bill-wave"></i>
                                 <span class="ms-3">Pemasukan</span>
                             </div>
                         </a>
                         <a class="nav-link text-warning mt-2 {{ request()->routeIs('admin.pengeluaran.index') ? 'active' : '' }}"
                             href="{{ route('admin.pengeluaran.index') }}">
                             <div class="sb-nav-link-icon">
-                                <i class="fas fa-concierge-bell"></i>
+                                <i class="fas fa-money-bill-wave"></i>
                                 <span class="ms-3">pengeluaran</span>
                             </div>
                         </a>
                         <a class="nav-link text-warning mt-2 {{ request()->routeIs('admin.riwayat.index') ? 'active' : '' }}"
                             href="{{ route('admin.riwayat.index') }}">
                             <div class="sb-nav-link-icon">
-                                <i class="fas fa-concierge-bell"></i>
-                                <span class="ms-3">Riwayat Customer</span>
+                                <i class="fas fa-history"></i>
+                                <span class="ms-3">Riwayat</span>
                             </div>
                         </a>
                     </div>

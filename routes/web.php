@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\Admin\AdminPaymentKasirController;
 use App\Http\Controllers\Admin\AdminPemasukanController;
 use App\Http\Controllers\Admin\AdminPengeluaranController;
+use App\Http\Controllers\Admin\AdminProfilController;
 use App\Http\Controllers\Admin\AdminRiwayatController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\BookingController;
@@ -19,6 +20,7 @@ use App\Http\Controllers\LayananController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OverviewController;
+use App\Http\Controllers\RiwayatPesananController;
 use App\Http\Controllers\StatusCheckerController;
 use App\Http\Controllers\UpdateProfileController;
 use Illuminate\Support\Facades\Route;
@@ -86,10 +88,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
         
     // layanan
     Route::get('/booking', [LayananController::class, 'index'])->name('booking');
+    
+    // Riwayat Pesanan
+    Route::get('/riwayat_pesanan', [RiwayatPesananController::class, 'index'])->name('riwayat_pesanan');
+    Route::get('/lihat_riwayat_pesanan/{id}', [RiwayatPesananController::class, 'show'])->name('lihat_riwayat_pesanan');
+    Route::get('/riwayat_pesanan/filter', [RiwayatPesananController::class, 'filter'])->name('riwayat_filter');
     
     // Overview
     Route::get('/overview', [OverviewController::class, 'index'])->name('overview');
@@ -110,6 +116,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/formbook/{layanan_id?}/{produk_id?}', [BookingController::class, 'formBook'])->name('formbook');
     Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store');
     Route::post('/booking/available-slots', [BookingController::class, 'getAvailableSlots'])->name('booking.available-slots');
+    Route::get('/booking/available', [BookingController::class, 'getAvailableKursis'])->name('kursi.available');
+    Route::get('/booking', [BookingController::class, 'showCart'])->name('cart');
     Route::post('/checkout', [BookingController::class, 'checkout'])->name('checkout.store');
     Route::get('/booking/available-slots', [BookingController::class, 'getAvailableSlots'])->name('booking.get-available-slots');
     Route::get('/user/check-profile', [BookingController::class, 'checkUserProfile'])->name('user.check-profile');
@@ -152,7 +160,7 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(
     Route::get('/admin/booking', [AdminBookingController::class, 'index'])->name('admin.booking.index');
     Route::get('/admin/booking/create', [AdminBookingController::class, 'create'])->name('admin.booking.create');
     Route::post('/admin/booking', [AdminBookingController::class, 'store'])->name('admin.booking.store');
-        Route::get('/admin/booking/{id}/edit', [AdminBookingController::class, 'edit'])->name('admin.booking.edit');
+    Route::get('/admin/booking/{id}/edit', [AdminBookingController::class, 'edit'])->name('admin.booking.edit');
     Route::put('/admin/booking/{id}', [AdminBookingController::class, 'update'])->name('admin.booking.update');
     Route::delete('/admin/booking/{booking}', [AdminBookingController::class, 'destroy'])->name('admin.booking.destroy');
     
@@ -193,10 +201,15 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(
     Route::put('/admin/pengeluaran/{id}', [AdminPengeluaranController::class, 'update'])->name('admin.pengeluaran.update');
     Route::delete('/admin/pengeluaran/{id}', [AdminPengeluaranController::class, 'destroy'])->name('admin.pengeluaran.destroy');
     Route::get('/admin/pengeluaran/export', [AdminPengeluaranController::class, 'export'])->name('admin.pengeluaran.export');
-
+    
     // CRUD riwayat
     Route::get('/admin/riwayat', [AdminRiwayatController::class, 'index'])->name('admin.riwayat.index');
     Route::get('/transaksi/{id}', [AdminRiwayatController::class, 'show'])->name('admin.riwayat.show');
+    
+    // CRUD profil admin
+    Route::get('/admin/profil/profil', [AdminProfilController::class, 'index'])->name('admin.profil.profil');
+    Route::get('/admin/profil/{id}/edit', [AdminProfilController::class, 'edit'])->name('admin.profil.edit');
+    Route::put('/admin/profil/{id}', [AdminProfilController::class, 'update'])->name('admin.profil.update');
 });
 
 require __DIR__.'/auth.php';

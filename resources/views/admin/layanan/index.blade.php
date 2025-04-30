@@ -6,15 +6,15 @@
                     <!-- Header -->
                     <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 mt-4">
                         <div>
-                            <h1 class="fw-semibold"><i class="fas fa-concierge-bell text-primary me-2"></i>Layanan</h1>
-                            <p class="text-gray mb-0"><i class="fas fa-handshake text-success me-1"></i>Hallo, selamat
+                            <h1 class="fw-semibold">Layanan</h1>
+                            <p class="text-gray mb-0">Hallo, selamat
                                 datang di halaman Layanan</p>
                         </div>
                     </div>
 
                     <!-- Tombol Tambah -->
                     <a href="{{ route('admin.layanan.create') }}" class="btn btn-primary mb-3">
-                        <i class="fas fa-plus me-1"></i> Tambah Layanan
+                        <i class="fas fa-plus me-1"></i>Tambah Layanan
                     </a>
 
                     <!-- Tabel Layanan -->

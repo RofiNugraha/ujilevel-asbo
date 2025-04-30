@@ -83,7 +83,7 @@
                 class="hidden flex-col space-y-4 text-lg font-medium text-gray-900 lg:hidden bg-white shadow-lg p-4">
                 <a href="{{ route('dashboard') }}" class="block text-gray-700 hover:text-gray-900">Home</a>
                 <a href="{{ route('about') }}" class="block hover:text-gray-900">About</a>
-                <a href="#{{ route('overview') }}" class="block hover:text-gray-900">Overview</a>
+                <a href="{{ route('overview') }}" class="block hover:text-gray-900">Overview</a>
                 <a href="{{ route('booking') }}" class="block hover:text-gray-900">Booking</a>
                 <a href="{{ route('notifikasi') }}">
                     <button class="nav-item relative text-gray-400 hover:text-[gold]">

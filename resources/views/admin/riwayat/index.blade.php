@@ -27,7 +27,6 @@
                                             <th>ID Booking/User</th>
                                             <th>Total Harga</th>
                                             <th>Metode Pembayaran</th>
-                                            <th>Payment Type</th>
                                             <th>Tanggal Transaksi</th>
                                             <th>Aksi</th>
                                         </tr>
@@ -39,7 +38,7 @@
                                             <td>{{ $transaction->id }}</td>
                                             <td>
                                                 @if($transaction->user_id)
-                                                {{ $transaction->user->name }}
+                                                {{ $transaction->user->nama_lengkap }}
                                                 @else
                                                 Non-booking
                                                 @endif
@@ -54,7 +53,6 @@
                                             </td>
                                             <td>Rp {{ number_format($transaction->total_harga, 0, ',', '.') }}</td>
                                             <td>{{ $transaction->metode_pembayaran }}</td>
-                                            <td>{{ $transaction->payment_type ?? '-' }}</td>
                                             <td>{{ $transaction->created_at->format('d/m/Y H:i') }}</td>
                                             <td>
                                                 <a href="{{ route('admin.riwayat.show', $transaction->id) }}"

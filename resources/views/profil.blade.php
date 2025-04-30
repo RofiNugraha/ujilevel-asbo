@@ -78,7 +78,8 @@
             </div>
             <hr class="border-t border-black my-4 mx-6">
             <section class="p-6" x-data="{ selectedBooking: null }">
-                <h3 class="text-xl font-semibold text-gray-700 mb-4"><i class="fas fa-calendar-check"></i> Pesanan Anda</h3>
+                <h3 class="text-xl font-semibold text-gray-700 mb-4"><i class="fas fa-calendar-check"></i> Pesanan Anda
+                </h3>
 
                 @forelse($bookings as $booking)
                 <div
@@ -176,6 +177,10 @@
                 <a href="{{ route('editprofil') }}"
                     class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg shadow font-semibold transition">
                     <i class="fas fa-user-edit"></i> Edit Profil
+                </a>
+                <a href="{{ route('riwayat_pesanan') }}"
+                    class="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded-lg shadow font-semibold transition">Lihat
+                    Riwayat Pesanan
                 </a>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf

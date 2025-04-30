@@ -33,7 +33,7 @@
                                         @foreach($bookings as $item)
                                         <tr>
                                             <td>{{ $no++ }}</td>
-                                            <td>{{ $item->user->name }}</td>
+                                            <td>{{ $item->user->nama_lengkap }}</td>
                                             <td>
                                                 @php
                                                 $layananItems = json_decode($item->layanan_id, true) ?? [];

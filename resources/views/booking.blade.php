@@ -35,7 +35,7 @@
             <p class="mt-6 text-xl text-gray-200">Rasakan layanan potong rambut dan perawatan terbaik untuk penampilan
                 maksimal.</p>
             <div class="mt-8">
-                <a href="#booking"
+                <a href="{{ route('booking') }}"
                     class="inline-flex items-center px-6 py-3 text-lg font-semibold text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
                     <i class="fas fa-calendar-check mr-2"></i>Buat Janji Sekarang
                 </a>

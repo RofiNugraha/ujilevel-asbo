@@ -33,7 +33,7 @@
             </h1>
             <p class="mt-6 text-xl text-gray-200">Rasakan layanan potong rambut dan perawatan terbaik.</p>
             <div class="mt-8">
-                <a href="#booking"
+                <a href="{{ route('booking') }}"
                     class="px-6 py-3 text-lg font-semibold text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
                     <i class="fas fa-calendar-check mr-2"></i>Buat Janji Sekarang
                 </a>
@@ -62,8 +62,8 @@
                         <p class="text-gray-300 mt-2"><i class="fas fa-envelope mr-2"></i>info@barbershop.com</p>
 
                         <h3 class="text-2xl font-bold text-[gold] mt-6">Jam Operasional</h3>
-                        <p class="text-gray-300 mt-2"><i class="fas fa-clock mr-2"></i>Senin - Minggu: 10:00 AM - 9:00
-                            PM</p>
+                        <p class="text-gray-300 mt-2"><i class="fas fa-clock mr-2"></i>Senin - Minggu: 10:00 - 21:00
+                        </p>
                     </div>
 
                     <!-- Contact Form -->

@@ -88,7 +88,7 @@
                                         @endphp
                                         <tr>
                                             <td>{{ $no++ }}</td>
-                                            <td>{{ $item->user->name }}</td>
+                                            <td>{{ $item->user->nama_lengkap }}</td>
                                             <td>
                                                 @foreach($layananItems as $layananItem)
                                                 @php
@@ -128,9 +128,9 @@
                                             </td>
                                             <td>
                                                 @if($status_pembayaran == 'unpaid')
-                                                <span class="badge bg-danger">Unpaid</span>
+                                                <span class="badge bg-danger">Belum di bayar</span>
                                                 @else
-                                                <span class="badge bg-success">Paid</span>
+                                                <span class="badge bg-success">Sudah di bayar</span>
                                                 @endif
                                                 @if($dpPaid)
                                                 <div class="small text-success mt-1">
@@ -200,7 +200,6 @@
                                         <tr class="text-dark">
                                             <th>No.</th>
                                             <th>ID Transaksi</th>
-                                            <th>Nama</th>
                                             <th>Layanan</th>
                                             <th>Status</th>
                                             <th>Pembayaran</th>
@@ -214,7 +213,6 @@
                                         <tr>
                                             <td>{{ $no++ }}</td>
                                             <td>{{ $item->id }}</td>
-                                            <td>{{ $item->customer_name }}</td>
                                             <td>
                                                 @php
                                                 $layananItems = is_array($item->layanan_id)

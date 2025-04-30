@@ -101,10 +101,10 @@
                     <!-- Header -->
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <div>
-                            <h1 class="fw-bold mb-1">Ikhtisar Dashboard</h1>
-                            <p class="text-muted">Selamat datang kembali, Administrator</p>
+                            <h1 class="fw-bold mb-1">Dashboard</h1>
+                            <p class="text-muted">Selamat datang di halaman dashboard</p>
                         </div>
-                        <div class="filter-container d-flex align-items-center">
+                        <!-- <div class="filter-container d-flex align-items-center">
                             <div class="me-3">
                                 <i class="fas fa-calendar-alt text-primary"></i>
                             </div>
@@ -123,7 +123,7 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
 
                     <!-- Financial Summary Cards -->
@@ -220,7 +220,7 @@
                                     </div>
                                     <div>
                                         <h3 class="stat-value">{{ $nonBookingCustomers }}</h3>
-                                        <p class="stat-label mb-0">Pelanggan Walk-in</p>
+                                        <p class="stat-label mb-0">Pelanggan Non-booking</p>
                                         <div class="stat-change text-success">
                                             <i class="fas fa-arrow-up me-1"></i>3.7% dari periode sebelumnya
                                         </div>
@@ -277,7 +277,7 @@
                                                     @if($transaction->user_id)
                                                     {{ $transaction->user->name }}
                                                     @else
-                                                    Pelanggan Walk-in
+                                                    Pelanggan Non-booking
                                                     @endif
                                                 </td>
                                                 <td>
@@ -333,7 +333,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-between mb-2">
-                                        <span>Pelanggan Walk-in</span>
+                                        <span>Pelanggan Non-booking</span>
                                         <span class="fw-bold">{{ $nonBookingCustomers }}</span>
                                     </div>
                                     <div class="progress" style="height: 8px;">
@@ -545,7 +545,7 @@
     const customerTypeChart = new Chart(customerTypeCtx, {
         type: 'pie',
         data: {
-            labels: ['Pelanggan Booking', 'Pelanggan Walk-in'],
+            labels: ['Pelanggan Booking', 'Pelanggan WNon-booking'],
             datasets: [{
                 data: [json($bookingCustomers), json($nonBookingCustomers)],
                 backgroundColor: [
@@ -569,34 +569,34 @@
     // Expense Breakdown Chart
     const expenseBreakdownCtx = document.getElementById('expenseBreakdownChart').getContext('2d');
     const expenseBreakdownChart = new Chart(expenseBreakdownCtx, {
-    type: 'bar',
-    data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
-        datasets: [{
-                label: 'Pengeluaran Toko',
-                data: json($storeExpenses),
-                backgroundColor: 'rgba(13, 110, 253, 0.5)'
-            },
-            {
-                label: 'Pengeluaran Personal',
-                data: json($personalExpenses),
-                backgroundColor: 'rgba(255, 193, 7, 0.5)'
-            }
-        ]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-            y: {
-                beginAtZero: true,
-                stacked: true
-            },
-            x: {
-                stacked: true
+        type: 'bar',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+            datasets: [{
+                    label: 'Pengeluaran Toko',
+                    data: json($storeExpenses),
+                    backgroundColor: 'rgba(13, 110, 253, 0.5)'
+                },
+                {
+                    label: 'Pengeluaran Personal',
+                    data: json($personalExpenses),
+                    backgroundColor: 'rgba(255, 193, 7, 0.5)'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    stacked: true
+                },
+                x: {
+                    stacked: true
+                }
             }
         }
-    }
     });
     </script>
     @if(session()->has('success'))

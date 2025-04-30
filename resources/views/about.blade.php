@@ -35,7 +35,7 @@
                 <p class="mt-6 text-xl text-gray-200"></i>Rasakan layanan potong rambut dan perawatan terbaik.
                 </p>
                 <div class="mt-8">
-                    <a href="#booking"
+                    <a href="{{ route('booking') }}"
                         class="px-6 py-3 text-lg font-semibold text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
                         <i class="fas fa-calendar-check mr-2"></i>Buat Janji Sekarang
                     </a>
@@ -173,7 +173,8 @@
             class="w-full md:w-1/2 max-w-sm md:max-w-md rounded-lg shadow-lg">
         <div class="md:w-1/2 text-center md:text-left">
             <h1 class="text-4xl font-bold text-yellow-500">Sistem Booking Online Asgar</h1>
-            <p class="mt-4 text-lg leading-relaxed">Sistem Booking Online Asgar adalah solusi modern untuk memesan layanan barbershop secara mudah dan praktis.</p>
+            <p class="mt-4 text-lg leading-relaxed">Sistem Booking Online Asgar adalah solusi modern untuk memesan
+                layanan barbershop secara mudah dan praktis.</p>
         </div>
     </main>
 
@@ -184,12 +185,18 @@
             <h1 class="text-4xl font-bold text-yellow-500 text-center mb-8">Jam Operasional</h1>
             <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
                 <ul class="text-lg space-y-2">
-                    <li class="flex justify-between border-b border-gray-700 pb-2"><span>Senin</span> <span>10.00 - 21.00</span></li>
-                    <li class="flex justify-between border-b border-gray-700 pb-2"><span>Selasa</span> <span>10.00 - 21.00</span></li>
-                    <li class="flex justify-between border-b border-gray-700 pb-2"><span>Rabu</span> <span>10.00 - 21.00</span></li>
-                    <li class="flex justify-between border-b border-gray-700 pb-2"><span>Kamis</span> <span>10.00 - 21.00</span></li>
-                    <li class="flex justify-between border-b border-gray-700 pb-2"><span>Jumat</span> <span>10.00 - 21.00</span></li>
-                    <li class="flex justify-between border-b border-gray-700 pb-2"><span>Sabtu</span> <span>10.00 - 22.00</span></li>
+                    <li class="flex justify-between border-b border-gray-700 pb-2"><span>Senin</span> <span>10.00 -
+                            21.00</span></li>
+                    <li class="flex justify-between border-b border-gray-700 pb-2"><span>Selasa</span> <span>10.00 -
+                            21.00</span></li>
+                    <li class="flex justify-between border-b border-gray-700 pb-2"><span>Rabu</span> <span>10.00 -
+                            21.00</span></li>
+                    <li class="flex justify-between border-b border-gray-700 pb-2"><span>Kamis</span> <span>10.00 -
+                            21.00</span></li>
+                    <li class="flex justify-between border-b border-gray-700 pb-2"><span>Jumat</span> <span>10.00 -
+                            21.00</span></li>
+                    <li class="flex justify-between border-b border-gray-700 pb-2"><span>Sabtu</span> <span>10.00 -
+                            22.00</span></li>
                     <li class="flex justify-between"><span class="mr-4">Minggu</span> <span>10.00 - 22.00</span></li>
                 </ul>
             </div>
@@ -202,19 +209,23 @@
             <h1 class="text-4xl font-bold text-yellow-500">Cara Melakukan Booking</h1>
             <ul class="mt-4 space-y-6">
                 <li class="flex items-start space-x-4">
-                    <span class="bg-yellow-500 text-black font-bold w-8 h-8 flex items-center justify-center rounded-full">1</span>
+                    <span
+                        class="bg-yellow-500 text-black font-bold w-8 h-8 flex items-center justify-center rounded-full">1</span>
                     <p>Buka website dan pilih layanan yang Anda inginkan.</p>
                 </li>
                 <li class="flex items-start space-x-4">
-                    <span class="bg-yellow-500 text-black font-bold w-8 h-8 flex items-center justify-center rounded-full">2</span>
+                    <span
+                        class="bg-yellow-500 text-black font-bold w-8 h-8 flex items-center justify-center rounded-full">2</span>
                     <p>Masukkan detail pemesanan dan pilih jadwal yang tersedia.</p>
                 </li>
                 <li class="flex items-start space-x-4">
-                    <span class="bg-yellow-500 text-black font-bold w-8 h-8 flex items-center justify-center rounded-full">3</span>
+                    <span
+                        class="bg-yellow-500 text-black font-bold w-8 h-8 flex items-center justify-center rounded-full">3</span>
                     <p>Konfirmasi pemesanan dan lakukan pembayaran jika diperlukan.</p>
                 </li>
                 <li class="flex items-start space-x-4">
-                    <span class="bg-yellow-500 text-black font-bold w-8 h-8 flex items-center justify-center rounded-full">4</span>
+                    <span
+                        class="bg-yellow-500 text-black font-bold w-8 h-8 flex items-center justify-center rounded-full">4</span>
                     <p>Datang ke lokasi sesuai jadwal dan nikmati layanan terbaik dari kami.</p>
                 </li>
             </ul>
