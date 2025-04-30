@@ -116,7 +116,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/formbook/{layanan_id?}/{produk_id?}', [BookingController::class, 'formBook'])->name('formbook');
     Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store');
     Route::post('/booking/available-slots', [BookingController::class, 'getAvailableSlots'])->name('booking.available-slots');
-    Route::get('/booking/available', [BookingController::class, 'getAvailableKursis'])->name('kursi.available');
     Route::post('/checkout', [BookingController::class, 'checkout'])->name('checkout.store');
     Route::get('/booking/available-slots', [BookingController::class, 'getAvailableSlots'])->name('booking.get-available-slots');
     Route::get('/user/check-profile', [BookingController::class, 'checkUserProfile'])->name('user.check-profile');
