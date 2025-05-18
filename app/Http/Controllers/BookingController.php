@@ -143,4 +143,26 @@ class BookingController extends Controller
 
         return redirect()->route('profil')->with('success', 'Booking dan checkout berhasil!');
     }
+
+    public function showCart()
+    {
+        $user = Auth::user();
+        $cart = Cart::where('user_id', $user->id)->first();
+
+        if (!$cart) {
+            return redirect()->route('cart.empty')->withErrors(['msg' => 'Keranjang Anda kosong.']);
+        }
+
+        $cartItems = $cart->cartItems;
+
+        // Hitung total harga
+        $total = 0;
+        foreach ($cartItems as $item) {
+            if ($item->layanan) {
+                $total += $item->layanan->harga * $item->quantity;
+            }
+        }
+
+        return view('cart', compact('cart', 'cartItems', 'total'));
+    }
 }
