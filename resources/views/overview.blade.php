@@ -17,7 +17,7 @@
     overflow: hidden;
     animation: marquee 20s linear infinite;
     background: linear-gradient(to left, #0e2094, #1a3cb3);
-    color: gold;
+    color: white;
     padding: 10px 20px;
     border-radius: 20px;
     position: absolute;
@@ -63,8 +63,8 @@
     <div class="image-container relative w-full h-screen bg-cover bg-center flex items-center justify-center">
         <div class="container text-center p-8 rounded-lg">
             <h1
-                class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 animate-pulse">
-                </i>Selamat Datang di Barbershop Kami!
+                class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-200 via-white to-gray-300 animate-pulse">
+                Selamat Datang di Barbershop Kami!
             </h1>
             <p class="mt-6 text-xl text-gray-200"></i>Rasakan layanan potong rambut dan perawatan terbaik.
             </p>
@@ -99,7 +99,7 @@
 
 
             <!-- MARQUEE -->
-            <div class="bg-white rounded-[39px] shadow-lg p-4 h-[60px] flex items-center marquee-container">
+            <div class="bg-[#2F2F2F] rounded-[39px] shadow-lg p-4 h-[60px] flex items-center marquee-container">
                 <h1 class="text-lg font-semibold marquee">
                     <i class="fas fa-bullhorn mr-2"></i>Daftar Booking:
                     {{ now()->setTimezone('Asia/Jakarta')->format('l, d F Y') }}
@@ -112,14 +112,14 @@
                     class="card mb-4 shadow-2xl rounded-lg overflow-hidden w-full bg-white transform hover:-translate-y-1 hover:shadow-3xl transition duration-300">
 
                     <!-- HEADER -->
-                    <div class="card-header bg-gray-100 text-[#0e2094] font-bold flex items-center justify-between p-4">
+                    <div class="card-header bg-[#2F2F2F] text-white font-bold flex items-center justify-between p-4">
                         <span><i class="fas fa-table me-1"></i> Lihat Daftar</span>
                         <div class="flex items-center space-x-2">
                             <div class="relative">
                                 <i
                                     class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                                 <input type="text"
-                                    class="pl-10 pr-4 py-2 border border-[#0e2094] rounded focus:outline-none focus:ring-2 focus:ring-[#0e2094]"
+                                    class="pl-10 pr-4 py-2 border border-white rounded focus:outline-none focus:ring-2 focus:ring-white"
                                     placeholder="Cari...">
                             </div>
                         </div>
@@ -129,20 +129,21 @@
                     <div class="card-body p-0">
                         <div class="overflow-x-auto">
                             <table class="min-w-full text-center border-separate border-spacing-0">
-                                <thead class="bg-[gold] text-black">
+                                <thead class="bg-[#2F2F2F] text-black">
                                     <tr>
-                                        <th class="py-4 border-b-2 border-gray-300"><i class="fas fa-hashtag"></i></th>
-                                        <th class="py-4 border-b-2 border-gray-300"><i class="fas fa-user"></i> Nama
+                                        <th class="py-4 text-white"><i class="fas fa-hashtag"></i>No
                                         </th>
-                                        <th class="py-4 border-b-2 border-gray-300"><i class="fas fa-chair"></i> Kursi
+                                        <th class="py-4 text-white"><i class="fas fa-user"></i> Nama
                                         </th>
-                                        <th class="py-4 border-b-2 border-gray-300"><i class="fas fa-clock"></i> Jam
+                                        <th class="py-4 text-white"><i class="fas fa-chair"></i> Kursi
+                                        </th>
+                                        <th class="py-4 text-white"><i class="fas fa-clock"></i> Jam
                                             Booking</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse ($bookings as $booking)
-                                    <tr class="border-b border-gray-300 hover:bg-gray-100 transition duration-200">
+                                    <tr class="border-b transition duration-200">
                                         <td class="p-4">{{ $loop->iteration }}</td>
                                         <td class="p-4">{{ $booking->user ? $booking->user->name : 'Tidak Diketahui' }}
                                         </td>

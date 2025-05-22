@@ -29,8 +29,8 @@
         <div class="image-container relative w-full h-screen bg-cover bg-center flex items-center justify-center">
             <div class="container text-center p-8 rounded-lg">
                 <h1
-                    class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 animate-pulse">
-                    </i>Selamat Datang di Barbershop Kami!
+                    class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-200 via-white to-gray-300 animate-pulse">
+                    Selamat Datang di Barbershop Kami!
                 </h1>
                 <p class="mt-6 text-xl text-gray-200"></i>Rasakan layanan potong rambut dan perawatan terbaik.
                 </p>
@@ -48,45 +48,49 @@
         <img src="{{ asset('images/tempat.jpg') }}" alt="Barbershop"
             class="w-full md:w-1/2 max-w-sm md:max-w-md rounded-lg shadow-lg">
         <div class="md:w-1/2 text-center md:text-left">
-            <h1 class="text-4xl font-bold text-yellow-500">Asgar System Booking Online</h1>
-            <p class="mt-4 text-lg leading-relaxed">Asgar System Booking Online merupakan solusi modern untuk memesan
-                layanan barbershop dengan mudah dan praktis.</p>
+            <h1 class="text-4xl font-bold text-white">Asgar System Booking Online</h1>
+            <p class="mt-4 text-lg leading-relaxed">Asgar System Booking Online adalah sebuah sistem pemesanan daring
+                (online) yang dirancang untuk memudahkan pelanggan dalam melakukan reservasi layanan Asgar, seperti
+                barbershop, salon, atau jasa personal lainnya, secara cepat dan efisien melalui internet. Sistem ini
+                memungkinkan pengguna untuk memilih layanan, melihat ketersediaan waktu, memilih staf, dan melakukan
+                booking tanpa harus datang langsung ke tempat. Dengan tampilan yang ramah pengguna dan fitur notifikasi
+                otomatis, Asgar System Booking Online membantu mengelola jadwal layanan secara lebih teratur, mengurangi
+                antrean, serta meningkatkan kenyamanan pelanggan dan produktivitas usaha.</p>
         </div>
     </main>
 
     <main class="container mx-auto px-6 py-16 text-white flex flex-col items-center space-y-12">
         <div class="text-center w-full md:w-2/3">
-            <h1 class="text-5xl font-extrabold text-yellow-500 text-center mb-8 drop-shadow-lg">Jam Operasi ASBO</h1>
-            <div
-                class="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-xl shadow-xl border border-gray-700 relative">
-                <img src="{{ asset('images/logogold.png') }}" alt="Logo"
+            <h1 class="text-5xl font-extrabold text-white text-center mb-8 drop-shadow-lg">Jam Operasi ASBO</h1>
+            <div class="bg-[#2F2F2F] p-8 rounded-xl shadow-xl relative">
+                <img src="{{ asset('images/asboiii.png') }}" alt="Logo"
                     class="w-24 md:w-1/4 rounded-lg shadow-xl transform hover:scale-105 transition duration-300 ease-in-out mx-auto mb-6">
                 <ul class="text-lg space-y-4">
                     <li
-                        class="flex justify-between items-center border-b border-gray-700 pb-2 hover:text-yellow-400 transition duration-300">
+                        class="flex justify-between items-center border-b border-gray-700 pb-2">
                         <span>Senin</span> <span>10.00 - 21.00</span>
                     </li>
                     <li
-                        class="flex justify-between items-center border-b border-gray-700 pb-2 hover:text-yellow-400 transition duration-300">
+                        class="flex justify-between items-center border-b border-gray-700 pb-2">
                         <span>Selasa</span> <span>10.00 - 21.00</span>
                     </li>
                     <li
-                        class="flex justify-between items-center border-b border-gray-700 pb-2 hover:text-yellow-400 transition duration-300">
+                        class="flex justify-between items-center border-b border-gray-700 pb-2">
                         <span>Rabu</span> <span>10.00 - 21.00</span>
                     </li>
                     <li
-                        class="flex justify-between items-center border-b border-gray-700 pb-2 hover:text-yellow-400 transition duration-300">
+                        class="flex justify-between items-center border-b border-gray-700 pb-2">
                         <span>Kamis</span> <span>10.00 - 21.00</span>
                     </li>
                     <li
-                        class="flex justify-between items-center border-b border-gray-700 pb-2 hover:text-yellow-400 transition duration-300">
+                        class="flex justify-between items-center border-b border-gray-700 pb-2">
                         <span>Jumat</span> <span>10.00 - 21.00</span>
                     </li>
                     <li
-                        class="flex justify-between items-center border-b border-gray-700 pb-2 hover:text-yellow-400 transition duration-300">
+                        class="flex justify-between items-center border-b border-gray-700 pb-2">
                         <span>Sabtu</span> <span>10.00 - 22.00</span>
                     </li>
-                    <li class="flex justify-between items-center text-yellow-400 font-semibold">
+                    <li class="flex justify-between items-center font-semibold">
                         <span>Minggu</span> <span>10.00 - 22.00</span>
                     </li>
                 </ul>
@@ -97,26 +101,26 @@
     <main
         class="container mx-auto px-6 py-16 text-white flex flex-col md:flex-row items-center space-y-12 md:space-y-0 md:space-x-12">
         <div class="md:w-1/2 text-center md:text-left">
-            <h1 class="text-4xl font-bold text-yellow-500">Cara Booking</h1>
+            <h1 class="text-4xl font-bold text-whote">Cara Booking</h1>
             <ul class="mt-4 space-y-6">
                 <li class="flex items-start space-x-4">
                     <span
-                        class="bg-yellow-500 text-black font-bold w-8 h-8 flex items-center justify-center rounded-full">1</span>
+                        class="bg-white text-black font-bold w-8 h-8 flex items-center justify-center rounded-full">1</span>
                     <p>Buka website dan pilih layanan yang diinginkan.</p>
                 </li>
                 <li class="flex items-start space-x-4">
                     <span
-                        class="bg-yellow-500 text-black font-bold w-8 h-8 flex items-center justify-center rounded-full">2</span>
+                        class="bg-white text-black font-bold w-8 h-8 flex items-center justify-center rounded-full">2</span>
                     <p>Masukkan detail pemesanan dan pilih jadwal yang tersedia.</p>
                 </li>
                 <li class="flex items-start space-x-4">
                     <span
-                        class="bg-yellow-500 text-black font-bold w-8 h-8 flex items-center justify-center rounded-full">3</span>
+                        class="bg-white text-black font-bold w-8 h-8 flex items-center justify-center rounded-full">3</span>
                     <p>Konfirmasi pemesanan dan lakukan pembayaran jika diperlukan.</p>
                 </li>
                 <li class="flex items-start space-x-4">
                     <span
-                        class="bg-yellow-500 text-black font-bold w-8 h-8 flex items-center justify-center rounded-full">4</span>
+                        class="bg-white text-black font-bold w-8 h-8 flex items-center justify-center rounded-full">4</span>
                     <p>Datang ke lokasi sesuai jadwal dan nikmati layanan terbaik.</p>
                 </li>
             </ul>
@@ -183,7 +187,7 @@
         <img src="{{ asset('images/logogold.png') }}" alt="Logo" class="w-32 md:w-1/3 rounded-lg shadow-lg mr-64">
         <div class="text-center md:text-left">
             <h1 class="text-4xl font-bold text-yellow-500 text-center mb-8">Jam Operasional</h1>
-            <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <div class="bg-[#2F2F2F] p-6 rounded-lg shadow-lg">
                 <ul class="text-lg space-y-2">
                     <li class="flex justify-between border-b border-gray-700 pb-2"><span>Senin</span> <span>10.00 -
                             21.00</span></li>

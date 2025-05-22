@@ -25,7 +25,7 @@
                 <div class="container mx-auto px-4 py-6">
                     <h1 class="text-3xl font-bold text-[gold] mb-6">Notifikasi Anda</h1>
 
-                    <div class="bg-white mt-8 mx-8 shadow-md p-4 rounded-lg">
+                    <div class="bg-[#2F2F2F] mt-8 mx-8 shadow-md p-4 rounded-lg">
                         <h1 class="text-2xl font-medium text-black mb-4">Notifikasi</h1>
 
                         @forelse ($notifications as $notification)

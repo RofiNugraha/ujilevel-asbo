@@ -29,7 +29,7 @@
     <div class="image-container relative w-full h-screen flex items-center justify-center">
         <div class="container text-center px-8 py-12 rounded-lg">
             <h1
-                class="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 animate-pulse">
+                class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-200 via-white to-gray-300 animate-pulse">
                 Selamat Datang di Barbershop Kami!
             </h1>
             <p class="mt-6 text-xl text-gray-200">Rasakan layanan potong rambut dan perawatan terbaik untuk penampilan
@@ -53,12 +53,12 @@
     <main class="m-16 flex flex-wrap justify-center items-center gap-16">
         @foreach ($layanans as $layanan)
         <div
-            class="bg-white rounded-3xl shadow-lg p-6 w-60 flex flex-col items-center text-center hover:scale-105 transition-transform duration-300">
+            class="bg-[#2F2F2F] rounded-3xl shadow-lg p-6 w-60 flex flex-col items-center text-center hover:scale-105 transition-transform duration-300">
             <img src="{{ asset('storage/' . $layanan->gambar) }}" alt="Gambar Layanan"
                 class="rounded-3xl mb-4 w-40 h-40 object-cover">
-            <h2 class="text-2xl font-semibold mb-2">{{ $layanan->nama_layanan }}</h2>
-            <p class="text-gray-600 text-sm mb-2">{{ $layanan->deskripsi }}</p>
-            <h5 class="font-semibold text-blue-700">Rp{{ number_format($layanan->harga, 0, ',', '.') }}</h5>
+            <h2 class="text-2xl font-semibold mb-2 text-white">{{ $layanan->nama_layanan }}</h2>
+            <p class="text-gray-300 text-sm mb-2">{{ $layanan->deskripsi }}</p>
+            <h5 class="font-semibold text-white">Rp{{ number_format($layanan->harga, 0, ',', '.') }}</h5>
             @auth
             <form action="{{ route('cart.addItem') }}" method="POST" class="mt-4">
                 @csrf

@@ -156,7 +156,7 @@ body {
             <nav class="sb-sidenav accordion" id="sidenavAccordion" style="background-color: white;">
                 <div class="sb-sidenav-menu">
                     <div class="nav ms-4 justify-content-center">
-                        <img src="{{ asset('images/logog.png')}}" alt="Logo" class="img-fluid"
+                        <img src="{{ asset('images/asboii.png')}}" alt="Logo" class="img-fluid"
                             style="width: 160px; height: auto;">
                         <a style="color: black;" class="nav-link mt-4 {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"
                             href="{{ route('admin.dashboard') }}">

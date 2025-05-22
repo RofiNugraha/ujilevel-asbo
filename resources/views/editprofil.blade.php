@@ -23,7 +23,7 @@
 </head>
 
 <body
-    class="bg-gradient-to-br from-[#0C102B] via-[#111843] to-[#0E2094] min-h-screen flex items-center justify-center p-4">
+    class="bg-[#1C1C1C] min-h-screen flex items-center justify-center p-4">
 
     <div class="glass rounded-3xl max-w-3xl w-full p-10 text-white shadow-xl">
         <h1 class="text-4xl font-extrabold text-center mb-10 text-white drop-shadow-lg">
@@ -88,7 +88,7 @@
 
             <!-- Submit -->
             <button type="submit"
-                class="w-full py-3 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 transition text-white text-lg font-bold rounded-xl shadow-lg transform hover:scale-105">
+                class="w-full py-3 bg-blue-600 transition text-white text-lg font-bold rounded-xl shadow-lg transform hover:scale-105">
                 <i class="fas fa-save mr-2"></i> Save Changes
             </button>
         </form>

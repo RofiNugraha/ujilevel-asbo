@@ -28,7 +28,7 @@
     <div class="image-container relative w-full h-screen bg-cover bg-center flex items-center justify-center">
         <div class="container text-center p-8 rounded-lg">
             <h1
-                class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 animate-pulse">
+                class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-200 via-white to-gray-300 animate-pulse">
                 Selamat Datang di Barbershop Kami!
             </h1>
             <p class="mt-6 text-xl text-gray-200">Rasakan layanan potong rambut dan perawatan terbaik.</p>
@@ -41,34 +41,34 @@
         </div>
     </div>
 
-    <div class="min-h-screen bg-black">
+    <div class="min-h-screen bg-[#1C1C1C]">
         <!-- Contact Section -->
         <section id="contact" class="py-16">
             <div class="container mx-auto px-6 text-center">
-                <h2 class="text-4xl font-bold text-[gold]">Hubungi Kami</h2>
+                <h2 class="text-4xl font-bold text-white">Hubungi Kami</h2>
                 <p class="mt-4 text-gray-300">Kami senang mendengar dari Anda! Hubungi kami kapan saja.</p>
 
                 <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
                     <!-- Contact Info -->
-                    <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-left">
-                        <h3 class="text-2xl font-bold text-[gold]">Alamat Kami</h3>
+                    <div class="bg-[#2F2F2F] p-6 rounded-lg shadow-lg text-left">
+                        <h3 class="text-2xl font-bold text-white">Alamat Kami</h3>
                         <p class="text-gray-300 mt-2"><i class="fas fa-map-marker-alt mr-2"></i>Jl. Barber No. 10,
                             Jakarta, Indonesia</p>
 
-                        <h3 class="text-2xl font-bold text-[gold] mt-6">Telepon</h3>
+                        <h3 class="text-2xl font-bold text-white mt-6">Telepon</h3>
                         <p class="text-gray-300 mt-2"><i class="fas fa-phone-alt mr-2"></i>+62 812 3456 7890</p>
 
-                        <h3 class="text-2xl font-bold text-[gold] mt-6">Email</h3>
+                        <h3 class="text-2xl font-bold text-white mt-6">Email</h3>
                         <p class="text-gray-300 mt-2"><i class="fas fa-envelope mr-2"></i>info@barbershop.com</p>
 
-                        <h3 class="text-2xl font-bold text-[gold] mt-6">Jam Operasional</h3>
+                        <h3 class="text-2xl font-bold text-white mt-6">Jam Operasional</h3>
                         <p class="text-gray-300 mt-2"><i class="fas fa-clock mr-2"></i>Senin - Minggu: 10:00 - 21:00
                         </p>
                     </div>
 
                     <!-- Contact Form -->
-                    <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-left">
-                        <h3 class="text-2xl font-bold text-[gold] text-center">Berikan Penilaian Layanan Kami</h3>
+                    <div class="bg-[#2F2F2F] p-6 rounded-lg shadow-lg text-left">
+                        <h3 class="text-2xl font-bold text-white text-center">Berikan Penilaian Layanan Kami</h3>
                         <form action="{{ route('contact.store') }}" method="post" class="mt-4 space-y-4">
                             @csrf
                             <input type="number" id="rating-input" name="rating" min="1" max="5" step="1"
@@ -90,10 +90,10 @@
                             </div>
 
                             <textarea name="feedback" rows="5" placeholder="Masukkan Umpan Balik Anda"
-                                class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500"></textarea>
+                                class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600"></textarea>
 
                             <button type="submit"
-                                class="w-full bg-yellow-500 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-yellow-600 transition"><i
+                                class="w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold text-lg transition"><i
                                     class="fas fa-paper-plane mr-2"></i>Kirim Penilaian</button>
                         </form>
                     </div>
@@ -168,7 +168,7 @@
             </div>
         </div>
     </div>
-    <div class="min-h-screen bg-black items-center justify-center" style="heigh: 100px;">
+    <div class="min-h-scrbg-[#1C1C1C] items-center justify-center" style="heigh: 100px;">
         <!-- Contact Section -->
         <section id="contact" class="py-16">
             <div class="container mx-auto px-6 text-center">
