@@ -16,9 +16,9 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table" id="bookings-table">
-                                    <thead class="bg-warning">
-                                        <tr class="text-dark">
+                                <table class="table table-bordered" id="myTabel" style="width:100%">
+                                    <thead class="table-dark text-center">
+                                        <tr>
                                             <th>No.</th>
                                             <th>Nama</th>
                                             <th>Layanan</th>
@@ -43,7 +43,7 @@
                                                 $layanan = App\Models\Layanan::find($layananItem['id']);
                                                 @endphp
                                                 @if($layanan)
-                                                <span class="badge bg-primary">
+                                                <span class="badge bg-primary mb-1">
                                                     {{ $layanan->nama_layanan }} (x{{ $layananItem['quantity'] }})
                                                 </span>
                                                 @endif
@@ -51,18 +51,22 @@
                                             </td>
                                             <td>{{ $item->jam_booking }}</td>
                                             <td>{{ $item->kursi }}</td>
-                                            <td>{{ $item->status }}</td>
+                                            <td>
+                                                <span class="badge bg-{{ $item->status == 'selesai' ? 'success' : 'warning' }}">
+                                                    {{ ucfirst($item->status) }}
+                                                </span>
+                                            </td>
                                             <td>
                                                 <a href="{{ route('admin.booking.edit', $item->id) }}"
-                                                    class="btn btn-warning btn-sm">
-                                                    Konfirmasi Booking
+                                                    class="btn btn-warning btn-sm mb-1">
+                                                    Konfirmasi
                                                 </a>
                                                 <form id="delete-form-{{ $item->id }}"
                                                     action="{{ route('admin.booking.destroy', $item->id) }}"
                                                     method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"
+                                                    <button type="button" class="btn btn-danger btn-sm"
                                                         onclick="confirmDelete({{ $item->id }})">Delete</button>
                                                 </form>
                                             </td>
@@ -75,15 +79,31 @@
                     </div>
                 </div>
 
+                <!-- DataTables Init -->
                 <script>
+                $(document).ready(function () {
+                    $('#myTabel').DataTable({
+                        language: {
+                            search: "_INPUT_",
+                            searchPlaceholder: "Cari booking...",
+                            lengthMenu: "Tampilkan _MENU_ entri",
+                            zeroRecords: "Tidak ada data ditemukan",
+                            info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
+                            infoEmpty: "Tidak ada entri yang tersedia",
+                            infoFiltered: "(difilter dari total _MAX_ entri)"
+                        },
+                        dom: '<"d-flex justify-content-between align-items-center mb-2"lf>tip'
+                    });
+                });
+
                 function confirmDelete(bookingId) {
                     Swal.fire({
-                        title: "Are you sure?",
-                        text: "This action cannot be undone!",
+                        title: "Yakin ingin menghapus?",
+                        text: "Aksi ini tidak bisa dibatalkan!",
                         icon: "warning",
                         showCancelButton: true,
-                        confirmButtonText: "Yes, delete it!",
-                        cancelButtonText: "Cancel"
+                        confirmButtonText: "Ya, hapus!",
+                        cancelButtonText: "Batal"
                     }).then((result) => {
                         if (result.isConfirmed) {
                             document.getElementById('delete-form-' + bookingId).submit();

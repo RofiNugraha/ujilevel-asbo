@@ -14,6 +14,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="//cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="text/javascript" src="https://app.stg.midtrans.com/snap/snap.js"
@@ -62,7 +63,7 @@ body {
 }
 
 .nav-link:hover {
-    background-color: gold !important;
+    background-color: black !important;
     color: white !important;
     border-radius: 5px;
     width: auto;
@@ -78,7 +79,7 @@ body {
 /* Styling untuk menu aktif */
 .nav-link.active {
     position: relative;
-    background-color: gold !important;
+    background-color: black !important;
     /* Background warna emas */
     color: white !important;
     /* Warna teks putih biar kontras */
@@ -96,7 +97,7 @@ body {
     top: 0;
     height: 100%;
     width: 10px;
-    background-color: gold;
+    background-color: black;
     /* Warna indikator */
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -124,7 +125,7 @@ body {
     {{ $slot }}
     <nav class="sb-topnav navbar navbar-expand border-0"
         style="height: 80px; background-color: white; margin-left: 235px;">
-        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0 text-warning bg-white" id="sidebarToggle">
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0 text-dark bg-white" id="sidebarToggle">
             <i class="fas fa-bars m-1"></i>
         </button>
         <div class="container-fluid d-flex justify-content-between">
@@ -141,10 +142,10 @@ body {
                     </a>
                 </li> -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link text-warning profile-container" href="{{ route('admin.profil.profil') }}">
+                    <a class="nav-link text-dark profile-container" href="{{ route('admin.profil.profil') }}">
                         <span class="me-2">Profil</span>
-                        <!-- <img src="{{ asset('images/google.png') }}" alt="Profile" class="rounded-circle" width="30"
-                            height="30"> -->
+                        <img src="{{ asset('images/google.png') }}" alt="Profile" class="rounded-circle" width="30"
+                            height="30">
                     </a>
                 </li>
             </ul>
@@ -155,9 +156,9 @@ body {
             <nav class="sb-sidenav accordion" id="sidenavAccordion" style="background-color: white;">
                 <div class="sb-sidenav-menu">
                     <div class="nav ms-4 justify-content-center">
-                        <img src="{{ asset('images/logog.png')}}" alt="Logo" class="img-fluid"
+                        <img src="{{ asset('images/asboii.png')}}" alt="Logo" class="img-fluid"
                             style="width: 160px; height: auto;">
-                        <a class="nav-link text-warning mt-4 {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"
+                        <a style="color: black;" class="nav-link mt-4 {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"
                             href="{{ route('admin.dashboard') }}">
                             <div class="sb-nav-link-icon d-flex">
                                 <i class="fas fa-home"></i>
@@ -165,7 +166,7 @@ body {
                             </div>
                         </a>
 
-                        <a class="nav-link text-warning mt-2 {{ request()->routeIs('admin.booking.index') ? 'active' : '' }}"
+                        <a style="color: black;" class="nav-link mt-2 {{ request()->routeIs('admin.booking.index') ? 'active' : '' }}"
                             href="{{ route('admin.booking.index') }}">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-calendar-check"></i>
@@ -173,7 +174,7 @@ body {
                             </div>
                         </a>
 
-                        <a class="nav-link text-warning mt-2 {{ request()->routeIs('admin.kasir.index') ? 'active' : '' }}"
+                        <a style="color: black;" class="nav-link mt-2 {{ request()->routeIs('admin.kasir.index') ? 'active' : '' }}"
                             href="{{ route('admin.kasir.index') }}">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-cash-register"></i>
@@ -181,7 +182,7 @@ body {
                             </div>
                         </a>
 
-                        <a class="nav-link text-warning mt-2 {{ request()->routeIs('admin.layanan.index') ? 'active' : '' }}"
+                        <a style="color: black;" class="nav-link mt-2 {{ request()->routeIs('admin.layanan.index') ? 'active' : '' }}"
                             href="{{ route('admin.layanan.index') }}">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-tools"></i>
@@ -189,21 +190,21 @@ body {
                             </div>
                         </a>
 
-                        <a class="nav-link text-warning mt-2 {{ request()->routeIs('admin.pemasukan.index') ? 'active' : '' }}"
+                        <a style="color: black;" class="nav-link mt-2 {{ request()->routeIs('admin.pemasukan.index') ? 'active' : '' }}"
                             href="{{ route('admin.pemasukan.index') }}">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-money-bill-wave"></i>
                                 <span class="ms-3">Pemasukan</span>
                             </div>
                         </a>
-                        <a class="nav-link text-warning mt-2 {{ request()->routeIs('admin.pengeluaran.index') ? 'active' : '' }}"
+                        <a style="color: black;" class="nav-link mt-2 {{ request()->routeIs('admin.pengeluaran.index') ? 'active' : '' }}"
                             href="{{ route('admin.pengeluaran.index') }}">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-money-bill-wave"></i>
                                 <span class="ms-3">pengeluaran</span>
                             </div>
                         </a>
-                        <a class="nav-link text-warning mt-2 {{ request()->routeIs('admin.riwayat.index') ? 'active' : '' }}"
+                        <a style="color: black;" class="nav-link mt-2 {{ request()->routeIs('admin.riwayat.index') ? 'active' : '' }}"
                             href="{{ route('admin.riwayat.index') }}">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-history"></i>
@@ -226,6 +227,11 @@ body {
         </div>
     </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+    <script> 
+        let table = new DataTable('#myTabel'); 
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
     </script>
     <script src="{{ asset('js/scripts.js') }}"></script>

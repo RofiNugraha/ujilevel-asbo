@@ -8,23 +8,22 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 
-<body class="flex flex-col min-h-screen" style="background-color: black;">
+<body class="flex flex-col min-h-screen" style="background-color:#1C1C1C;">
     <header class="navbar transparent fixed w-full sticky top-0 z-10 shadow-md">
         <div class="max-w-7xl mx-auto flex items-center justify-between py-4 px-6">
-            <img src="{{ asset('images/logogold.png')}}" alt="ASBO Logo" class="w-[100px]">
+            <img src="{{ asset('images/asboiii.png')}}" alt="ASBO Logo" class="w-[100px]">
             <div class="hidden lg:flex space-x-6 text-lg font-medium text-gray-900">
                 <a href="{{ route('dashboard') }}"
-                    class="nav-item text-gray-400 hover:text-[gold] hover:underline">Home</a>
-                <a href="{{ route('about') }}"
-                    class="nav-item text-gray-400 hover:text-[gold] hover:underline">About</a>
+                    class="nav-item text-white hover:text-[gold] hover:underline">Home</a>
+                <a href="{{ route('about') }}" class="nav-item text-white hover:text-[gold] hover:underline">About</a>
                 <a href="{{ route('overview') }}"
-                    class="nav-item text-gray-400 hover:text-[gold] hover:underline">Overview</a>
+                    class="nav-item text-white hover:text-[gold] hover:underline">Overview</a>
                 <a href="{{ route('booking') }}"
-                    class="nav-item text-gray-400 hover:text-[gold] hover:underline">Booking</a>
+                    class="nav-item text-white hover:text-[gold] hover:underline">Booking</a>
                 <a href="{{ route('contact') }}"
-                    class="nav-item text-gray-400 hover:text-[gold] hover:underline">Contact</a>
+                    class="nav-item text-white hover:text-[gold] hover:underline">Contact</a>
                 <a href="{{ route('notifikasi') }}">
-                    <button class="nav-item relative text-gray-400 hover:text-[gold]">
+                    <button class="nav-item relative text-white hover:text-[gold]">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -47,8 +46,12 @@
                         </span>
                     </button>
                 </a>
-                <a href="{{ route('profil') }}"
-                    class="block bg-gray-200 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-300">Profil</a>
+                <a href="{{ route('profil') }}" class="flex items-center gap-3">
+                    <h2 class="text-xl font-bold text-white">{{ auth()->user()->name }}</h2>
+                    <img src="{{ auth()->user()->image ? asset('storage/' . auth()->user()->image) : asset('images/default-avatar.jpg') }}"
+                        alt="Profile Photo"
+                        class="w-12 h-12 rounded-full object-cover border-2 border-gray-300 hover:border-gray-500 transition">
+                </a>
             </div>
 
             <script>
@@ -94,8 +97,12 @@
                         </svg>
                     </button>
                 </a>
-                <a href="{{ route('profil') }}"
-                    class="block bg-gray-200 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-300">Profil</a>
+                <a href="{{ route('profil') }}">
+                    <img src="{{ auth()->user()->image ? asset('storage/' . auth()->user()->image) : asset('images/default-avatar.jpg') }}"
+                        alt="Profile Photo"
+                        class="w-10 h-10 rounded-full object-cover border-2 border-gray-300 hover:border-gray-500 transition">
+                </a>
+
             </div>
     </header>
 
@@ -132,13 +139,13 @@
     </script>
 
     <!-- Footer -->
-    <footer class="bg-black text-white py-12 relative overflow-hidden">
+    <footer class="bg-[#1C1C1C] text-white py-12 relative overflow-hidden">
         <div class="absolute inset-0 opacity-10 bg-[url('/path-to-pattern.png')] bg-cover"></div>
         <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
                 <!-- Logo dan Deskripsi -->
                 <div class="flex flex-col items-center md:items-start">
-                    <img src="{{ asset('images/logogold.png')}}" alt="Logo ASBO"
+                    <img src="{{ asset('images/asboiii.png')}}" alt="Logo ASBO"
                         class="w-[160px] transition-transform duration-300 hover:scale-105">
                     <p class="mt-3 text-gray-400 leading-relaxed">
                         Mitra terpercaya Anda dalam solusi manajemen keuangan.
@@ -146,7 +153,7 @@
                 </div>
                 <!-- Bagian Tautan -->
                 <div class="flex flex-col items-center md:items-start">
-                    <h2 class="text-lg text-[gold] font-semibold border-b-2 border-[gold] pb-2">Tautan Cepat</h2>
+                    <h2 class="text-lg text-white font-semibold border-b-2 border-white pb-2">Tautan Cepat</h2>
                     <ul class="mt-4 space-y-3">
                         <li><a href="#" class="text-gray-400 hover:text-gold transition duration-300">Home</a></li>
                         <li><a href="#" class="text-gray-400 hover:text-gold transition duration-300">About</a></li>
@@ -157,7 +164,7 @@
                 </div>
                 <!-- Bagian Media Sosial -->
                 <div class="flex flex-col items-center md:items-start">
-                    <h2 class="text-lg text-[gold] font-semibold border-b-2 border-[gold] pb-2">Ikuti Kami</h2>
+                    <h2 class="text-lg text-white font-semibold border-b-2 border-white pb-2">Ikuti Kami</h2>
                     <div class="flex mt-4 space-x-4">
                         <a href="#" class="text-gray-400 hover:text-gold transition duration-300">
                             <i class="fab fa-facebook text-xl"></i>

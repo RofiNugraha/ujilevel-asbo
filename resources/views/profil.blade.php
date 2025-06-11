@@ -175,12 +175,15 @@
             <hr class="border-t border-black my-4 mx-6">
             <div class="flex justify-between p-6">
                 <a href="{{ route('editprofil') }}"
-                    class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg shadow font-semibold transition">
-                    <i class="fas fa-user-edit"></i> Edit Profil
+                    class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg shadow-md font-semibold transition duration-200">
+                    <i class="fas fa-user-edit"></i>
+                    <span>Edit Profil</span>
                 </a>
+
                 <a href="{{ route('riwayat_pesanan') }}"
-                    class="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded-lg shadow font-semibold transition">Lihat
-                    Riwayat Pesanan
+                    class="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded-lg shadow-md font-semibold transition duration-200">
+                    <i class="fas fa-history"></i>
+                    <span>Lihat Riwayat Pesanan</span>
                 </a>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf

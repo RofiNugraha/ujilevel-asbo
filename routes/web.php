@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminBookingController;
+use App\Http\Controllers\Admin\AdminCustomController;
 use App\Http\Controllers\Admin\AdminKasirController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DownPaymentController;
 use App\Http\Controllers\LayananController;
+use App\Http\Controllers\NavbarController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OverviewController;
@@ -105,6 +107,8 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/profil', [UpdateProfileController::class, 'updateProfile'])->name('profil.update');
     Route::post('/profil/{id}/batal', [ProfileController::class, 'cancel'])->name('bookings.cancel');
 
+    Route::get('/components/landing-layout', [NavbarController::class, 'index'])->name('navbar.index');
+    
     // Cart 
     Route::get('cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('cart/addItem', [CartController::class, 'addItem'])->name('cart.addItem');
@@ -116,6 +120,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/formbook/{layanan_id?}/{produk_id?}', [BookingController::class, 'formBook'])->name('formbook');
     Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store');
     Route::post('/booking/available-slots', [BookingController::class, 'getAvailableSlots'])->name('booking.available-slots');
+
+    Route::get('/booking/available', [BookingController::class, 'getAvailableKursis'])->name('kursi.available');
+    Route::get('/cart', [BookingController::class, 'showCart'])->name('cart');
     Route::post('/checkout', [BookingController::class, 'checkout'])->name('checkout.store');
     Route::get('/booking/available-slots', [BookingController::class, 'getAvailableSlots'])->name('booking.get-available-slots');
     Route::get('/user/check-profile', [BookingController::class, 'checkUserProfile'])->name('user.check-profile');
@@ -208,6 +215,14 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(
     Route::get('/admin/profil/profil', [AdminProfilController::class, 'index'])->name('admin.profil.profil');
     Route::get('/admin/profil/{id}/edit', [AdminProfilController::class, 'edit'])->name('admin.profil.edit');
     Route::put('/admin/profil/{id}', [AdminProfilController::class, 'update'])->name('admin.profil.update');
+
+    // CRUD admin custom
+    Route::get('/admin/custom', [AdminCustomController::class, 'index'])->name('admin.custom.index');
+    Route::get('/admin/custom/create', [AdminCustomController::class, 'create'])->name('admin.custom.create');
+    Route::post('/admin/custom', [AdminCustomController::class, 'store'])->name('admin.custom.store');
+    Route::get('admin/custom/{custom}/edit', [AdminCustomController::class, 'edit'])->name('admin.custom.edit');
+    Route::put('admin/custom/{custom}', [AdminCustomController::class, 'update'])->name('admin.custom.update');
+    Route::delete('customs/{custom}', [AdminCustomController::class, 'destroy'])->name('admin.custom.destroy');
 });
 
 require __DIR__.'/auth.php';

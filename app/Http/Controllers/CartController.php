@@ -49,7 +49,7 @@ class CartController extends Controller
                                         ->first();
 
             if ($existingHaircut) {
-                return redirect()->route('cart.index')->with('error', 'Layanan Haircut sudah ada di keranjang!');
+                return redirect()->route('cart')->with('error', 'Layanan Haircut sudah ada di keranjang!');
             }
         }
 
@@ -58,7 +58,7 @@ class CartController extends Controller
                             ->first();
 
         if ($cartItem) {
-            return redirect()->route('cart.index')->with('error', 'Layanan ini sudah ada di keranjang!');
+            return redirect()->route('cart')->with('error', 'Layanan ini sudah ada di keranjang!');
         }
 
         CartItem::create([
@@ -68,7 +68,7 @@ class CartController extends Controller
             'subtotal' => $request->quantity * $layanan->harga
         ]);
 
-        return redirect()->route('cart.index')->with('success', 'Item berhasil ditambahkan ke keranjang!');
+        return redirect()->route('cart')->with('success', 'Item berhasil ditambahkan ke keranjang!');
     }
 
     public function removeItem($id)
@@ -76,12 +76,12 @@ class CartController extends Controller
         $cartItem = CartItem::findOrFail($id);
         
         if ($cartItem->cart->user_id !== Auth::id()) {
-            return redirect()->route('cart.index')->with('error', 'Unauthorized action.');
+            return redirect()->route('cart')->with('error', 'Unauthorized action.');
         }
         
         $cartItem->delete();
 
-        return redirect()->route('cart.index')->with('success', 'Item removed from cart.');
+        return redirect()->route('cart')->with('success', 'Item removed from cart.');
     }
 
     public function totalPrice()

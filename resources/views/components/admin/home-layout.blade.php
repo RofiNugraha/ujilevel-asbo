@@ -16,22 +16,22 @@
     <!-- Note: replace with src="https://app.midtrans.com/snap/snap.js" for Production environment -->
 </head>
 
-<body class="flex flex-col min-h-screen" style="background-color: black;">
+<body class="flex flex-col min-h-screen" style="background-color: #1C1C1C;">
     <header class="navbar transparent fixed w-full sticky top-0 z-10 shadow-md">
         <div class="max-w-7xl mx-auto flex items-center justify-between py-4 px-6">
             <img src="{{ asset('images/logogold.png')}}" alt="ASBO Logo" class="w-[80px]">
-            <div class="hidden lg:flex space-x-6 text-lg font-medium text-gray-900">
-                <a href="{{ route('/') }}" class="nav-item text-gray-400 hover:text-[gold] hover:underline">Home</a>
+            <div class="hidden lg:flex space-x-6 text-lg font-medium text-white">
+                <a href="{{ route('/') }}" class="nav-item hover:text-[gold] hover:underline">Home</a>
                 <a href="{{ route('about') }}"
-                    class="nav-item text-gray-400 hover:text-[gold] hover:underline">About</a>
+                    class="nav-item hover:text-[gold] hover:underline">About</a>
                 <a href="{{ route('overview') }}"
-                    class="nav-item text-gray-400 hover:text-[gold] hover:underline">Overview</a>
+                    class="nav-item hover:text-[gold] hover:underline">Overview</a>
                 <a href="{{ route('booking') }}"
-                    class="nav-item text-gray-400 hover:text-[gold] hover:underline">Booking</a>
+                    class="nav-item hover:text-[gold] hover:underline">Booking</a>
                 <a href="{{ route('contact') }}"
-                    class="nav-item text-gray-400 hover:text-[gold] hover:underline">Contact</a>
+                    class="nav-item hover:text-[gold] hover:underline">Contact</a>
                 <a href="{{ route('notifikasi') }}">
-                    <button class="nav-item relative text-gray-400 hover:text-[gold]">
+                    <button class="nav-item relative hover:text-[gold]">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -109,7 +109,7 @@
     </script>
 
     <!-- Footer -->
-    <footer class="bg-black text-white py-8">
+    <footer class="bg-[#1C1C1C] text-white py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Logo and Description -->

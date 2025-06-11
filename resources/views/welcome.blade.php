@@ -24,7 +24,7 @@
     }
     </style>
 
-    <div class="min-h-screen bg-black from-gray-50 to-gray-200">
+    <div class="min-h-screen bg-[#1C1C1C] from-gray-50 to-gray-200">
         <!-- Hero Section -->
         <div class="image-container relative w-full h-screen bg-cover bg-center flex items-center justify-center">
             <div class="container text-center p-8 rounded-lg">
@@ -43,60 +43,57 @@
         </div>
 
         <!-- Services Section -->
-        <section id="services" class="py-16 bg-black">
+        <section id="services" class="py-16 bg-[#1C1C1C]">
             <div class="container mx-auto px-6 text-center m-4">
                 <h2 class="text-4xl font-bold text-[gold]">Layanan Kami</h2>
-                <p class="mt-4 text-gray-300">Kami menyediakan layanan perawatan pria terbaik.</p>
+                <p class="mt-4 text-white">Kami menyediakan layanan perawatan pria terbaik.</p>
                 <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="p-6 bg-gray-50 rounded-lg shadow-lg">
+                    <div class="p-6 bg-[#2F2F2F] rounded-lg shadow-lg">
                         <img src="{{ asset('images/haircut.jpg') }}" alt="Potong Rambut"
                             class="w-full h-40 object-cover rounded-lg">
-                        <h3 class="text-2xl font-bold text-gray-800 mt-4">Potong Rambut</h3>
+                        <h3 class="text-2xl font-bold text-white mt-4">Potong Rambut</h3>
                     </div>
-                    <div class="p-6 bg-gray-50 rounded-lg shadow-lg">
+                    <div class="p-6 bg-[#2F2F2F] rounded-lg shadow-lg">
                         <img src="{{ asset('images/semir.jpg') }}" alt="Semir Rambut"
                             class="w-full h-40 object-cover rounded-lg">
-                        <h3 class="text-2xl font-bold text-gray-800 mt-4">Semir Rambut</h3>
+                        <h3 class="text-2xl font-bold text-white mt-4">Semir Rambut</h3>
                     </div>
-                    <div class="p-6 bg-gray-50 rounded-lg shadow-lg">
+                    <div class="p-6 bg-[#2F2F2F] rounded-lg shadow-lg">
                         <img src="{{ asset('images/pijat.jpg') }}" alt="Pijat Kepala"
                             class="w-full h-40 object-cover rounded-lg">
-                        <h3 class="text-2xl font-bold text-gray-800 mt-4">Pijat Kepala</h3>
+                        <h3 class="text-2xl font-bold text-white mt-4">Pijat Kepala</h3>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Catalog Section -->
-        <section id="catalog" class="py-16 bg-black">
+        <section id="catalog" class="py-16 bg-[#1C1C1C]">
             <div class="container mx-auto px-6 text-center m-4">
                 <h2 class="text-4xl font-bold text-[gold]">Produk Kami</h2>
-                <p class="mt-4 text-gray-300">Temukan berbagai produk perawatan terbaik kami.</p>
+                <p class="mt-4 text-white">Temukan berbagai produk perawatan terbaik kami.</p>
                 <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="p-6 bg-gray-200 rounded-lg shadow-lg">
+                    <div class="p-6 bg-[#2F2F2F] rounded-lg shadow-lg">
                         <img src="{{ asset('images/pomade.jpg') }}" alt="Pomade"
                             class="w-full h-40 object-cover rounded-lg">
-                        <h3 class="mt-4 text-2xl font-bold text-gray-800">Pomade</h3>
-                        <p class="mt-2 text-gray-600">Tampil rapi dan stylish dengan daya tahan maksimal</p>
+                        <h3 class="mt-4 text-2xl font-bold text-white">Pomade</h3>
                     </div>
-                    <div class="p-6 bg-gray-200 rounded-lg shadow-lg">
+                    <div class="p-6 bg-[#2F2F2F] rounded-lg shadow-lg">
                         <img src="{{ asset('images/vit.jpg') }}" alt="Vitamin Rambut"
                             class="w-full h-40 object-cover rounded-lg">
-                        <h3 class="mt-4 text-2xl font-bold text-gray-800">Vitamin Rambut</h3>
-                        <p class="mt-2 text-gray-600">Nutrisi terbaik untuk rambut sehat dan berkilau</p>
+                        <h3 class="mt-4 text-2xl font-bold text-white">Vitamin Rambut</h3>
                     </div>
-                    <div class="p-6 bg-gray-200 rounded-lg shadow-lg">
+                    <div class="p-6 bg-[#2F2F2F] rounded-lg shadow-lg">
                         <img src="{{ asset('images/produk.jpg') }}" alt="Creambath"
                             class="w-full h-40 object-cover rounded-lg">
-                        <h3 class="mt-4 text-2xl font-bold text-gray-800">Creambath</h3>
-                        <p class="mt-2 text-gray-600">Perawatan intensif untuk rambut lembut dan segar</p>
+                        <h3 class="mt-4 text-2xl font-bold text-white">Creambath</h3>
                     </div>
                 </div>
             </div>
         </section>
     </div>
 
-    <div class="min-h-screen bg-black">
+    <div class="min-h-screen bg-[#1C1C1C]">
         <!-- Contact Section -->
         <section id="contact" class="py-16">
             <div class="container mx-auto px-6 text-center">

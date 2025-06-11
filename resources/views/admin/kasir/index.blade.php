@@ -32,9 +32,9 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-hover" id="riwayat-table">
-                                    <thead class="bg-warning">
-                                        <tr class="text-dark">
+                                <table class="table table-hover" id="myTabel">
+                                    <thead class="bg-dark">
+                                        <tr class="text-white">
                                             <th>No.</th>
                                             <th>Nama</th>
                                             <th>Layanan</th>
@@ -195,8 +195,8 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-hover" id="non-booking-table">
-                                    <thead class="bg-info">
+                                <table class="table table-hover" id="myTabel">
+                                    <thead>
                                         <tr class="text-dark">
                                             <th>No.</th>
                                             <th>ID Transaksi</th>

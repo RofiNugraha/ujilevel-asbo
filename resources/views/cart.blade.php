@@ -1,7 +1,7 @@
 <x-landing-layout>
     <h1
-        class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 mt-20 flex justify-center items-center animate-pulse">
-        KERANJANG ANDA
+        class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-200 via-white to-gray-300 flex justify-center items-center animate-pulse">
+        Keranjang Anda
     </h1>
 
     <main class="m-8 flex flex-col items-center">

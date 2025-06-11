@@ -20,11 +20,11 @@
                     <!-- Tabel Layanan -->
                     <div class="card mb-4">
                         <div class="card-header">
-                            <i class="fas fa-list-alt me-2 text-warning"></i> Daftar Layanan
+                            <i class="fas fa-list-alt me-2" style="color: #8B4513;"></i> Daftar Layanan
                         </div>
                         <div class="card-body">
                             <table class="table" id="myTable">
-                                <thead class="bg-warning text-white">
+                                <thead class="text-white bg-dark fw-bold">
                                     <tr>
                                         <th><i class="fas fa-tag me-1"></i>Nama Layanan</th>
                                         <th><i class="fas fa-align-left me-1"></i>Deskripsi</th>
@@ -46,7 +46,7 @@
                                         <td>
                                             <!-- Tombol Edit -->
                                             <a href="{{ route('admin.layanan.edit', $layanan->id) }}"
-                                                class="btn btn-warning btn-sm rounded-circle" data-bs-toggle="tooltip"
+                                                class="btn btn-primary btn-sm rounded-circle" data-bs-toggle="tooltip"
                                                 title="Edit">
                                                 <i class="fas fa-edit"></i>
                                             </a>
