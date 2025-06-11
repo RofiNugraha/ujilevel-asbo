@@ -3,7 +3,7 @@
         class="bg-white bg-opacity-95 backdrop-blur-lg w-full max-w-4xl min-h-screen mx-auto my-12 rounded-3xl shadow-2xl overflow-hidden text-gray-800">
         <div class="p-6">
             <!-- Header Section -->
-            <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-6 rounded-t-xl">
+            <div class="bg-gradient-to-r bg-black text-white p-6 rounded-t-xl">
                 <div class="flex justify-between items-center">
                     <div class="flex items-center space-x-3">
                         <i class="fas fa-file-invoice text-xl"></i>
@@ -61,7 +61,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                 <!-- Order Info Card -->
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                    <div class="bg-blue-700 text-white px-5 py-4">
+                    <div class="bg-black text-white px-5 py-4">
                         <h3 class="font-bold flex items-center">
                             <i class="fas fa-info-circle mr-2"></i>Informasi Pesanan
                         </h3>
@@ -126,7 +126,7 @@
                 <!-- Booking Info Card -->
                 @if($transaction->booking)
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                    <div class="bg-yellow-400 text-gray-900 px-5 py-4">
+                    <div class="bg-black text-white px-5 py-4">
                         <h3 class="font-bold flex items-center">
                             <i class="fas fa-calendar-check mr-2"></i>Informasi Booking
                         </h3>
@@ -135,13 +135,13 @@
                         <div class="space-y-3">
                             <div class="flex justify-between">
                                 <span class="text-gray-600 flex items-center">
-                                    <i class="fas fa-ticket-alt mr-2 text-yellow-500"></i>ID Booking:
+                                    <i class="fas fa-ticket-alt mr-2 text-blue-500"></i>ID Booking:
                                 </span>
                                 <span class="font-semibold">{{ $transaction->booking_id }}</span>
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-gray-600 flex items-center">
-                                    <i class="far fa-calendar mr-2 text-yellow-500"></i>Tanggal Booking:
+                                    <i class="far fa-calendar mr-2 text-blue-500"></i>Tanggal Booking:
                                 </span>
                                 <span>{{ \Carbon\Carbon::parse($transaction->booking->tanggal_booking)->format('d M Y') }}</span>
                             </div>
@@ -149,7 +149,7 @@
                             isset($transaction->booking->waktu_selesai))
                             <div class="flex justify-between">
                                 <span class="text-gray-600 flex items-center">
-                                    <i class="far fa-clock mr-2 text-yellow-500"></i>Waktu:
+                                    <i class="far fa-clock mr-2 text-blue-500"></i>Waktu:
                                 </span>
                                 <span>{{ $transaction->booking->waktu_mulai }} -
                                     {{ $transaction->booking->waktu_selesai }}</span>
@@ -158,7 +158,7 @@
                             @if(isset($transaction->booking->status_booking))
                             <div class="flex justify-between">
                                 <span class="text-gray-600 flex items-center">
-                                    <i class="fas fa-info-circle mr-2 text-yellow-500"></i>Status Booking:
+                                    <i class="fas fa-info-circle mr-2 text-black"></i>Status Booking:
                                 </span>
                                 @if($transaction->booking->status_booking == 'confirmed')
                                 <span

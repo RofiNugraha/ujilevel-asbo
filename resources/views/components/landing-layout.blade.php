@@ -11,7 +11,10 @@
 <body class="flex flex-col min-h-screen" style="background-color:#1C1C1C;">
     <header class="navbar transparent fixed w-full sticky top-0 z-10 shadow-md">
         <div class="max-w-7xl mx-auto flex items-center justify-between py-4 px-6">
-            <img src="{{ asset('images/asboiii.png')}}" alt="ASBO Logo" class="w-[100px]">
+            <!-- <img src="{{ asset('images/asboiii.png')}}" alt="ASBO Logo" class="w-[100px]"> -->
+            @if($siteCustom && $siteCustom->logo)
+            <img src="{{ asset($siteCustom->logo) }}" alt="Logo" class="w-[100px]">
+            @endif
             <div class="hidden lg:flex space-x-6 text-lg font-medium text-gray-900">
                 <a href="{{ route('dashboard') }}"
                     class="nav-item text-white hover:text-[gold] hover:underline">Home</a>

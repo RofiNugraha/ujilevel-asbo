@@ -20,16 +20,12 @@
     <header class="navbar transparent fixed w-full sticky top-0 z-10 shadow-md">
         <div class="max-w-7xl mx-auto flex items-center justify-between py-4 px-6">
             <img src="{{ asset('images/logogold.png')}}" alt="ASBO Logo" class="w-[80px]">
-            <div class="hidden lg:flex space-x-6 text-lg font-medium text-white">
+            <div class=" hidden lg:flex space-x-6 text-lg font-medium text-white">
                 <a href="{{ route('/') }}" class="nav-item hover:text-[gold] hover:underline">Home</a>
-                <a href="{{ route('about') }}"
-                    class="nav-item hover:text-[gold] hover:underline">About</a>
-                <a href="{{ route('overview') }}"
-                    class="nav-item hover:text-[gold] hover:underline">Overview</a>
-                <a href="{{ route('booking') }}"
-                    class="nav-item hover:text-[gold] hover:underline">Booking</a>
-                <a href="{{ route('contact') }}"
-                    class="nav-item hover:text-[gold] hover:underline">Contact</a>
+                <a href="{{ route('about') }}" class="nav-item hover:text-[gold] hover:underline">About</a>
+                <a href="{{ route('overview') }}" class="nav-item hover:text-[gold] hover:underline">Overview</a>
+                <a href="{{ route('booking') }}" class="nav-item hover:text-[gold] hover:underline">Booking</a>
+                <a href="{{ route('contact') }}" class="nav-item hover:text-[gold] hover:underline">Contact</a>
                 <a href="{{ route('notifikasi') }}">
                     <button class="nav-item relative hover:text-[gold]">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"

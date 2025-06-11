@@ -78,10 +78,10 @@
     </div>
 
     <!-- SECTION JUDUL -->
-    <h1
-        class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 mt-20 flex justify-center items-center animate-pulse">
+    <h1 class="text-5xl font-extrabold text-white mt-20 flex justify-center items-center animate-pulse">
         Daftar Booking Hari Ini
     </h1>
+
 
     <!-- WRAPPER -->
     <div class="flex items-center justify-center mx-6">

@@ -181,7 +181,7 @@
                 </a>
 
                 <a href="{{ route('riwayat_pesanan') }}"
-                    class="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded-lg shadow-md font-semibold transition duration-200">
+                    class="flex items-center gap-2 bg-green-600 text-white px-6 py-2 rounded-lg shadow-md font-semibold transition duration-200">
                     <i class="fas fa-history"></i>
                     <span>Lihat Riwayat Pesanan</span>
                 </a>

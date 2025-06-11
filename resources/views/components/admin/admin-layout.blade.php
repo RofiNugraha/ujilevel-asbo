@@ -158,7 +158,8 @@ body {
                     <div class="nav ms-4 justify-content-center">
                         <img src="{{ asset('images/asboii.png')}}" alt="Logo" class="img-fluid"
                             style="width: 160px; height: auto;">
-                        <a style="color: black;" class="nav-link mt-4 {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"
+                        <a style="color: black;"
+                            class="nav-link mt-4 {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"
                             href="{{ route('admin.dashboard') }}">
                             <div class="sb-nav-link-icon d-flex">
                                 <i class="fas fa-home"></i>
@@ -166,7 +167,8 @@ body {
                             </div>
                         </a>
 
-                        <a style="color: black;" class="nav-link mt-2 {{ request()->routeIs('admin.booking.index') ? 'active' : '' }}"
+                        <a style="color: black;"
+                            class="nav-link mt-2 {{ request()->routeIs('admin.booking.index') ? 'active' : '' }}"
                             href="{{ route('admin.booking.index') }}">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-calendar-check"></i>
@@ -174,7 +176,8 @@ body {
                             </div>
                         </a>
 
-                        <a style="color: black;" class="nav-link mt-2 {{ request()->routeIs('admin.kasir.index') ? 'active' : '' }}"
+                        <a style="color: black;"
+                            class="nav-link mt-2 {{ request()->routeIs('admin.kasir.index') ? 'active' : '' }}"
                             href="{{ route('admin.kasir.index') }}">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-cash-register"></i>
@@ -182,7 +185,8 @@ body {
                             </div>
                         </a>
 
-                        <a style="color: black;" class="nav-link mt-2 {{ request()->routeIs('admin.layanan.index') ? 'active' : '' }}"
+                        <a style="color: black;"
+                            class="nav-link mt-2 {{ request()->routeIs('admin.layanan.index') ? 'active' : '' }}"
                             href="{{ route('admin.layanan.index') }}">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-tools"></i>
@@ -190,25 +194,36 @@ body {
                             </div>
                         </a>
 
-                        <a style="color: black;" class="nav-link mt-2 {{ request()->routeIs('admin.pemasukan.index') ? 'active' : '' }}"
+                        <a style="color: black;"
+                            class="nav-link mt-2 {{ request()->routeIs('admin.pemasukan.index') ? 'active' : '' }}"
                             href="{{ route('admin.pemasukan.index') }}">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-money-bill-wave"></i>
                                 <span class="ms-3">Pemasukan</span>
                             </div>
                         </a>
-                        <a style="color: black;" class="nav-link mt-2 {{ request()->routeIs('admin.pengeluaran.index') ? 'active' : '' }}"
+                        <a style="color: black;"
+                            class="nav-link mt-2 {{ request()->routeIs('admin.pengeluaran.index') ? 'active' : '' }}"
                             href="{{ route('admin.pengeluaran.index') }}">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-money-bill-wave"></i>
                                 <span class="ms-3">pengeluaran</span>
                             </div>
                         </a>
-                        <a style="color: black;" class="nav-link mt-2 {{ request()->routeIs('admin.riwayat.index') ? 'active' : '' }}"
+                        <a style="color: black;"
+                            class="nav-link mt-2 {{ request()->routeIs('admin.riwayat.index') ? 'active' : '' }}"
                             href="{{ route('admin.riwayat.index') }}">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-history"></i>
                                 <span class="ms-3">Riwayat</span>
+                            </div>
+                        </a>
+                        <a style="color: black;"
+                            class="nav-link mt-2 {{ request()->routeIs('admin.custom.index') ? 'active' : '' }}"
+                            href="{{ route('admin.custom.index') }}">
+                            <div class="sb-nav-link-icon">
+                                <i class="fas fa-history"></i>
+                                <span class="ms-3">Customisasi</span>
                             </div>
                         </a>
                     </div>
@@ -229,8 +244,8 @@ body {
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
-    <script> 
-        let table = new DataTable('#myTabel'); 
+    <script>
+    let table = new DataTable('#myTabel');
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
     </script>

@@ -44,10 +44,10 @@
     </div>
 
     <!-- Services Title -->
-    <h1
-        class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 mt-20 flex justify-center animate-pulse">
-        LAYANAN KAMI
+    <h1 class="text-5xl font-extrabold text-white mt-20 flex justify-center items-center animate-pulse">
+        Layanan Kami
     </h1>
+
 
     <!-- Services List -->
     <main class="m-16 flex flex-wrap justify-center items-center gap-16">

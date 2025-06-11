@@ -3,7 +3,7 @@
         class="bg-white bg-opacity-95 backdrop-blur-lg w-full max-w-4xl min-h-screen mx-auto my-12 rounded-3xl shadow-2xl overflow-hidden text-gray-800">
         <div class="p-6">
             <!-- Header Section -->
-            <div class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-white p-6 rounded-t-xl">
+            <div class="bg-gradient-to-r bg-black text-white p-6 rounded-t-xl">
                 <div class="flex justify-between items-center">
                     <div class="flex items-center space-x-3">
                         <i class="fas fa-history text-xl"></i>
