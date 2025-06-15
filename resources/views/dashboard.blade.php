@@ -84,29 +84,33 @@
                         <div
                             class="bg-[#2F2F2F] p-6 rounded-lg shadow-lg grid grid-cols-1 md:grid-cols-2 items-center gap-2 max-w-4xl w-full">
                             <!-- Informasi (Kiri) -->
+                            @if($siteCustom)
                             <div class="bg-[#2F2F2F] p-6 rounded-lg shadow-lg text-left">
                                 <h3 class="text-2xl font-bold text-white">Alamat Kami</h3>
-                                <p class="text-gray-300 mt-2"><i class="fas fa-map-marker-alt mr-2"></i>Jl. Barber No.
-                                    10,
-                                    Jakarta, Indonesia</p>
+                                <p class="text-gray-300 mt-2"><i
+                                        class="fas fa-map-marker-alt mr-2"></i>{{ $siteCustom->alamat }}</p>
 
                                 <h3 class="text-2xl font-bold text-white mt-6">Telepon</h3>
-                                <p class="text-gray-300 mt-2"><i class="fas fa-phone-alt mr-2"></i>+62 812 3456 7890</p>
+                                <p class="text-gray-300 mt-2"><i
+                                        class="fas fa-phone-alt mr-2"></i>{{ $siteCustom->no_hp }}</p>
 
                                 <h3 class="text-2xl font-bold text-white mt-6">Email</h3>
-                                <p class="text-gray-300 mt-2"><i class="fas fa-envelope mr-2"></i>info@barbershop.com
+                                <p class="text-gray-300 mt-2"><i
+                                        class="fas fa-envelope mr-2"></i>{{ $siteCustom->email }}
                                 </p>
 
                                 <h3 class="text-2xl font-bold text-white mt-6">Jam Operasional</h3>
-                                <p class="text-gray-300 mt-2"><i class="fas fa-clock mr-2"></i>Senin - Minggu: 10:00 -
-                                    21:00
+                                <p class="text-gray-300 mt-2"><i
+                                        class="fas fa-clock mr-2"></i>{{ $siteCustom->jam_operasional }}
                                 </p>
                             </div>
+                            @endif
 
                             <!-- Logo (Kanan) -->
                             <div class="flex justify-center md:justify-end">
-                                <img src="{{ asset('images/asboiii.png') }}" alt="Logo Barbershop"
-                                    class="h-80 w-full object-contain">
+                                @if($siteCustom && $siteCustom->logo)
+                                <img src="{{ asset($siteCustom->logo) }}" alt="Logo" class="h-80 w-full object-contain">
+                                @endif
                             </div>
                         </div>
                     </div>

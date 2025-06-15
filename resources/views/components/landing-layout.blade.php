@@ -148,8 +148,10 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
                 <!-- Logo dan Deskripsi -->
                 <div class="flex flex-col items-center md:items-start">
-                    <img src="{{ asset('images/asboiii.png')}}" alt="Logo ASBO"
+                    @if($siteCustom && $siteCustom->logo)
+                    <img src="{{ asset($siteCustom->logo) }}" alt="Logo"
                         class="w-[160px] transition-transform duration-300 hover:scale-105">
+                    @endif
                     <p class="mt-3 text-gray-400 leading-relaxed">
                         Mitra terpercaya Anda dalam solusi manajemen keuangan.
                     </p>
@@ -169,18 +171,20 @@
                 <div class="flex flex-col items-center md:items-start">
                     <h2 class="text-lg text-white font-semibold border-b-2 border-white pb-2">Ikuti Kami</h2>
                     <div class="flex mt-4 space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-gold transition duration-300">
+                        @if($siteCustom)
+                        <a href="{{ $siteCustom->link_facebook }}"
+                            class="text-gray-400 hover:text-gold transition duration-300">
                             <i class="fab fa-facebook text-xl"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-gold transition duration-300">
-                            <i class="fab fa-twitter text-xl"></i>
+                        <a href="{{ $siteCustom->link_whatsapp }}"
+                            class="text-gray-400 hover:text-gold transition duration-300">
+                            <i class="fab fa-whatsapp text-xl"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-gold transition duration-300">
+                        <a href="{{ $siteCustom->link_instagram }}"
+                            class="text-gray-400 hover:text-gold transition duration-300">
                             <i class="fab fa-instagram text-xl"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-gold transition duration-300">
-                            <i class="fab fa-linkedin text-xl"></i>
-                        </a>
+                        @endif
                     </div>
                     <p class="mt-4 text-gray-500 text-sm">Tetap terhubung dengan kami untuk info terbaru.</p>
                 </div>

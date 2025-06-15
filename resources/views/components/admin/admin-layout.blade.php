@@ -156,6 +156,9 @@ body {
             <nav class="sb-sidenav accordion" id="sidenavAccordion" style="background-color: white;">
                 <div class="sb-sidenav-menu">
                     <div class="nav ms-4 justify-content-center">
+                        <!-- <center>
+                            <h3>Admin Page</h3>
+                        </center> -->
                         <img src="{{ asset('images/asboii.png')}}" alt="Logo" class="img-fluid"
                             style="width: 160px; height: auto;">
                         <a style="color: black;"
@@ -222,7 +225,7 @@ body {
                             class="nav-link mt-2 {{ request()->routeIs('admin.custom.index') ? 'active' : '' }}"
                             href="{{ route('admin.custom.index') }}">
                             <div class="sb-nav-link-icon">
-                                <i class="fas fa-history"></i>
+                                <i class="fas fa-settings"></i>
                                 <span class="ms-3">Customisasi</span>
                             </div>
                         </a>
