@@ -55,13 +55,11 @@ class GoogleController extends Controller
 
                 Auth::login($newUser);
                 
-                // Add success message for SweetAlert
                 session()->flash('success', 'Pendaftaran dengan Google berhasil! Selamat datang, ' . $newUser->name);
                 
                 return redirect()->intended('dashboard');
             }
         } catch (Exception $e) {
-            // Add error message for SweetAlert
             session()->flash('error', 'Autentikasi Google gagal. Silakan coba lagi.');
             return redirect('login');
         }
